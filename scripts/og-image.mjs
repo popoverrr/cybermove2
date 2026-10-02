@@ -10,6 +10,13 @@ const root = process.cwd();
 const pub = join(root, 'public');
 await mkdir(pub, { recursive: true });
 const company = JSON.parse(await readFile(join(root, 'content/data/company.json'), 'utf8'));
+// brand mark from the live site's logo (src/assets/brand/logo-source.svg): «CM» glyphs + name outlines
+const src = await readFile(join(root, 'src/assets/brand/logo-source.svg'), 'utf8');
+const groups = src.replace(/\r?\n/g, '').match(/<g transform="translate\(17\.303[\s\S]*?<\/g><\/g>|<g fill="currentColor" >[\s\S]*?<\/g>/g);
+const CM = groups[0];        // the monogram inside the circle (viewBox 0 0 100 100)
+const NAME = groups[1];      // CYBERMOVE outlines (y ≈ 25…61)
+const SUB = groups[2];       // CONSULTING outlines (y ≈ 75…95)
+const mark = (color, sw) => `<circle cx="50" cy="50" r="47" fill="none" stroke="${color}" stroke-width="${sw}"/>${CM.replaceAll('currentColor', color)}`;
 
 const C = { space: '#08090B', graphite: '#111316', chalk: '#F2F2EF', steel: '#8C9199', accent: '#C8FF2E', line: 'rgba(242,242,239,0.12)' };
 const font = (f) => readFile(join(root, 'node_modules/@fontsource-variable', f)).then((b) => b.toString('base64'));
@@ -28,14 +35,16 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <line x1="0" y1="96" x2="1200" y2="96" stroke="${C.line}"/>
   <line x1="0" y1="534" x2="1200" y2="534" stroke="${C.line}"/>
   <g font-family="JB" font-size="18" letter-spacing="1.2" fill="${C.steel}">
-    <text x="60" y="58">${company.descriptor.ru.toUpperCase()}</text>
+    <text x="60" y="58">CHAOS → CORE → SYSTEM → GROWTH</text>
     <text x="1140" y="58" text-anchor="end">RU · EN</text>
     <text x="60" y="578">${company.legalName}</text>
   </g>
+  <g transform="translate(60 210) scale(1.7)">${mark(C.chalk, 1.4)}</g>
   <g font-family="IT" font-weight="600" fill="${C.chalk}">
-    <text x="52" y="370" font-size="178" letter-spacing="-5">${company.brand}</text>
+    <text x="262" y="330" font-size="132" letter-spacing="-3">${company.brand}</text>
   </g>
-  <rect x="1108" y="232" width="26" height="26" fill="${C.accent}"/>
+  <rect x="1108" y="238" width="22" height="22" fill="${C.accent}"/>
+  <text id="sub" x="266" y="378" font-family="JB" font-size="30" fill="${C.steel}">CONSULTING</text>
   <g font-family="IT" font-weight="500" fill="${C.chalk}" font-size="40" letter-spacing="-0.8">
     <text x="60" y="466">${company.tagline.ru}</text>
   </g>
@@ -58,22 +67,26 @@ await page.setContent(html);
 await page.evaluate(() => document.fonts.ready);
 // fit the wordmark: place the accent pixel right after the rendered wordmark
 await page.evaluate(() => {
-  const word = document.querySelector('text[font-size="178"]');
+  const word = document.querySelector('text[font-size="132"]');
   const box = word.getBBox();
-  document.querySelector('rect[width="26"]').setAttribute('x', String(box.x + box.width + 14));
+  document.querySelector('rect[width="22"]').setAttribute('x', String(box.x + box.width + 10));
+  // CONSULTING spans the width of the name
+  const sub = document.querySelector('#sub');
+  const w = sub.getBBox().width;
+  sub.setAttribute('letter-spacing', String((box.width - 6 - w) / 9));
 });
 const raw = await page.screenshot({ type: 'png' });
 await browser.close();
 await sharp(raw).png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(join(pub, 'og.png'));
 
-/* ── Favicon: "C" arc + the accent pixel, as pure paths (no font dependency) ── */
-const favSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="${C.space}"/>
-  <path d="M21.5 10.2A8 8 0 1 0 21.5 21.8" fill="none" stroke="${C.chalk}" stroke-width="3.6" stroke-linecap="butt"/>
-  <rect x="22.5" y="19.5" width="5" height="5" fill="${C.accent}"/>
+/* ── Favicon: the CM mark in a circle (pure paths, no font dependency) + the accent pixel ── */
+const favSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="22" fill="${C.space}"/>
+  <g transform="translate(8 8) scale(0.84)">${mark(C.chalk, 5)}</g>
+  <rect x="80" y="80" width="12" height="12" fill="${C.accent}"/>
 </svg>`;
 await writeFile(join(pub, 'favicon.svg'), favSvg);
-const png = (size, pad = 0) => sharp(Buffer.from(favSvg), { density: 72 * (size / 32) * 1.01 })
+const png = (size, pad = 0) => sharp(Buffer.from(favSvg), { density: 72 * (size / 100) * 1.01 })
   .resize(size - pad * 2, size - pad * 2).extend({ top: pad, bottom: pad, left: pad, right: pad, background: C.space }).png().toBuffer();
 await writeFile(join(pub, 'apple-touch-icon.png'), await png(180, 0));
 await writeFile(join(pub, 'icon-192.png'), await png(192));
@@ -88,10 +101,10 @@ header.writeUInt16LE(1, 10); header.writeUInt16LE(32, 12);
 header.writeUInt32LE(p32.length, 14); header.writeUInt32LE(22, 18);
 await writeFile(join(pub, 'favicon.ico'), Buffer.concat([header, p32]));
 
-/* ── Logo (text wordmark with a system-safe font stack, per design system) ── */
-const logo = `<svg xmlns="http://www.w3.org/2000/svg" width="360" height="64" viewBox="0 0 360 64" role="img" aria-label="${company.brand}">
-  <text x="0" y="48" font-family="'Inter Tight', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="52" letter-spacing="-1" fill="${C.space}">${company.brand}</text>
-  <rect x="338" y="10" width="14" height="14" fill="${C.accent}"/>
+/* ── Logo: mark + name + CONSULTING (outlines from the live logo), accent square ── */
+const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 100" width="470" height="100" role="img" aria-label="${company.brand} CONSULTING">
+  ${mark(C.space, 2.2)}${NAME.replaceAll('currentColor', C.space)}${SUB.replaceAll('currentColor', C.space)}
+  <rect x="458" y="25" width="10" height="10" fill="${C.accent}"/>
 </svg>`;
 await writeFile(join(pub, 'logo.svg'), logo);
 console.log('brand assets written to public/');

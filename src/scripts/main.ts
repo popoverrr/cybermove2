@@ -8,3 +8,4 @@ import './bend';
 import './marquee';
 import './lang';
 import './accordion';
+import './audio';

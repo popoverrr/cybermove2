@@ -3,12 +3,17 @@ import { t, url, otherLang, type Lang, type PageKey } from '../lib/i18n';
 import { contacts } from '../lib/content';
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { asset } from '../lib/i18n';
 
 interface Props { lang: Lang; page: PageKey | 'notFound'; altHref: string }
 const { lang, page, altHref } = Astro.props;
 const navKeys = ['services', 'cases', 'insights', 'about', 'contact'] as const;
 const other = otherLang(lang);
 const firstLabel = '';
+// the music button is rendered only when the track is part of the build (docs/10-fixes.md §6)
+const hasMusic = existsSync(join(process.cwd(), 'public/audio/ambient.mp3'));
 ---
 <header class="hdr" id="hdr" data-state="top" data-theme="dark">
   <div class="hdr__cap" aria-hidden="true"><i class="hdr__progress"></i></div>
@@ -17,6 +22,9 @@ const firstLabel = '';
     <a class="hdr__brand" href={url(lang, 'home')} aria-label="CYBERMOVE">
       <Wordmark class="hdr__wm" />
       <Wordmark compact class="hdr__wm-c" />
+    </a>
+    <a class="hdr__partner label" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+      <span class="muted">{t(lang, 'nav.partner')}</span><span class="hdr__partner-num">{contacts.whatsapp.display}</span>
     </a>
 
     <nav class="hdr__nav" aria-label={t(lang, 'nav.menu')}>
@@ -38,6 +46,13 @@ const firstLabel = '';
       </a>
     </div>
 
+    {hasMusic && (
+      <button class="hdr__music" type="button" data-music data-src={asset('audio/ambient.mp3')} aria-pressed="false"
+        data-on={t(lang, 'common.musicOn')} data-off={t(lang, 'common.musicOff')} aria-label={t(lang, 'common.musicOn')}>
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </button>
+    )}
+
     <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu-panel" data-open-label={t(lang, 'nav.menu')} data-close-label={t(lang, 'nav.close')}>
       <span class="hdr__burger" aria-hidden="true"><i></i><i></i></span>
       <span class="sr-only hdr__menu-text">{t(lang, 'nav.menu')}</span>
@@ -50,7 +65,7 @@ const firstLabel = '';
   <div class="menu" id="menu-panel" role="dialog" aria-modal="true" aria-label={t(lang, 'nav.menu')} hidden data-theme="dark">
     <div class="menu__inner">
       <div class="menu__top label">
-        <span class="muted">cybermove / {t(lang, 'nav.menu').toLowerCase()}</span>
+        <Wordmark class="menu__wm" />
         <button type="button" class="menu__close" data-menu-close aria-label={t(lang, 'nav.close')}><Icon name="close" size={14} /></button>
       </div>
       <ol class="menu__links list-reset">
@@ -62,6 +77,9 @@ const firstLabel = '';
           </li>
         ))}
       </ol>
+      <a class="menu__partner label" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+        <span class="muted">{t(lang, 'nav.partner')}</span><span>{contacts.whatsapp.display}</span>
+      </a>
       <div class="menu__foot">
         <a class="btn btn--primary" href={url(lang, 'contact')}>
           <span class="btn__in"><span class="btn__text">{t(lang, 'nav.ctaLong')}</span><Icon name="arrow" class="btn__arrow" /></span>

@@ -33,6 +33,7 @@ const sectionLinks = (['services', 'cases', 'insights', 'about', 'contact'] as c
       <h2 class="label muted">{t(lang, 'nav.contact')}</h2>
       <ul class="list-reset">
         <li><a class="link ftr__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" size={16} /><span>WhatsApp · {contacts.whatsapp.display}</span></a></li>
+        <li><a class="link label" href={contacts.whatsapp.url} target="_blank" rel="noopener">{t(lang, 'nav.partner')} · {contacts.whatsapp.display}</a></li>
         {contacts.phone && <li><a class="link" href={`tel:${contacts.phone.number}`}>{t(lang, 'contact.channels.phoneLabel')} · {contacts.phone.display}</a></li>}
         {contacts.email && <li><a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a></li>}
         <li><span class="label muted">{t(lang, 'footer.langTitle')}</span> <a class="link label" href={altHref} hreflang={other} lang={other} data-lang-switch>{t(lang, 'nav.lang')} · {t(lang, 'nav.langLabel')}</a></li>

@@ -231,3 +231,31 @@ test('performance: no long tasks > 50 ms while scrolling home (4× CPU throttle)
   expect(long.filter((d) => d > 50)).toEqual([]);
   await ctx.close();
 });
+
+test.describe('fixes 10', () => {
+  test('case photos are never grayscale', async ({ page }) => {
+    for (const path of ['/', '/cases/', '/services/systems/', '/cases/usyk/', '/en/cases/']) {
+      await page.goto(path);
+      const gray = await page.evaluate(() => [...document.querySelectorAll('.pphoto')].filter((el) => getComputedStyle(el).filter.includes('grayscale')).length);
+      expect(gray, path).toBe(0);
+    }
+  });
+  test('logo with CONSULTING, partner number, floating WhatsApp', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('.hdr__wm .wm__sub')).toHaveText('CONSULTING');
+    await expect(page.locator('.hdr__partner')).toContainText('+7 701 825 1028');
+    const fab = page.locator('[data-wa-fab]');
+    await expect(fab).toHaveAttribute('href', 'https://wa.me/77018251028');
+    await expect(fab).not.toHaveClass(/is-on/);
+    await page.mouse.wheel(0, 1400);
+    await expect(fab).toHaveClass(/is-on/);
+    expect(await page.evaluate(() => document.body.innerText.includes('825 10 28'))).toBe(false);
+  });
+  test('home hero texts and buttons from the skeleton', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('Двигаем бизнес вперёд.');
+    await expect(page.locator('.home-hero .hero__actions a').first()).toHaveAttribute('href', '/contact/?service=business-audit');
+    await expect(page.locator('.home-hero .hero__actions a').nth(1)).toHaveAttribute('href', '/cases/');
+  });
+});

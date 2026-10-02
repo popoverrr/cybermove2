@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const root = process.cwd();
 const pages = JSON.parse(readFileSync(join(root, 'content/source/pages.json'), 'utf8'));
 const norm = (s) => s.replace(/&nbsp;| /g, ' ').replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&')
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<\/?(a|strong|em|b|i|span|code|tspan)\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<\/?(a|strong|em|b|i|span|code|tspan)\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().replace('+7 701 825 10 28', '+7 701 825 1028'); // phone format: docs/10-fixes.md §4
 let fails = 0, checked = 0;
 const missing = [];
 for (const p of pages) {
@@ -23,7 +23,8 @@ for (const p of pages) {
   const h1 = norm(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]);
   if (title !== norm(fm.title)) { console.log('TITLE', p.url, '|', title, '≠', fm.title); fails++; }
   if (desc !== norm(fm.description)) { console.log('DESC', p.url); fails++; }
-  if (h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
+  // home H1 comes from the skeleton by the owner's decision (docs/10-fixes.md §1)
+  if (!/^\/(en\/)?$/.test(p.url) && h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
   if (!/\/(services\/[\w-]+\/[\w-]+|cases\/[\w-]+|insights\/[\w-]+\/[\w-]+)\/$/.test(p.url)) continue;
   const body = src.split('---').slice(2).join('---').split('\n');
   const stop = body.findIndex((l) => /^## (Похожие кейсы|Similar cases|Связанные кейсы|Related cases)/.test(l) && /cases\/[\w-]+\/$/.test(p.url))

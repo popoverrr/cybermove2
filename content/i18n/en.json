@@ -23,7 +23,7 @@
     },
     "contact": {
       "title": "Contact CYBERMOVE — get an initial review",
-      "description": "Tell us about the task. We come back with first conclusions and propose a way to work together. WhatsApp +7 701 825 10 28."
+      "description": "Tell us about the task. We come back with first conclusions and propose a way to work together. WhatsApp +7 701 825 1028."
     },
     "privacy": {
       "title": "Privacy policy — CYBERMOVE",
@@ -42,6 +42,7 @@
     "skip": "Skip to content",
     "tabsLabel": "Recently opened pages",
     "crumbs": "Breadcrumbs",
+    "partner": "Partnerships · WhatsApp",
     "services": "Services",
     "cases": "Cases",
     "about": "About",
@@ -55,6 +56,9 @@
     "open": "Open",
     "close": "Close",
     "backToTop": "Back to top",
+    "musicOn": "Play music",
+    "musicOff": "Mute music",
+    "waAria": "Message us on WhatsApp",
     "whatsapp": "Message us on WhatsApp",
     "codes": "CHAOS · CORE · SYSTEM · GROWTH"
   },
@@ -71,11 +75,11 @@
   },
   "home": {
     "hero": {
-      "label": "More than consulting",
-      "title": "We set business in motion — from diagnostics to delivery.",
-      "lead": "Audit and finance, websites and CRM, brand and content, advertising and SEO, tenders and legal. One team, one system.",
-      "primary": "Get an initial review",
-      "secondary": "See services"
+      "label": "Marketing · AI · Business growth",
+      "title": "We move business forward.",
+      "lead": "Marketing, brand, AI automation, business development, tenders and legal — one team, one growth system. We start with a diagnosis and see it through to results.",
+      "ctaPrimary": "Start with an audit",
+      "ctaSecondary": "See our projects"
     },
     "windows": {
       "cases": {

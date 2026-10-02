@@ -164,7 +164,8 @@ function build(lang) {
     common: { ...ui.common, whatsapp: waBtn[1], codes: S[sH1 + 2] },
     footer: { ...footer, bend: ui.footer.bend },
     home: {
-      hero: { label: cells(H[h1 - 1])[0], title: strip(H[h1].slice(2)), lead: H[h1 + 1], primary: heroBtns[0], secondary: heroBtns[1] },
+      // hero texts: from the skeleton by the owner's decision (docs/10-fixes.md §1)
+      hero: ui.home.hero,
       windows: ui.home.windows,
       orbit: ui.home.orbit,
       clients: { label: cells(H[clientsAt])[1], names },
@@ -227,7 +228,8 @@ function build(lang) {
 }
 
 for (const lang of ['ru', 'en']) {
-  const data = build(lang);
+  // phone format of the owner's fixes (docs/10-fixes.md §4) everywhere, incl. the contact page description
+  const data = JSON.parse(JSON.stringify(build(lang)).replaceAll('+7 701 825 10 28', '+7 701 825 1028'));
   const check = (o, p = '') => { for (const [k, v] of Object.entries(o)) { if (v === undefined) throw new Error(`[${lang}] undefined ${p}${k}`); if (v && typeof v === 'object') check(v, `${p}${k}.`); } };
   check(data);
   writeFileSync(join(root, `content/i18n/${lang}.json`), JSON.stringify(data, null, 2) + '\n');

@@ -27,6 +27,7 @@ const c = (k: string) => t(lang, `contact.${k}`);
             <Icon name="arrow-ne" size={20} class="contact__wa-arrow" />
           </a>
           <dl class="contact__list">
+            <div><dt class="label muted">{t(lang, 'nav.partner')}</dt><dd><a class="link" href={contacts.whatsapp.url} target="_blank" rel="noopener">{contacts.whatsapp.display}</a></dd></div>
             {contacts.phone && <div><dt class="label muted">{c('channels.phoneLabel')}</dt><dd><a class="link" href={`tel:${contacts.phone.number}`}>{contacts.phone.display}</a></dd></div>}
             <div><dt class="label muted">{c('channels.companyLabel')}</dt><dd>{c('channels.company')}</dd></div>
             {contacts.email && <div><dt class="label muted">E-mail</dt><dd><a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a></dd></div>}

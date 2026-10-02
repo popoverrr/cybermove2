@@ -44,3 +44,14 @@ for (const f of fonts) {
   if (/cyrillic/.test(f)) ru += s; else { ru += s; en += s; }
 }
 console.log(`Fonts downloaded on a typical RU page: ${(ru / 1024).toFixed(0)} KB, EN page: ${(en / 1024).toFixed(0)} KB`);
+
+// background music (docs/10-fixes.md §6): ≤ 3 MB
+{
+  const { existsSync, statSync } = await import('node:fs');
+  const mp3 = join(dist, 'audio', 'ambient.mp3');
+  if (!existsSync(mp3)) console.log('Music: public/audio/ambient.mp3 is absent — the music button is not rendered');
+  else {
+    const mb = statSync(mp3).size / 1048576;
+    console.log(`Music: ambient.mp3 ${mb.toFixed(2)} MB${mb > 3 ? '  ⚠ over the 3 MB budget' : ''}`);
+  }
+}

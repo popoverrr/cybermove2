@@ -29,16 +29,14 @@ const svcPath = t(lang, 'home.windows.services.path');
   <!-- 1 · Hero + CORE schema + windows -->
   <Block theme="dark" label={company.brand} first hero class="home-hero">
     <div class="container">
-      <div class="home-hero__grid">
-        <div class="home-hero__text">
-          <p class="label hero__label reveal">{h('hero.label')}</p>
-          <h1 class="hero__title home-hero__title reveal" data-split>{h('hero.title')}</h1>
-          <p class="lead hero__lead reveal" style="--rd:120ms">{h('hero.lead')}</p>
-        </div>
-        <div class="home-hero__fig reveal" style="--rd:160ms"><CoreOrbit lang={lang} /></div>
-        <div class="btn-row btn-row--stack hero__actions home-hero__actions reveal" style="--rd:200ms">
-          <Button href={url(lang, 'contact')}>{h('hero.primary')}</Button>
-          <Button href={url(lang, 'services')} variant="secondary">{h('hero.secondary')}</Button>
+      <div class="home-hero__fig" aria-hidden="false"><CoreOrbit lang={lang} /></div>
+      <p class="label hero__label reveal">{h('hero.label')}</p>
+      <h1 class="hero__title home-hero__title reveal" data-split>{h('hero.title')}</h1>
+      <div class="home-hero__row">
+        <p class="lead hero__lead reveal" style="--rd:120ms">{h('hero.lead')}</p>
+        <div class="btn-row btn-row--stack hero__actions reveal" style="--rd:200ms">
+          <Button href={url(lang, 'contact', '?service=business-audit')}>{h('hero.ctaPrimary')}</Button>
+          <Button href={url(lang, 'cases')} variant="secondary">{h('hero.ctaSecondary')}</Button>
         </div>
       </div>
       <HomeWindows lang={lang} />

@@ -7,6 +7,7 @@ import '../styles/sections.css';
 import '../styles/transitions.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
 import { t, href, asset, langs, defaultLang, ogLocale, otherLang, pageSlugs, type Lang, type PageKey } from '../lib/i18n';
 import { company, contacts, cities } from '../lib/content';
 import fontCyr from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-cyrillic-wght-normal.woff2?url';
@@ -165,6 +166,7 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
     <slot />
   </main>
   <Footer lang={lang} altHref={altHref} />
+  <WhatsAppFab lang={lang} />
   <div class="cursor-label label" aria-hidden="true"><span>{t(lang, 'common.open')} →</span></div>
   <script>
     import '../scripts/main';

@@ -12,12 +12,16 @@
     "langLabel": "Русская версия",
     "skip": "Skip to content",
     "tabsLabel": "Recently opened pages",
-    "crumbs": "Breadcrumbs"
+    "crumbs": "Breadcrumbs",
+    "partner": "Partnerships · WhatsApp"
   },
   "common": {
     "open": "Open",
     "close": "Close",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "musicOn": "Play music",
+    "musicOff": "Mute music",
+    "waAria": "Message us on WhatsApp"
   },
   "footer": {
     "bend": "We move business forward →"
@@ -42,6 +46,13 @@
     },
     "orbit": {
       "aria": "Diagram: the business core and the system around it"
+    },
+    "hero": {
+      "label": "Marketing · AI · Business growth",
+      "title": "We move business forward.",
+      "lead": "Marketing, brand, AI automation, business development, tenders and legal — one team, one growth system. We start with a diagnosis and see it through to results.",
+      "ctaPrimary": "Start with an audit",
+      "ctaSecondary": "See our projects"
     }
   },
   "contact": {

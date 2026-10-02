@@ -54,8 +54,6 @@
   .hwin__covers-set { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 8px 0; }
   .hwin__cover { position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: var(--bg-raised); border: var(--hairline) solid var(--line); }
   .hwin__cover picture { display: block; width: 100%; height: 100%; }
-  .hwin .hwin__cover .pphoto { transition: filter var(--dur-3) var(--ease-out); }
-  .hwin:hover .hwin__cover .pphoto, .hwin:focus-visible .hwin__cover .pphoto { filter: grayscale(0) contrast(1.02); }
   .hwin__mono {
     position: absolute; left: 5px; top: 5px; padding: 2px 6px; border-radius: 4px;
     font-family: var(--font-display); font-weight: 600; font-size: 10px; letter-spacing: -0.01em; line-height: 1.3;
@@ -318,16 +316,11 @@
   }
   .pcard__cover { position: relative; aspect-ratio: 4 / 3; border-bottom: var(--hairline) solid var(--line); background: var(--bg-sunken); overflow: hidden; }
   .pcard__cover .cover { transition: transform var(--dur-4) var(--ease-out); }
-  /* project photos: same treatment as team portraits — grayscale, colour on hover/focus */
+  /* case photos are always in colour (docs/10-fixes.md §2); hover = a slight zoom inside the frame + frame highlight */
   .pcard__cover picture, .case-hero__photo picture { display: block; width: 100%; height: 100%; }
-  /* full colour by default (the open project window is its own screen, not a preview) */
   .pphoto { display: block; width: 100%; height: 100%; object-fit: cover; }
-  /* grayscale → colour only for previews: grid cards and the home "Projects" window */
-  .pcard .pphoto, .hwin .pphoto {
-    filter: grayscale(1) contrast(1.1);
-    transition: filter 400ms var(--ease-out), transform var(--dur-4) var(--ease-out);
-  }
-  .pcard__link:hover .pphoto, .pcard__link:focus-visible .pphoto { filter: grayscale(0) contrast(1.02); }
+  .pcard .pphoto, .hwin .pphoto { transition: transform var(--dur-4) var(--ease-out); }
+  .pcard__link:focus-visible .pphoto { transform: scale(1.03); }
   @media (hover: hover) and (pointer: fine) { .pcard__link:hover .pphoto { transform: scale(1.03); } }
   /* small window-bar style chip in the corner: monogram + sector, for quick scanning */
   .pcard__chip {
