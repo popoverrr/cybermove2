@@ -24,13 +24,13 @@ ErrorDocument 404 /404.html
 
   # ── Old-site URLs → new pages (301) ──
   RewriteRule ^approach/?$ /about/ [L,R=301,NC]
-  RewriteRule ^partners/?$ /projects/ [L,R=301,NC]
+  RewriteRule ^partners/?$ /cases/ [L,R=301,NC]
   RewriteRule ^(marketing|brand-development)/?$ /services/ [L,R=301,NC]
-  RewriteRule ^services/.+$ /services/ [L,R=301,NC]
-  RewriteRule ^en/services/.+$ /en/services/ [L,R=301,NC]
+  RewriteRule ^(en/)?projects/?$ /$1cases/ [L,R=301,NC]
+  RewriteRule ^(en/)?team/?$ /$1about/ [L,R=301,NC]
 
   # ── Trailing slash for known pages ──
-  RewriteRule ^(en/)?(services|projects|team|about|contact|privacy)$ /$1$2/ [L,R=301]
+  RewriteRule ^(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy)$ /$1$2/ [L,R=301]
   RewriteRule ^en$ /en/ [L,R=301]
 </IfModule>
 

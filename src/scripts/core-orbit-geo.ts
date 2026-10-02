@@ -1,7 +1,7 @@
 // Geometry of the CORE schema, shared by the build (static SVG) and the runtime (rotation).
 // Orbits are circles seen at ~65° tilt → ellipses with ry = r · K. Labels stay horizontal and are
 // placed on the outer side of their dot; overlapping labels are pushed apart vertically.
-export const W = 640;
+export const W = 800;
 export const H = 520;
 export const CX = W / 2;
 export const CY = H / 2;

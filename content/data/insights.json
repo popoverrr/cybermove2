@@ -147,7 +147,11 @@
           "description": "AI agents for business in sales: lead qualification, FAQs, reminders and call analysis. Where they break, how to protect data and how to measure the impact.",
           "h1": "AI agents in sales: what they really do and where they break"
         }
-      }
+      },
+      "more": [
+        "choose-crm-kazakhstan",
+        "landing-page-for-ads"
+      ]
     },
     {
       "id": "business-audit-before-ads",
@@ -179,7 +183,10 @@
           "description": "A business audit before running ads: six areas to check (product, positioning, funnel, sales, finance, systems), what you get out of it, and a checklist.",
           "h1": "Business audit: what to check before you spend money on advertising"
         }
-      }
+      },
+      "more": [
+        "unit-economics-cac-ltv-romi"
+      ]
     },
     {
       "id": "choose-crm-kazakhstan",
@@ -211,7 +218,11 @@
           "description": "How to choose a CRM for a sales team in Kazakhstan: WhatsApp, telephony, Kaspi payments, data residency, types of systems and when you don't need one yet.",
           "h1": "How to choose a CRM for your sales team in Kazakhstan"
         }
-      }
+      },
+      "more": [
+        "ai-agent-in-sales",
+        "landing-page-for-ads"
+      ]
     },
     {
       "id": "google-ads-kazakhstan-auction",
@@ -243,7 +254,12 @@
           "description": "Google Ads in Kazakhstan: how the auction works, what goes into Ad Rank, why cost per click rises and which reports to check so you stop overpaying for clicks.",
           "h1": "Google Ads in Kazakhstan: how the auction works and why cost per click goes up"
         }
-      }
+      },
+      "more": [
+        "seo-for-service-companies",
+        "tiktok-ads-for-business",
+        "landing-page-for-ads"
+      ]
     },
     {
       "id": "landing-page-for-ads",
@@ -275,7 +291,12 @@
           "description": "A landing page for paid ads: structure, load speed, forms and messengers, analytics, and the common mistakes that make paid traffic leave without enquiring.",
           "h1": "Landing pages for paid ads: what a page needs so traffic isn't wasted"
         }
-      }
+      },
+      "more": [
+        "ai-agent-in-sales",
+        "choose-crm-kazakhstan",
+        "google-ads-kazakhstan-auction"
+      ]
     },
     {
       "id": "marketing-agency-contract",
@@ -307,7 +328,10 @@
           "description": "A contract with a marketing agency: scope and deliverables, KPIs and how they are measured, access and data, content rights, payment, acceptance and exit terms.",
           "h1": "A contract with your marketing agency: what to put in writing so you don't argue about results"
         }
-      }
+      },
+      "more": [
+        "public-procurement-kazakhstan"
+      ]
     },
     {
       "id": "personal-brand-entrepreneur",
@@ -339,7 +363,11 @@
           "description": "A personal brand for entrepreneurs without daily posting: expert positioning, a monthly production day, content formats and what to delegate. A practical plan.",
           "h1": "A personal brand for entrepreneurs: where to start if you have no time for social media"
         }
-      }
+      },
+      "more": [
+        "positioning-one-sentence",
+        "tiktok-ads-for-business"
+      ]
     },
     {
       "id": "positioning-one-sentence",
@@ -371,7 +399,10 @@
           "description": "Company positioning in one sentence: the segment, problem, difference and proof method, before-and-after examples and how to test it on customers.",
           "h1": "Positioning: how to explain what makes you different in one sentence"
         }
-      }
+      },
+      "more": [
+        "personal-brand-entrepreneur"
+      ]
     },
     {
       "id": "public-procurement-kazakhstan",
@@ -403,7 +434,10 @@
           "description": "How to take part in public procurement in Kazakhstan: the 2025 law, the goszakup.gov.kz portal and digital signature, procurement methods and why bids fail.",
           "h1": "Public procurement in Kazakhstan: how a company can start bidding for government tenders"
         }
-      }
+      },
+      "more": [
+        "marketing-agency-contract"
+      ]
     },
     {
       "id": "seo-for-service-companies",
@@ -435,7 +469,12 @@
           "description": "SEO for service businesses: a page for every service, content, technical health, local signals and links. What produces results and what isn't worth the budget.",
           "h1": "SEO for service businesses: what pays off in six months and what never will"
         }
-      }
+      },
+      "more": [
+        "google-ads-kazakhstan-auction",
+        "tiktok-ads-for-business",
+        "landing-page-for-ads"
+      ]
     },
     {
       "id": "tiktok-ads-for-business",
@@ -467,7 +506,12 @@
           "description": "TikTok ads for business: which products they suit, minimum budgets, native creative, the funnel, testing and the signs that it is still too early to start.",
           "h1": "TikTok ads for business: when they work and when it is better not to start"
         }
-      }
+      },
+      "more": [
+        "google-ads-kazakhstan-auction",
+        "seo-for-service-companies",
+        "personal-brand-entrepreneur"
+      ]
     },
     {
       "id": "unit-economics-cac-ltv-romi",
@@ -499,7 +543,10 @@
           "description": "Unit economics for small businesses: how to calculate CAC, LTV and ROMI, where to find the data, three common mistakes and a worked example in tenge.",
           "h1": "Unit economics for small businesses: CAC, LTV and ROMI without spreadsheet hell"
         }
-      }
+      },
+      "more": [
+        "business-audit-before-ads"
+      ]
     }
   ]
 }

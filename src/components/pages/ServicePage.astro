@@ -32,7 +32,7 @@ const hasInsights = s.insights.length > 0;
       serviceType: pick(lang, s.name), category: pick(lang, d.nameFull), provider: { '@id': site + href('ru') + '#organization' } },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
   ]}>
-  <DirHero lang={lang} label={`${d.index} · ${s.index}`} crumbs={crumbs} title={pick(lang, s.name)} lead={pick(lang, s.lead)} metrics={d.metrics} image={d.image} />
+  <DirHero lang={lang} label={`${d.index} · ${s.index}`} crumbs={crumbs} title={seo.h1} lead={pick(lang, s.lead)} metrics={d.metrics} image={d.image} />
 
   <Block theme="light" label={L('includes')} class="svc-page-intro">
     <div class="container">

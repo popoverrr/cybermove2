@@ -289,6 +289,7 @@ const insights = [];
       title: L((lang) => strip((lang === 'ru' ? ls.ru[i] : ls.en[j]).slice(3))),
       excerpt: L((lang) => (lang === 'ru' ? ls.ru[i + 1] : ls.en[j + 1])),
       seo: L((lang) => seo(art[lang].fm)),
+      more: articleSlugs(sections(art.ru.lines).slice(-1)[0].lines),
     });
   });
 }

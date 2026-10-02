@@ -17,7 +17,7 @@ const img = image ? imgs[`/src/assets/live/${image}`]?.default : undefined;
   <div class="container">
     <Crumbs lang={lang} items={crumbs} />
     <h1 class="hero__title reveal">
-      {kicker && <span class="label hero__label hero__kicker">{kicker}</span>}
+      {kicker && <span class="label hero__label hero__kicker">{kicker}</span>}{kicker && ' '}
       <span class="hero__thesis" data-split>{title}</span>
     </h1>
     <p class="lead hero__lead reveal" style="--rd:120ms">{lead}</p>

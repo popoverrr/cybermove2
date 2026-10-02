@@ -4,8 +4,14 @@ import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 const PAGES = [
   { key: 'home', ru: '/', en: '/en/' },
   { key: 'services', ru: '/services/', en: '/en/services/' },
-  { key: 'projects', ru: '/projects/', en: '/en/projects/' },
-  { key: 'team', ru: '/team/', en: '/en/team/' },
+  { key: 'direction', ru: '/services/systems/', en: '/en/services/systems/' },
+  { key: 'service', ru: '/services/audit/business-audit/', en: '/en/services/audit/business-audit/' },
+  { key: 'cases', ru: '/cases/', en: '/en/cases/' },
+  { key: 'case', ru: '/cases/usyk/', en: '/en/cases/usyk/' },
+  { key: 'case-ship', ru: '/cases/fort-desaix/', en: '/en/cases/fort-desaix/' },
+  { key: 'insights', ru: '/insights/', en: '/en/insights/' },
+  { key: 'rubric', ru: '/insights/traffic/', en: '/en/insights/traffic/' },
+  { key: 'article', ru: '/insights/audit/business-audit-before-ads/', en: '/en/insights/audit/business-audit-before-ads/' },
   { key: 'about', ru: '/about/', en: '/en/about/' },
   { key: 'contact', ru: '/contact/', en: '/en/contact/' },
   { key: 'privacy', ru: '/privacy/', en: '/en/privacy/' },
@@ -72,6 +78,7 @@ for (const p of PAGES) {
 }
 
 test('no horizontal scroll at 320 px, all pages', async ({ browser }) => {
+  test.setTimeout(400_000);
   const ctx = await browser.newContext({ viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
   for (const p of PAGES) for (const lang of ['ru', 'en'] as const) {
@@ -97,6 +104,7 @@ test('no horizontal scroll at 320 px, all pages', async ({ browser }) => {
 });
 
 test('reduced motion: every .reveal is visible after load', async ({ browser }) => {
+  test.setTimeout(400_000);
   const ctx = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   for (const p of PAGES) for (const lang of ['ru', 'en'] as const) {
@@ -141,52 +149,50 @@ test.describe('interactions (desktop)', () => {
 
   test('home window click navigates', async () => {
     await page.goto('/');
-    await page.locator('[data-win="projects"]').click();
-    await expect(page).toHaveURL(/\/projects\/$/);
+    await page.locator('[data-win="cases"]').click();
+    await expect(page).toHaveURL(/\/cases\/$/);
   });
 
-  test('projects: filter, overlay, deep link', async () => {
-    await page.goto('/projects/');
+  test('cases: filter by sector, card opens the case page', async () => {
+    await page.goto('/cases/');
     const cards = page.locator('.pcard:not(.is-off)');
-    await expect(cards).toHaveCount(34);
-    const b2bCount = await page.locator('.pcard[data-sector="b2b"]').count();
-    await page.locator('.chip[data-sector="b2b"]').click();
-    await expect(cards).toHaveCount(b2bCount);
+    await expect(cards).toHaveCount(37);
+    const n = await page.locator('.pcard[data-sector="maritime"]').count();
+    expect(n).toBe(3);
+    await page.locator('.chip[data-sector="maritime"]').click();
+    await expect(cards).toHaveCount(n);
+    await expect(page).toHaveURL(/\?sector=maritime$/);
     await page.locator('.pcard:not(.is-off) .pcard__link').first().click();
-    await expect(page.locator('dialog[open]')).toBeVisible();
-    await expect(page).toHaveURL(/[?&]p=[\w-]+/); // ?sector= is kept alongside
-    await page.keyboard.press('Escape');
-    await expect(page.locator('dialog[open]')).toHaveCount(0);
-    await page.goto('/projects/?p=usyk');
-    await expect(page.locator('dialog[open] #pd-title-usyk')).toBeVisible();
+    await expect(page).toHaveURL(/\/cases\/fort-desaix\/$/);
+    await expect(page.locator('.vessel')).toBeVisible();
   });
 
-  test('estimator reacts to sliders', async () => {
-    await page.goto('/services/');
-    const hours = page.locator('[data-res="hours"]');
-    await hours.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1200);
-    const before = await hours.textContent();
-    await page.locator('#est-people').fill('50');
-    await page.waitForTimeout(1200);
-    expect(await hours.textContent()).not.toBe(before);
-    await expect(page.locator('[data-est-cta]')).toHaveAttribute('href', /est=\d+h/);
+  test('CORE schema: nodes are links to service areas, schema rotates', async () => {
+    await page.goto('/');
+    const node = page.locator('.orbit__node--sys[data-node="analytics"]');
+    await expect(node).toHaveAttribute('href', '/services/audit/');
+    await expect(page.locator('.orbit__node--sys')).toHaveCount(11);
+    const x0 = await page.locator('[data-node="crm"] .orbit__dot').getAttribute('cx');
+    await page.waitForTimeout(2500);
+    const x1 = await page.locator('[data-node="crm"] .orbit__dot').getAttribute('cx');
+    expect(x1).not.toBe(x0);
   });
 
-  test('contact: prefill, validation, WhatsApp', async () => {
-    await page.goto('/contact/?need=ai&est=120h');
-    await expect(page.locator('input[name="needs"][value="ai"]')).toBeChecked();
-    await expect(page.locator('textarea[name="message"]')).toHaveValue(/120/);
+  test('contact: ?service preselects, validation, WhatsApp', async () => {
+    await page.goto('/contact/?service=crm');
+    await expect(page.locator('select[name="service"]')).toHaveValue('crm');
     await page.evaluate(() => { (window as unknown as { __opened: string[] }).__opened = []; window.open = (u?: string | URL) => { (window as unknown as { __opened: string[] }).__opened.push(String(u)); return null; }; });
     await page.locator('.cform__submit').click();
     await expect(page.locator('#cf-name-err')).not.toBeEmpty();
     await expect(page.locator('#cf-contact-err')).not.toBeEmpty();
     await page.fill('#cf-name', 'Test');
     await page.fill('#cf-contact', '+7 701 000 00 00');
+    await page.locator('.chip--check').first().click();
     await page.locator('.cform__submit').click();
     const opened = await page.evaluate(() => (window as unknown as { __opened: string[] }).__opened);
     expect(opened.length).toBe(1);
     expect(opened[0]).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
+    expect(decodeURIComponent(opened[0])).toContain('CRM');
   });
 
   test('language switch leads to the alternate page (HTTP 200)', async () => {
@@ -199,69 +205,6 @@ test.describe('interactions (desktop)', () => {
       const res = await page.request.get(href!);
       expect(res.status()).toBe(200);
     }
-  });
-});
-
-test.describe('content features', () => {
-  for (const [name, opts] of [
-    ['desktop', { viewport: { width: 1440, height: 900 } }],
-    ['mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
-  ] as const) {
-    test(`project window photo is in full colour (${name})`, async ({ browser }) => {
-      const ctx = await browser.newContext(opts);
-      const page = await ctx.newPage();
-      for (const id of ['usyk', 'ufw', 'hydrosta']) {
-        await page.goto(`/projects/?p=${id}`);
-        const img = page.locator('dialog[open] .pd__cover img');
-        await expect(img).toBeVisible();
-        expect(await img.evaluate((el) => getComputedStyle(el).filter), `${id} overlay photo filter`).toBe('none');
-      }
-      // grid cards stay grayscale previews
-      await page.keyboard.press('Escape');
-      expect(await page.locator('.pcard .pphoto').first().evaluate((el) => getComputedStyle(el).filter)).toContain('grayscale');
-      await ctx.close();
-    });
-  }
-
-  test('projects ?sector= preselects the filter and the URL follows the chips', async ({ page }) => {
-    await page.goto('/en/projects/?sector=horeca');
-    const n = await page.locator('.pcard[data-sector="horeca"]').count();
-    await expect(page.locator('.chip.is-on')).toHaveAttribute('data-sector', 'horeca');
-    await expect(page.locator('.pcard:not(.is-off)')).toHaveCount(n);
-    await page.locator('.chip[data-sector="b2b"]').click();
-    await expect(page).toHaveURL(/\?sector=b2b$/);
-    await page.locator('.chip[data-sector="all"]').click();
-    await expect(page).toHaveURL(/\/en\/projects\/$/);
-  });
-
-  test('home sectors link to filtered projects and project windows', async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto('/');
-    await expect(page.locator('.sm__tab[data-sector="horeca"]')).toHaveAttribute('href', '/projects/?sector=horeca');
-    await expect(page.locator('.sm__name-link').first()).toHaveAttribute('href', /\/projects\/\?p=[\w-]+$/);
-    await page.locator('.home-sectors').scrollIntoViewIfNeeded();
-    await page.locator('.sm__tab[data-sector="media"]').hover();
-    await expect(page.locator('[data-sector-all]')).toHaveAttribute('href', '/projects/?sector=media');
-    await page.locator('.sm__tab[data-sector="media"]').click();
-    await expect(page).toHaveURL(/\/projects\/\?sector=media$/);
-    await expect(page.locator('.chip.is-on')).toHaveAttribute('data-sector', 'media');
-  });
-
-  test('estimator has no share slider; formula states the fixed 25 %', async ({ page }) => {
-    for (const path of ['/services/', '/en/services/']) {
-      await page.goto(path);
-      await expect(page.locator('input[name="share"]')).toHaveCount(0);
-      await expect(page.locator('.est__formula')).toContainText('25%');
-    }
-  });
-
-  test('home contact window lists every non-empty channel, one link, no nested anchors', async ({ page }) => {
-    await page.goto('/');
-    const win = page.locator('[data-win="contact"]');
-    await expect(win.locator('.hwin__channel')).toHaveCount(3);
-    await expect(win.locator('a')).toHaveCount(0);
-    await expect(win.locator('.hwin__caret')).toHaveCount(1);
-    await expect(win.locator('.hwin__channel').last().locator('.hwin__caret')).toHaveCount(1);
   });
 });
 

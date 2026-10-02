@@ -59,7 +59,7 @@ export interface Case {
 }
 export interface Sector { id: string; title: Localized; line: Localized }
 export interface InsightMeta {
-  id: string; direction: string; date: Localized; read: Localized; title: Localized; excerpt: Localized; seo: Localized<Seo>;
+  id: string; direction: string; date: Localized; read: Localized; title: Localized; excerpt: Localized; seo: Localized<Seo>; more: string[];
 }
 export interface Rubric { id: string; h1: Localized; lead: Localized; seo: Localized<Seo> }
 export interface OrbitNode { id: string; label: string; ring: 'core' | 'system'; angle: number; direction?: string }

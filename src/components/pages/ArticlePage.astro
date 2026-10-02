@@ -13,7 +13,7 @@ import ArticleRows from '../ArticleRows.astro';
 import FaqList from '../FaqList.astro';
 import SiteCta from '../SiteCta.astro';
 import { t, href, url, pick, localHref, type Lang } from '../../lib/i18n';
-import { insights, insightById, directionById, serviceById, caseById } from '../../lib/content';
+import { insightById, directionById, serviceById, caseById } from '../../lib/content';
 
 interface Props { lang: Lang; entry: CollectionEntry<'insights'> }
 const { lang, entry } = Astro.props;
@@ -27,7 +27,7 @@ const headings = (entry.rendered?.metadata?.headings ?? []).filter((h) => h.dept
 // site-absolute links of the source ("/cases/x/", "/en/…") → current base path
 const html = (entry.rendered?.html ?? '').replace(/href="(\/[^"]*)"/g, (_, p) => `href="${localHref(p)}"`);
 const svcs = entry.data.services.map(serviceById);
-const more = insights.filter((a) => a.direction === d.id && a.id !== slug);
+const more = meta.more.map(insightById);
 const site = Astro.site!.origin;
 const L = (k: string) => t(lang, `insights.${k}`);
 ---

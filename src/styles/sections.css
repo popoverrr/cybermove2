@@ -48,7 +48,7 @@
     .home-hero__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; }
     .home-hero__text { grid-column: 1 / span 7; grid-row: 1; }
     .home-hero__actions { grid-column: 1 / span 7; grid-row: 2; margin-top: var(--s-7); }
-    .home-hero__fig { grid-column: 8 / -1; grid-row: 1 / span 2; margin: 0 calc(var(--gutter-x) * -1 - 4vw) 0 0; align-self: center; }
+    .home-hero__fig { grid-column: 8 / -1; grid-row: 1 / span 2; margin: 0 calc(var(--gutter-x) * -1) 0 calc(var(--col-gap) * -2); align-self: center; }
     .home-hero__title, .home-hero__title:lang(en) { font-size: clamp(2.75rem, 1rem + 3.6vw, 5.25rem); }
   }
 
@@ -87,7 +87,8 @@
   @media (max-width: 639px) {
     .orbit__node--core .orbit__label, .orbit__node--core .orbit__leader { display: none; }
     .orbit__node--sys:not(.is-key) .orbit__label, .orbit__node--sys:not(.is-key) .orbit__leader { display: none; }
-    .orbit__label { font-size: 21px; }
+    .orbit__svg { width: 88%; margin-inline: auto; }
+    .orbit__label { font-size: 22px; }
     .orbit__core-text { font-size: 19px; }
     .orbit__fig { font-size: 17px; }
     .orbit__fig + .orbit__fig { display: none; }

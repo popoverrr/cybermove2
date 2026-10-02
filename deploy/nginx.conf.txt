@@ -4,11 +4,11 @@
 error_page 404 /404.html;
 
 location ~* ^/(approach)/?$ { return 301 /about/; }
-location ~* ^/(partners)/?$ { return 301 /projects/; }
+location ~* ^/(partners)/?$ { return 301 /cases/; }
 location ~* ^/(marketing|brand-development)/?$ { return 301 /services/; }
-location ~* ^/services/.+ { return 301 /services/; }
-location ~* ^/en/services/.+ { return 301 /en/services/; }
-location ~ ^/(en/)?(services|projects|team|about|contact|privacy)$ { return 301 /$1$2/; }
+location ~* ^/(en/)?projects/?$ { return 301 /$1cases/; }
+location ~* ^/(en/)?team/?$ { return 301 /$1about/; }
+location ~ ^/(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy)$ { return 301 /$1$2/; }
 
 location ^~ /_astro/ {
   add_header Cache-Control "public, max-age=31536000, immutable";
