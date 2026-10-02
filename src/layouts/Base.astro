@@ -88,7 +88,7 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  {noindex && <meta name="robots" content="noindex" />}
+  {(noindex || import.meta.env.PUBLIC_PREVIEW) && <meta name="robots" content="noindex" />}
   <link rel="canonical" href={canonical} />
   {langs.map((l) => <link rel="alternate" hreflang={l} href={site + hrefFor(l)} />)}
   <link rel="alternate" hreflang="x-default" href={site + hrefFor(defaultLang)} />
