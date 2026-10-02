@@ -39,25 +39,55 @@ document.querySelectorAll<HTMLElement>('[data-core-orbit]').forEach((root) => {
   let rotCore = 0, rotSys = 0, speed = 1, hover = -1;
   let running = false, inView = false;
   const px = spring(), py = spring();
-  const scrollRot = spring(); // extra rotation from page scroll (degrees of the outer orbit)
+  // mobile flywheel (docs/12-fixes-3.md §3): scroll adds angular velocity, which decays to the slow drift
+  const BASE = 360 / OUTER_PERIOD * 1000 * 0.35;   // deg/s of the outer orbit at rest (mobile)
+  const VMAX = 60;                                  // deg/s — never faster than a full turn in 6 s
+  const KICK = 0.35;                                // deg/s added per px of scroll
+  const TAU = 1000;                                 // ms, decay of the scroll impulse
+  let vel = BASE, scrollNow = window.scrollY, scrollPrev = scrollNow;
+  let prevP: ReturnType<typeof layout> | undefined;
+  let frame = 0;
+  // cheap frame: move dots/links/leader starts with the current angles, keep labels where they are
+  const relayoutDots = (prev: NonNullable<typeof prevP>) => {
+    const fresh = layout(nodes, rotCore, rotSys, fs, () => false, prev);
+    return fresh.map((f, i) => ({ ...prev[i], x: f.x, y: f.y, depth: f.depth }));
+  };
 
   const write = (now: number, dt: number) => {
+    void now;
     if (!running) return false;
-    speed += ((hover >= 0 ? 0 : 1) - speed) * lerpK(0.06, dt);
+    dt = Math.min(dt, 50); // no jump after a stalled frame
     const m = mobile();
-    rotCore -= (360 * dt / INNER_PERIOD) * speed;
-    rotSys += (360 * dt / OUTER_PERIOD) * speed * (m ? 0.35 : 1);
-    if (m && hover < 0) stepSpring(scrollRot, dt, 60, 14);
-    const sOff = m ? scrollRot.x : 0;
+    if (m) {
+      const dy = scrollNow - scrollPrev; scrollPrev = scrollNow;
+      if (hover >= 0) vel += (0 - vel) * (1 - Math.exp(-dt / 130));      // brake to zero in ~0.4 s
+      else {
+        vel += dy * KICK;
+        vel = BASE + (vel - BASE) * Math.exp(-dt / TAU);
+      }
+      vel = Math.max(-VMAX, Math.min(VMAX, vel));
+      rotSys += vel * dt / 1000;
+      rotCore -= (vel * 0.7 + 360 / INNER_PERIOD * 1000 * 0.35) * dt / 1000 * (hover >= 0 ? Math.abs(vel) / VMAX : 1);
+    } else {
+      speed += ((hover >= 0 ? 0 : 1) - speed) * lerpK(0.06, dt);
+      rotCore -= (360 * dt / INNER_PERIOD) * speed;
+      rotSys += (360 * dt / OUTER_PERIOD) * speed;
+    }
     const vis = (n: GeoNode) => !small.matches || (n.ring === 'system' && els[nodes.indexOf(n as never)].g.classList.contains('is-key'));
-    const P = layout(nodes, rotCore - sOff * 0.7, rotSys + sOff, fs, vis);
+    // on phones the label layout (collision passes) runs every other frame; the dots still move every frame
+    frame++;
+    const P = m && prevP && frame % 2 ? relayoutDots(prevP) : layout(nodes, rotCore, rotSys, fs, vis, prevP);
     P.forEach((p, i) => {
-      const e = els[i], x = p.x.toFixed(1), y = p.y.toFixed(1);
+      if (prevP && prevP[i].anchor !== p.anchor) { els[i].text.style.opacity = '0'; setTimeout(() => (els[i].text.style.opacity = ''), 140); }
+    });
+    prevP = P;
+    P.forEach((p, i) => {
+      const e = els[i], x = p.x.toFixed(2), y = p.y.toFixed(2);
       e.dot.setAttribute('cx', x); e.dot.setAttribute('cy', y);
       e.hit?.setAttribute('cx', x); e.hit?.setAttribute('cy', y);
       e.leader.setAttribute('x1', x); e.leader.setAttribute('y1', y);
-      e.leader.setAttribute('x2', p.lx.toFixed(1)); e.leader.setAttribute('y2', (p.ly + p.ty - p.ty0).toFixed(1));
-      e.text.setAttribute('x', p.tx.toFixed(1)); e.text.setAttribute('y', p.ty.toFixed(1));
+      e.leader.setAttribute('x2', p.lx.toFixed(2)); e.leader.setAttribute('y2', (p.ly + p.ty - p.ty0).toFixed(2));
+      e.text.setAttribute('x', p.tx.toFixed(2)); e.text.setAttribute('y', p.ty.toFixed(2));
       e.text.setAttribute('text-anchor', p.anchor);
       e.g.style.setProperty('--o', (0.45 + 0.55 * p.depth).toFixed(3));
       e.g.style.setProperty('--s', (0.82 + 0.3 * p.depth).toFixed(3));
@@ -93,7 +123,7 @@ document.querySelectorAll<HTMLElement>('[data-core-orbit]').forEach((root) => {
     return true;
   };
 
-  const start = () => { if (running || !inView || document.hidden) return; running = true; addTask({ write }); };
+  const start = () => { if (running || !inView || document.hidden) return; running = true; scrollPrev = scrollNow; addTask({ write }); };
   const stop = () => { running = false; };
   pulses.forEach((p, i) => (p.next = performance.now() + 1700 + i * 1300)); // after the entrance sequence
 
@@ -114,15 +144,8 @@ document.querySelectorAll<HTMLElement>('[data-core-orbit]').forEach((root) => {
   }, () => { inView = false; stop(); });
   document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
 
-  // scroll-linked rotation (mobile): about half a turn of the outer orbit while the schema crosses the screen
-  const onScroll = () => {
-    if (!mobile() || !inView) return;
-    const r = root.getBoundingClientRect();
-    const k = (window.innerHeight - r.top) / (window.innerHeight + r.height); // 0 → 1 across the screen
-    scrollRot.target = k * 180;
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); scrollRot.x = scrollRot.target;
+  // scroll only records the position (passive); the flywheel integrates it in the shared rAF
+  window.addEventListener('scroll', () => { scrollNow = window.scrollY; }, { passive: true });
 
   if (finePointer()) {
     root.addEventListener('pointermove', (e) => {

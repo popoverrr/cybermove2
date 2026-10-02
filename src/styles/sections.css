@@ -430,3 +430,73 @@
   .sm__pos { justify-self: start; }
   @media (min-width: 1024px) { .sm__pos { display: none; } }
 }
+@layer pages {
+  /* Fixes 3 §1: the scrolled header always has an opaque plate; local sticky strips push the header away */
+  .hdr__cap { background: color-mix(in srgb, var(--bg-raised) 94%, transparent); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .hdr__cap { background: var(--bg-raised); } }
+  .hdr { transition: color var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out), translate var(--dur-3) var(--ease-out); }
+  .hdr.is-away { translate: 0 calc(-100% - 8px); }
+  [data-subbar] { transition: translate var(--dur-3) var(--ease-out); }
+  html.hdr-away [data-subbar].is-stuck { translate: 0 calc(env(safe-area-inset-top, 0px) - var(--header-h)); }
+  @media (prefers-reduced-motion: reduce) { .hdr, [data-subbar] { transition: none; } }
+
+  /* /cases/ chip strip: one solid band, ≤ 56 px, page margins inside, soft fade on the right edge */
+  .csnav { padding-block: 6px; background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; border-top: 0; margin-top: var(--s-8); }
+  .csnav .chip { min-height: 44px; }
+  .csnav__list {
+    scroll-padding-inline: var(--gutter-x);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  }
+  @media (min-width: 1100px) { .csnav__list { -webkit-mask-image: none; mask-image: none; } }
+  .csec { scroll-margin-top: calc(var(--header-h) + 64px); }
+}
+@layer pages {
+  /* «About» window: accent fill over the hairline, lit steps, a spark after completion (fixes 3 §2) */
+  .hwin__fill, .hwin__spark { position: absolute; left: 4px; right: 4px; top: 5px; height: 1px; pointer-events: none; }
+  .hwin__fill { background: var(--accent); transform-origin: 0 50%; transform: scaleX(1); }
+  .hwin__spark { display: none; }
+  .hwin__steps li .label, .hwin__steps li .hwin__step { transition: opacity var(--dur-2) var(--ease-out); }
+  .hwin__mini--about li:last-child::before { background: var(--accent); box-shadow: none; }
+  .hwin__steps li::before { background: var(--accent) !important; box-shadow: none !important; } /* no JS / reduced: all lit */
+  .hwin__steps.is-live .hwin__fill { transform: scaleX(0); }
+  .hwin__steps.is-live li::before { background: var(--bg) !important; box-shadow: inset 0 0 0 1px var(--fg) !important; transition: background-color var(--dur-2), box-shadow var(--dur-2); z-index: 1; }
+  .hwin__steps.is-live li.is-lit::before { background: var(--accent) !important; box-shadow: inset 0 0 0 1px var(--accent) !important; }
+  .hwin__steps.is-live li:not(.is-lit) .label, .hwin__steps.is-live li:not(.is-lit) .hwin__step { opacity: 0.45; }
+  .hwin__steps.is-live.is-done .hwin__spark {
+    display: block; height: 5px; top: 3px; right: auto; width: 5px; border-radius: 50%; background: var(--accent);
+    animation: hwin-spark 4s linear infinite;
+  }
+  @keyframes hwin-spark {
+    0% { transform: translateX(0); opacity: 0; }
+    5% { opacity: 1; }
+    40% { opacity: 1; }
+    45% { transform: translateX(calc(var(--track-w, 300px))); opacity: 0; }
+    100% { transform: translateX(calc(var(--track-w, 300px))); opacity: 0; }
+  }
+}
+@layer pages { .orbit__label { transition: opacity 140ms linear; } .orbit__stage, .orbit__nodes { will-change: transform; } }
+@layer pages {
+  /* «Cases» window: endless ribbon by industry (fixes 3 §4) */
+  .hwin__mini--projects { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent); }
+  .hwin__ribbon { position: absolute; inset: 0 0 auto 0; will-change: transform; display: none; }
+  html.js .hwin__ribbon { display: block; }
+  html.js .hwin__still { display: none; }
+  @media (prefers-reduced-motion: reduce) { html.js .hwin__ribbon { display: none; } html.js .hwin__still { display: block; } }
+  .hwin__still { position: absolute; inset: 0; overflow: hidden; }
+  .hwin__group { padding-top: 6px; }
+  .hwin__sep {
+    margin: 0 8px; padding: 8px 0 2px; border-top: var(--hairline) solid var(--line);
+    font-size: 9.5px; color: var(--fg-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .hwin__ribbon-set .hwin__covers-set, .hwin__still .hwin__covers-set { padding-bottom: 2px; justify-content: start; }
+  .hwin__sector { display: inline-block; vertical-align: top; max-width: 20ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hwin__sector:not(:empty)::before { content: ' / '; white-space: pre; }
+  .hwin__sector.is-swap { animation: method-tick var(--dur-2) var(--ease-out); }
+  .hwins__cell--projects .win__path { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+}
+@layer pages {
+  /* no gap between the header capsule and a stuck strip: the strip owns the whole header zone behind it */
+  [data-subbar].is-stuck::before { content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--header-h); background: var(--bg); pointer-events: none; }
+  .method--live .method__bar.is-stuck::before { left: 0; right: 0; }
+}

@@ -32,7 +32,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <p class="lead hero__lead reveal" style="--rd:120ms">{c('hero.lead')}</p>
     </div>
 
-    <nav class="csnav reveal" aria-label={c('hero.title')} data-csnav>
+    <nav class="csnav reveal" aria-label={c('hero.title')} data-csnav data-subbar>
       <div class="container">
         <ol class="csnav__list list-reset">
           {sectors.map((s, i) => (
@@ -75,7 +75,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
       c.classList.toggle('is-on', on);
       if (on) {
         c.setAttribute('aria-current', 'true');
-        if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: c.offsetLeft - 16, behavior: 'smooth' });
+        // keep the whole active chip in view (scroll-padding-inline = page margins)
+        if (list.scrollWidth > list.clientWidth) {
+          const pad = parseFloat(getComputedStyle(list).paddingLeft) || 16;
+          const l = c.offsetLeft - list.offsetLeft, r = l + c.offsetWidth;
+          if (l - pad < list.scrollLeft || r + pad > list.scrollLeft + list.clientWidth) list.scrollTo({ left: l - pad, behavior: 'smooth' });
+        }
       } else c.removeAttribute('aria-current');
     });
     const io = new IntersectionObserver((es) => {

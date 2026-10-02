@@ -6,10 +6,12 @@ import CasePhoto from './CasePhoto.astro';
 import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-// 12 different cases, picked round-robin across sectors so the miniature shows the range
-const bySector = sectors.map((s) => cases.filter((c) => c.sector === s.id));
-const featured: typeof cases = [];
-for (let i = 0; featured.length < 12 && i < 12; i++) for (const list of bySector) if (list[i] && featured.length < 12) featured.push(list[i]);
+// «Cases» window (docs/12-fixes-3.md §4): an endless ribbon of all cases grouped by industry, in /cases/ order.
+const groups = sectors.map((s, i) => ({ s, i, list: cases.filter((c) => c.sector === s.id) }));
+// header part: the first two words of the industry («Fashion, retail», «Политика, медиа»)
+const short = (title: string) => title.split(/\s+/).slice(0, 2).join(' ').replace(/[,·]$/, '');
+// static view (no JS / reduced motion): three cases from each of the first three industries
+const still = groups.slice(0, 3);
 const channels = [
   { label: t(lang, 'contact.channels.whatsapp'), value: contacts.whatsapp.display },
   ...(contacts.phone ? [{ label: t(lang, 'contact.channels.phoneLabel'), value: contacts.phone.display }] : []),
@@ -27,17 +29,36 @@ const W = {
 <ul class="hwins list-reset" role="list">
   <li class="hwins__cell hwins__cell--projects reveal" style="--rd:0ms">
     <a class="win hwin" href={url(lang, 'cases')} data-win="cases" data-cursor data-magnetic>
-      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{path('cases')}</span><span></span></div>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{path('cases')}<span class="hwin__sector" data-ribbon-title aria-hidden="true"></span></span><span></span></div>
       <div class="hwin__mini hwin__mini--projects" aria-hidden="true">
-        <div class="hwin__covers">
-          {[0, 1, 2].map((set) => (
-            <div class="hwin__covers-set" aria-hidden={set > 0 ? 'true' : undefined}>
-              {featured.map((c) => (
-                <div class="hwin__cover">
-                  <CasePhoto item={c} lang={lang} sizes="240px" thumb decorative />
-                  <span class="hwin__mono">{monogram(pick(lang, c.cardName))}</span>
+        <div class="hwin__ribbon" data-ribbon>
+          {[0, 1].map((copy) => (
+            <div class="hwin__ribbon-set" aria-hidden={copy > 0 ? 'true' : undefined}>
+              {groups.map((g) => (
+                <div class="hwin__group" data-group={short(pick(lang, g.s.title))}>
+                  <p class="hwin__sep label">{String(g.i + 1).padStart(2, '0')} · {pick(lang, g.s.title)} · {g.list.length}</p>
+                  <div class="hwin__covers-set">
+                    {g.list.map((c) => (
+                      <div class="hwin__cover">
+                        <CasePhoto item={c} lang={lang} sizes="240px" thumb decorative />
+                        <span class="hwin__mono">{monogram(pick(lang, c.cardName))}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
+            </div>
+          ))}
+        </div>
+        <div class="hwin__still">
+          {still.map((g) => (
+            <div class="hwin__group">
+              <p class="hwin__sep label">{String(g.i + 1).padStart(2, '0')} · {pick(lang, g.s.title)} · {g.list.length}</p>
+              <div class="hwin__covers-set">
+                {g.list.slice(0, 3).map((c) => (
+                  <div class="hwin__cover"><CasePhoto item={c} lang={lang} sizes="240px" thumb decorative /><span class="hwin__mono">{monogram(pick(lang, c.cardName))}</span></div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -70,7 +91,8 @@ const W = {
     <a class="win hwin" href={url(lang, 'about')} data-win="about" data-cursor data-magnetic>
       <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{path('about')}</span><span></span></div>
       <div class="hwin__mini hwin__mini--about" aria-hidden="true">
-        <ol class="list-reset">
+        <ol class="list-reset hwin__steps" data-steps-line style={`--n:${steps.length}`}>
+          <i class="hwin__fill"></i><i class="hwin__spark"></i>
           {steps.map((s, i) => <li style={`--i:${i}`}><span class="label muted">{s.stage}</span><span class="hwin__step">{s.title}</span></li>)}
         </ol>
       </div>

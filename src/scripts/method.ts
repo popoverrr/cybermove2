@@ -19,6 +19,7 @@ document.querySelectorAll<HTMLElement>('[data-method]').forEach((root) => {
     bar = document.createElement('div');
     bar.className = 'method__bar label';
     bar.setAttribute('aria-hidden', 'true');
+    if (mobileMQ.matches) bar.dataset.subbar = '';
     bar.innerHTML = `<span class="method__bar-num"><span class="method__bar-now">01</span><span class="muted"> / ${total}</span></span><span class="method__bar-stage"></span><i class="method__bar-track"><i class="method__bar-fill"></i></i>`;
     root.querySelector('.method__steps')!.before(bar);
     barNow = bar.querySelector('.method__bar-now');

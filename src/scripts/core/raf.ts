@@ -13,8 +13,11 @@ let last = 0;
 function loop(now: number) {
   const dt = last ? Math.min(now - last, 64) : 16.67;
   last = now;
-  for (const t of tasks) t.read?.(now, dt);
-  for (const t of tasks) if (t.write && t.write(now, dt) === false) tasks.delete(t);
+  // one failing task must never stop the shared loop (and every animation with it)
+  for (const t of tasks) { try { t.read?.(now, dt); } catch (e) { tasks.delete(t); console.error(e); } }
+  for (const t of tasks) {
+    try { if (t.write && t.write(now, dt) === false) tasks.delete(t); } catch (e) { tasks.delete(t); console.error(e); }
+  }
   if (tasks.size) frame = requestAnimationFrame(loop);
   else { frame = 0; last = 0; }
 }

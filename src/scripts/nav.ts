@@ -173,6 +173,12 @@ function initNav(hdr: HTMLElement) {
 
   measure();
   observeBlocks();
-  if (window.scrollY > 80) setState('capsule');
+  // the scrolled state must never be missed (docs/12-fixes-3.md §1): restored scroll positions, bfcache,
+  // browsers that deliver scroll before the first frame — sync directly as well as from the rAF subscriber
+  const sync = () => { if (open) return; if (window.scrollY > 80) { if (state === 'top') setState('capsule'); } else setState('top'); };
+  sync();
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('pageshow', () => { measure(); sync(); });
+  window.addEventListener('load', sync);
   requestAnimationFrame(() => hdr.classList.add('is-ready'));
 }

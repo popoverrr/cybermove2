@@ -36,17 +36,21 @@ export const textWidth = (s: string, fs: number) => s.length * fs * 0.68;
  */
 export function layout(
   nodes: GeoNode[], rotCore: number, rotSys: number, fs: number, visible: (n: GeoNode) => boolean = () => true,
+  prev?: Placed[],
 ): Placed[] {
-  const out = nodes.map((n): Placed => {
+  const out = nodes.map((n, i): Placed => {
     const p = point(n.ring === 'core' ? R_CORE : R_SYS, n.angle + (n.ring === 'core' ? rotCore : rotSys));
     const dx = p.x - CX, dy = (p.y - CY) / K;
     const len = Math.hypot(dx, dy) || 1;
     const ux = dx / len, uy = dy / len;
     // mostly-vertical positions (top/bottom of the ellipse) get a vertical leader and centred text
-    const vertical = Math.abs(ux) < 0.42;
+    // hysteresis: a label keeps its side until the node is clearly past the switch point (no flicker)
+    const was = prev?.[i]?.anchor;
+    const vertical = was === 'middle' ? Math.abs(ux) < 0.48 : was ? Math.abs(ux) < 0.36 : Math.abs(ux) < 0.42;
     const lx = p.x + (vertical ? 0 : Math.sign(ux) * LEAD);
     const ly = p.y + (vertical ? Math.sign(uy || 1) * LEAD : 0);
     const anchor = vertical ? 'middle' : ux > 0 ? 'start' : 'end';
+    void was;
     const tx = lx + (vertical ? 0 : Math.sign(ux) * 4);
     const ty = vertical ? (uy > 0 ? ly + fs * 0.95 : ly - fs * 0.35) : ly + fs * 0.34;
     return { x: p.x, y: p.y, depth: p.depth, lx, ly, anchor, tx, ty, ty0: ty };

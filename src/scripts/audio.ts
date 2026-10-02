@@ -28,7 +28,7 @@ if (btn) {
     addTask({ write: (now) => {
       if (id !== fade) return false;
       const k = Math.min(1, (now - t0) / ms);
-      audio.volume = from + (to - from) * k;
+      audio.volume = Math.min(1, Math.max(0, from + (to - from) * k));
       if (k >= 1) { done?.(); return false; }
       return true;
     } });
