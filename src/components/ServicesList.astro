@@ -1,0 +1,24 @@
+---
+// The 10 services (docs/14-rework.md §8): compact numbered rows; 01–07 lead to service pages, 08–10 open the
+// contact panel with the service preselected (no pages of their own). Used on home and on /services/.
+import Icon from './Icon.astro';
+import { ta, url, href, type Lang } from '../lib/i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const svc = ta<{ label: string; to: string }[]>(lang, 'homeServices.items');
+---
+<ol class="rsvc__list list-reset">
+  {svc.map((s, i) => {
+    const isPanel = s.to.startsWith('#');
+    const link = isPanel ? url(lang, 'contact', `?service=${s.to.slice(1)}`) : href(lang, s.to);
+    return (
+      <li class="rsvc__row reveal" style={`--rd:${Math.min(i, 6) * 30}ms`}>
+        <a class="rsvc__link" href={link} data-service={isPanel ? s.to.slice(1) : undefined}>
+          <span class="rsvc__idx label">{String(i + 1).padStart(2, '0')}</span>
+          <span class="rsvc__name">{s.label}</span>
+          <Icon name="arrow" size={18} class="rsvc__arrow" />
+        </a>
+      </li>
+    );
+  })}
+</ol>

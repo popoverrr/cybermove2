@@ -5,6 +5,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { brand } from './brand.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(root, 'content/source');
@@ -13,7 +14,7 @@ const LANGS = ['ru', 'en'];
 
 /* ── parsing helpers ── */
 function load(lang, rel) {
-  const raw = readFileSync(join(SRC, lang, rel), 'utf8').replace(/\r/g, '');
+  const raw = brand(readFileSync(join(SRC, lang, rel), 'utf8').replace(/\r/g, ''));
   const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const fm = {};
   for (const l of m[1].split('\n')) { const i = l.indexOf(':'); fm[l.slice(0, i).trim()] = l.slice(i + 1).trim(); }
@@ -216,7 +217,8 @@ const KNOWN = {
   disciplines: ['Дисциплины', 'Disciplines'], services: ['Услуги в проекте', 'Services in this project'], similar: ['Похожие кейсы', 'Similar cases'],
 };
 const kindOf = (title) => Object.keys(KNOWN).find((k) => KNOWN[k].includes(title)) ?? 'extra';
-const cases = order.map((slug) => {
+const RANK = JSON.parse(readFileSync(join(OUT, 'case-rank.json'), 'utf8'));
+const cases = order.map((slug, oi) => {
   const P = L((lang) => load(lang, `cases/${slug}.md`));
   const parsed = L((lang) => {
     const ss = sections(P[lang].lines);
@@ -256,6 +258,7 @@ const cases = order.map((slug) => {
   return {
     id: slug,
     n: parsed.ru.n,
+    rank: RANK[slug] ?? 100 + oi,
     sector: cardInfo.ru[slug].sector,
     name: L((lang) => parsed[lang].name),
     cardName: L((lang) => cardInfo[lang][slug].name),

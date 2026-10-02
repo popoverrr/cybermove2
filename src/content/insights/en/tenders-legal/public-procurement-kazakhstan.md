@@ -1,6 +1,6 @@
 ---
 title: "Public procurement in Kazakhstan: how a company can start bidding for government tenders"
-seoTitle: "Public Procurement in Kazakhstan: How to Bid — CYBERMOVE"
+seoTitle: "Public Procurement in Kazakhstan: How to Bid — Cyber Move Consulting"
 description: "How to take part in public procurement in Kazakhstan: the 2025 law, the goszakup.gov.kz portal and digital signature, procurement methods and why bids fail."
 date: 2026-09-25
 direction: tenders-legal

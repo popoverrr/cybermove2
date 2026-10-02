@@ -1,6 +1,6 @@
 ---
 title: "TikTok ads for business: when they work and when it is better not to start"
-seoTitle: "TikTok Ads for Business: When They Work — CYBERMOVE"
+seoTitle: "TikTok Ads for Business: When They Work — Cyber Move Consulting"
 description: "TikTok ads for business: which products they suit, minimum budgets, native creative, the funnel, testing and the signs that it is still too early to start."
 date: 2026-09-25
 direction: traffic

@@ -6,7 +6,7 @@ import Button from '../Button.astro';
 import Icon from '../Icon.astro';
 import Crumbs from '../Crumbs.astro';
 import CasePhoto from '../CasePhoto.astro';
-import CaseCard from '../CaseCard.astro';
+import CaseRow from '../CaseRow.astro';
 import SiteCta from '../SiteCta.astro';
 import { t, href, url, pick, type Lang } from '../../lib/i18n';
 import { cases, sectors, caseById, serviceById, directionById, type Case, type CaseBlock } from '../../lib/content';
@@ -115,7 +115,7 @@ const theme = () => (k++ % 2 === 0 ? 'dark' : 'light') as 'dark' | 'light';
     <div class="container">
       <BlockHead label={L('similar')} link={{ href: url(lang, 'cases', `#${c.sector}`), text: pick(lang, sector.title) }} />
       <h2 class="section-title reveal" data-split>{L('similar')}</h2>
-      <ul class="pgrid list-reset">{c.similar.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
+      <CaseRow lang={lang} items={c.similar.map(caseById)} />
       <div class="case-next reveal">
         <Button href={url(lang, 'contact')}>{L('discuss')}</Button>
         <a class="case-next__link" href={href(lang, `cases/${next.id}/`)} data-cursor>

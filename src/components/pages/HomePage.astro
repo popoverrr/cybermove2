@@ -1,91 +1,75 @@
 ---
+// Home after the rework (docs/14-rework.md §0): hero (label, one-line H1, CORE scene, description, one button) →
+// cases (filter + endless horizontal ribbon) → brands strip → 10 services → «How we work» → insights → CTA.
 import Base from '../../layouts/Base.astro';
 import Block from '../Block.astro';
 import BlockHead from '../BlockHead.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import HomeWindows from '../HomeWindows.astro';
 import Marquee from '../Marquee.astro';
-import SectorMorph from '../SectorMorph.astro';
-import CaseCard from '../CaseCard.astro';
-import CoreOrbit from '../CoreOrbit.astro';
-import CtaBlock from '../CtaBlock.astro';
-import SitesBlock from '../SitesBlock.astro';
-import WindowFrame from '../WindowFrame.astro';
+import CoreScene from '../CoreScene.astro';
+import CaseFilter from '../CaseFilter.astro';
+import CaseRow from '../CaseRow.astro';
+import ServicesList from '../ServicesList.astro';
 import { t, ta, url, href, pick, type Lang } from '../../lib/i18n';
-import { directions, servicesOf, caseById, contacts, company } from '../../lib/content';
+import { casesRanked, sites, insights, directionById } from '../../lib/content';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const h = (k: string) => t(lang, `home.${k}`);
+const dots = (s: string) => s.split(/\s*•\s*/);
+const titleParts = h('hero.title').split(/(?<=\.)\s+/); // three phrases
 const names = ta<string[]>(lang, 'home.clients.names');
 const half = Math.ceil(names.length / 2);
 const steps = ta<{ stage: string; title: string; text: string }[]>(lang, 'method.steps');
-const stats = ta<{ value: string; suffix: string; label: string }[]>(lang, 'home.results.stats');
-const featured = ta<string[]>(lang, 'home.results.featured').map(caseById);
-const approach = ta<{ title: string; text: string }[]>(lang, 'home.approach.items');
-const svcPath = t(lang, 'home.windows.services.path');
+const svc = ta<{ label: string; to: string }[]>(lang, 'homeServices.items');
+const latest = insights.slice(0, 4);
+const casesTitle = dots(t(lang, 'casesBlock.title'));
 ---
-<Base lang={lang} page="home" path="cybermove" jsonLd={[]}>
-  <!-- 1 · Hero + CORE schema + windows -->
-  <Block theme="dark" label={company.brand} first hero class="home-hero">
+<Base lang={lang} page="home" path="cyber move consulting" jsonLd={[]}>
+  <!-- 1 · Hero -->
+  <Block theme="dark" label="CYBER MOVE CONSULTING" first hero class="rhero">
     <div class="container">
-      <div class="home-hero__fig" aria-hidden="false"><CoreOrbit lang={lang} /></div>
-      <p class="label hero__label reveal">{h('hero.label')}</p>
-      <h1 class="hero__title home-hero__title reveal" data-split>{h('hero.title')}</h1>
-      <div class="home-hero__row">
-        <p class="lead hero__lead reveal" style="--rd:120ms">{h('hero.lead')}</p>
-        <div class="btn-row btn-row--stack hero__actions reveal" style="--rd:200ms">
-          <Button href={url(lang, 'contact', '?service=business-audit')}>{h('hero.ctaPrimary')}</Button>
-          <Button href={url(lang, 'cases')} variant="secondary">{h('hero.ctaSecondary')}</Button>
-        </div>
-      </div>
-      <HomeWindows lang={lang} />
+      <p class="rhero__label reveal">{dots(h('hero.label')).map((w, i) => <>{i > 0 && <span class="dot" aria-hidden="true">•</span>}{w}</>)}</p>
+      <h1 class="rhero__title reveal">{titleParts.map((p, i) => <><b>{p.replace(/\.$/, '')}</b><span class="dot">.</span>{i < titleParts.length - 1 && ' '}</>)}</h1>
+      <CoreScene lang={lang} />
+      <p class="rhero__p1 reveal">{h('hero.p1')}</p>
+      <p class="rhero__p2 reveal">{h('hero.p2')}</p>
+      <div class="rhero__cta reveal"><Button href={url(lang, 'contact', '?service=business-audit')} data-service="business-audit">{h('hero.cta')}</Button></div>
     </div>
   </Block>
 
-  <!-- 2 · Clients marquee (continues the hero) -->
-  <Block theme="dark" label={h('clients.label')} flow="continue" class="home-clients">
+  <!-- 2 · Cases -->
+  <Block theme="dark" label={casesTitle[0]} class="rcases" id="cases">
     <div class="container">
-      <BlockHead label={`02 · ${h('clients.label')}`} link={{ href: url(lang, 'cases'), text: h('results.link') }} />
+      <h2 class="rcases__title reveal">{casesTitle.map((w, i) => <>{i > 0 && <span class="dot" aria-hidden="true"> • </span>}<span class="nowrap">{w}</span></>)}</h2>
+      <CaseFilter lang={lang} mode="filter" target="home-cases" />
+      <CaseRow lang={lang} items={casesRanked()} sites={sites} auto id="home-cases" label={casesTitle[0]} />
+      <div class="rcases__all reveal"><Button href={url(lang, 'cases')} variant="secondary">{t(lang, 'casesBlock.seeAll')}</Button></div>
     </div>
+  </Block>
+
+  <!-- 3 · Brands strip, right under the cases -->
+  <Block theme="dark" label={casesTitle[0]} flow="continue" tight class="rbrands">
     <Marquee rows={[names.slice(0, half), names.slice(half)]} label={h('clients.label')} />
   </Block>
 
-  <!-- 3 · Service areas index -->
-  <Block theme="light" label={h('directions.label')} class="home-services">
+  <!-- 4 · Services: 10 rows -->
+  <Block theme="light" label={t(lang, 'homeServices.title')} class="rsvc">
     <div class="container">
-      <BlockHead label={h('directions.label')} link={{ href: url(lang, 'services'), text: t(lang, 'nav.services') }} />
-      <h2 class="section-title reveal" data-split>{h('directions.title')}</h2>
-      <ol class="svc list-reset">
-        {directions.map((d, i) => (
-          <li class="svc__row reveal" style={`--rd:${i * 40}ms`}>
-            <a class="svc__link" href={href(lang, `services/${d.id}/`)}>
-              <span class="svc__idx label muted">{d.index}</span>
-              <span class="svc__main">
-                <span class="svc__title h3">{pick(lang, d.name)}</span>
-                <span class="svc__thesis">{pick(lang, d.thesis)}</span>
-                <span class="svc__codes label muted">{d.codes}</span>
-                <span class="svc__lead muted">{pick(lang, d.lead)}</span>
-              </span>
-              <Icon name="arrow" size={20} class="svc__arrow" />
-            </a>
-            <WindowFrame path={`${svcPath} / ${d.id}`} class="svc__preview" aria-hidden="true">
-              <ul class="list-reset label">{servicesOf(d).map((s) => <li>{pick(lang, s.name)}</li>)}</ul>
-            </WindowFrame>
-          </li>
-        ))}
-      </ol>
+      <BlockHead label={`01–${String(svc.length).padStart(2, '0')}`} link={{ href: url(lang, 'services'), text: t(lang, 'nav.services') }} />
+      <h2 class="block-title-sm reveal">{t(lang, 'homeServices.title')}</h2>
+      <ServicesList lang={lang} />
     </div>
   </Block>
 
-  <!-- 4 · Method -->
-  <Block theme="dark" label={t(lang, 'method.label')} class="home-method">
+  <!-- 5 · How we work -->
+  <Block theme="dark" label={t(lang, 'method.title')} class="home-method rmethod">
     <div class="container">
       <BlockHead label={t(lang, 'method.label')} />
       <div class="method" data-method>
         <div class="method__aside">
-          <h2 class="reveal" data-split>{t(lang, 'method.title')}</h2>
+          <h2 class="block-title-sm reveal">{t(lang, 'method.title')}</h2>
           <div class="method__counter label" aria-hidden="true">
             <span class="method__now num">01</span><span class="muted"> / {String(steps.length).padStart(2, '0')}</span>
             <span class="method__track"><i class="method__fill"></i></span>
@@ -95,8 +79,8 @@ const svcPath = t(lang, 'home.windows.services.path');
           {steps.map((s, i) => (
             <li class:list={['method__step reveal', i === 0 && 'is-active']} data-step={i}>
               <span class="label muted">{String(i + 1).padStart(2, '0')} · {s.stage}</span>
-              <h3 class="method__title">{s.title}</h3>
-              <p class="lead method__text">{s.text}</p>
+              <h3 class="method__title method__title--sm">{s.title}</h3>
+              <p class="method__text">{s.text}</p>
             </li>
           ))}
         </ol>
@@ -104,65 +88,33 @@ const svcPath = t(lang, 'home.windows.services.path');
     </div>
   </Block>
 
-  <!-- 5 · Sectors (interaction #3) -->
-  <Block theme="light" label={t(lang, 'cases.hero.label')} class="home-sectors">
+  <!-- 6 · Insights, compact -->
+  <Block theme="light" label={t(lang, 'nav.insights')} class="rins">
     <div class="container">
-      <BlockHead label={t(lang, 'cases.hero.label')} />
-      <h2 class="reveal" data-split>{t(lang, 'cases.hero.title')}</h2>
-      <p class="lead muted section-lead-after reveal">{t(lang, 'cases.hero.lead')}</p>
-      <div class="reveal"><SectorMorph lang={lang} label={t(lang, 'cases.hero.title')} allLabel={h('results.link')} /></div>
-    </div>
-  </Block>
-
-  <!-- 6 · Results: numbers + featured cases -->
-  <Block theme="dark" label={h('results.label')} class="home-results">
-    <div class="container">
-      <BlockHead label={h('results.label')} link={{ href: url(lang, 'cases'), text: h('results.link') }} />
-      <h2 class="section-title reveal" data-split>{h('results.title')}</h2>
-      <dl class="stats list-reset">
-        {stats.map((s, i) => (
-          <div class="stats__item reveal" style={`--rd:${i * 60}ms`}>
-            <dt class="stats__num num"><span data-count={s.value}>{s.value}</span>{s.suffix && <span class="stats__suffix">{s.suffix}</span>}</dt>
-            <dd class="muted">{s.label}</dd>
-          </div>
-        ))}
-      </dl>
-      <ul class="pgrid pgrid--home list-reset">
-        {featured.map((c, i) => <CaseCard item={c} lang={lang} index={i + 1} ratio="4x5" />)}
-      </ul>
-      <div class="reveal results__all"><Button href={url(lang, 'cases')} variant="secondary">{h('results.link')}</Button></div>
-    </div>
-  </Block>
-
-  <!-- 6b · Websites we have built (fixes 4 §4.3) -->
-  <SitesBlock lang={lang} theme="light" />
-
-  <!-- 7 · Approach (principles) -->
-  <Block theme="dark" label={h('approach.label')} class="home-approach">
-    <div class="container">
-      <BlockHead label={h('approach.label')} link={{ href: url(lang, 'about'), text: h('approach.link') }} />
-      <h2 class="section-title reveal" data-split>{h('approach.title')}</h2>
-      <ol class="cols3 list-reset">
-        {approach.map((p, i) => (
-          <li class="cols3__item reveal" style={`--rd:${i * 80}ms`}>
-            <span class="label muted num">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{p.title}</h3>
-            <p class="muted">{p.text}</p>
+      <BlockHead label={t(lang, 'nav.insights')} link={{ href: url(lang, 'insights'), text: t(lang, 'insights.allInsights') }} />
+      <h2 class="block-title-sm reveal">{t(lang, 'nav.insights')}</h2>
+      <ol class="rins__list list-reset">
+        {latest.map((a) => (
+          <li class="rins__row reveal">
+            <a class="rins__link" href={href(lang, `insights/${a.direction}/${a.id}/`)}>
+              <span class="label muted">{pick(lang, directionById(a.direction).name)} · {pick(lang, a.read)}</span>
+              <span class="rins__title">{pick(lang, a.title)}</span>
+            </a>
           </li>
         ))}
       </ol>
+      <p class="rins__more"><a class="link link--arrow" href={url(lang, 'insights')}><span>{t(lang, 'insights.allInsights')}</span><Icon name="arrow" size={14} /></a></p>
     </div>
   </Block>
 
-  <!-- 8 · Final CTA -->
-  <CtaBlock
-    theme="light"
-    label={h('cta.label')}
-    title={h('cta.title')}
-    lead={h('cta.lead')}
-    primary={{ href: url(lang, 'contact'), text: h('cta.primary') }}
-    secondary={{ href: contacts.whatsapp.url, text: h('cta.secondary'), icon: 'whatsapp', external: true }}
-  />
+  <!-- 7 · CTA (one button, opens the contact panel) -->
+  <Block theme="dark" label={h('cta.label')} class="cta">
+    <div class="container">
+      <h2 class="cta__title reveal">{h('cta.title')}</h2>
+      <p class="lead muted cta__lead reveal">{h('cta.lead')}</p>
+      <div class="cta__actions reveal"><Button href={url(lang, 'contact')}>{h('cta.primary')}</Button></div>
+    </div>
+  </Block>
 </Base>
 
 <script>

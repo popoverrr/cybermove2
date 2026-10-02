@@ -1,0 +1,48 @@
+---
+// Floating buttons + contact panel (docs/14-rework.md §11). The glass «Contact» button (and every CTA that leads
+// to /contact/) opens the panel: a bottom sheet on phones, a window at the bottom-right on desktop. Inside:
+// WhatsApp, phone, the short form, the cities. The sound button sits next to it (only when the track is built in).
+// Without JS every trigger is a plain link to /contact/.
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import Icon from './Icon.astro';
+import ContactForm from './ContactForm.astro';
+import { t, url, asset, type Lang } from '../lib/i18n';
+import { contacts } from '../lib/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const hasMusic = existsSync(join(process.cwd(), 'public/audio/ambient.mp3'));
+---
+<div class="fabs" data-fabs>
+  {hasMusic && (
+    <button class="gbtn gbtn--sound" type="button" data-music data-src={asset('audio/ambient.mp3')} aria-pressed="false"
+      data-on={t(lang, 'common.musicOn')} data-off={t(lang, 'common.musicOff')} aria-label={t(lang, 'common.musicOn')}>
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    </button>
+  )}
+  <a class="gbtn gbtn--wa" href={url(lang, 'contact')} data-panel-open aria-haspopup="dialog" aria-controls="cpanel" aria-label={t(lang, 'panel.fab')}>
+    <Icon name="whatsapp-line" size={22} /><span class="gbtn__text">{t(lang, 'panel.fab')}</span>
+  </a>
+</div>
+
+<div class="cpanel-backdrop" data-panel-close hidden></div>
+<section class="cpanel" id="cpanel" role="dialog" aria-modal="true" aria-labelledby="cpanel-title" hidden data-theme="dark" tabindex="-1">
+  <div class="win__bar cpanel__win" aria-hidden="true"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__path label">cyber move / {t(lang, 'nav.contact').toLowerCase()}</span><span></span></div>
+  <div class="cpanel__grip" data-panel-grip aria-hidden="true"></div>
+  <div class="cpanel__bar">
+    <h2 class="cpanel__title" id="cpanel-title">{t(lang, 'panel.title')}</h2>
+    <button type="button" class="cpanel__close" data-panel-close aria-label={t(lang, 'panel.close')}><Icon name="close" size={14} /></button>
+  </div>
+  <div class="cpanel__body">
+    <a class="btn btn--primary cpanel__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+      <span class="btn__in"><Icon name="whatsapp" size={18} class="btn__lead-icon" /><span class="btn__text">{t(lang, 'panel.wa')}</span><Icon name="arrow-ne" class="btn__arrow" /></span>
+    </a>
+    {contacts.phone && <a class="link cpanel__phone" href={`tel:${contacts.phone.number}`}>{contacts.phone.display}</a>}
+    <ContactForm lang={lang} idp="cp" compact />
+    <p class="label cpanel__geo">{t(lang, 'footer.cities')}</p>
+  </div>
+</section>
+
+<script>
+  import '../scripts/contact-panel';
+</script>

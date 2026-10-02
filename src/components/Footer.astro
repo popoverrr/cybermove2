@@ -8,13 +8,13 @@ interface Props { lang: Lang; altHref: string }
 const { lang, altHref } = Astro.props;
 const other = otherLang(lang);
 const year = new Date().getFullYear();
-const sectionLinks = (['services', 'cases', 'sites', 'insights', 'about', 'contact'] as const).map((k) => ({ href: url(lang, k), text: t(lang, `nav.${k}`) }));
+const sectionLinks = (['services', 'cases', 'insights', 'about', 'contact'] as const).map((k) => ({ href: url(lang, k), text: t(lang, `nav.${k}`) }));
 ---
-<footer class="ftr" data-theme="dark" data-label="CYBERMOVE">
+<footer class="ftr" data-theme="dark" data-label="CYBER MOVE CONSULTING">
   <BendText lang={lang} />
   <div class="container ftr__grid">
     <div class="ftr__brand">
-      <a href={url(lang, 'home')} class="ftr__wm" aria-label="CYBERMOVE"><Wordmark /></a>
+      <a href={url(lang, 'home')} class="ftr__wm" aria-label="Cyber Move Consulting"><Wordmark /></a>
       <p class="muted ftr__tagline">{t(lang, 'footer.tagline')}</p>
     </div>
     <nav class="ftr__col" aria-labelledby="ftr-services">

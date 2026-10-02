@@ -1,6 +1,6 @@
 ---
 title: "Landing pages for paid ads: what a page needs so traffic isn't wasted"
-seoTitle: "Landing Page for Ads: Structure and Mistakes — CYBERMOVE"
+seoTitle: "Landing Page for Ads: Structure and Mistakes — Cyber Move Consulting"
 description: "A landing page for paid ads: structure, load speed, forms and messengers, analytics, and the common mistakes that make paid traffic leave without enquiring."
 date: 2026-09-25
 direction: systems

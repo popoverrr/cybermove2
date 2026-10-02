@@ -10,18 +10,14 @@
     background: var(--accent);
     transition: transform var(--dur-2) var(--ease-out);
   }
+  /* one-line logo (rework §12) */
   .wm { align-items: center; gap: 0.5em; }
   .wm__mark { display: block; width: 1.75em; height: 1.75em; flex: none; overflow: visible; }
   .wm--compact .wm__mark { width: 1.6em; height: 1.6em; }
-  .wm__type { display: grid; justify-items: start; gap: 0.2em; }
-  .wm__name { display: inline-flex; align-items: flex-start; }
-  /* «CONSULTING» spans the width of «CYBERMOVE» (letter-spacing tuned against the display font) */
-  .wm__sub {
-    font-family: var(--font-mono); font-weight: 400; font-size: 0.42em; line-height: 1;
-    letter-spacing: var(--wm-sub-ls, 0.8em); margin-right: calc(var(--wm-sub-ls, 0.8em) * -1); text-transform: uppercase;
-  }
-  .wm .wm__name .wm__px { margin-top: 1px; }
-  a:hover .wm__name .wm__px, a:focus-visible .wm__name .wm__px { transform: translateX(3px); }
+  .wm__type { display: inline-flex; align-items: baseline; gap: 0.42em; white-space: nowrap; }
+  .wm__name { font-family: var(--font-display); font-weight: 650; letter-spacing: -0.01em; }
+  .wm__sub { font-family: var(--font-mono); font-weight: 300; font-size: 0.86em; letter-spacing: 0.16em; color: var(--fg-muted); }
+  @media (max-width: 340px) { .hdr .wm__sub { display: none; } }
   a:hover > .wm .wm__px, a:hover > .wm__px, a:focus-visible .wm__px { transform: translateX(3px); }
 
   /* ── Links ── */

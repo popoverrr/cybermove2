@@ -1,6 +1,6 @@
 ---
 title: "AI agents in sales: what they really do and where they break"
-seoTitle: "AI Agents for Business: Use Cases and Risks — CYBERMOVE"
+seoTitle: "AI Agents for Business: Use Cases and Risks — Cyber Move Consulting"
 description: "AI agents for business in sales: lead qualification, FAQs, reminders and call analysis. Where they break, how to protect data and how to measure the impact."
 date: 2026-09-25
 direction: systems

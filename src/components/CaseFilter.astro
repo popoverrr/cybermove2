@@ -1,0 +1,57 @@
+---
+// Category chips (rework §6.1/6.3): «All» + 8 industries + «Websites», all visible at once (wrapping rows),
+// compact; the selected chip is green liquid glass with a moving glint. mode="filter" — filters a ribbon
+// (data-target), mode="nav" — anchors to the sections of /cases/ (sticky, collapses to one scrollable line).
+import { t, url, type Lang } from '../lib/i18n';
+import { sectors } from '../lib/content';
+interface Props { lang: Lang; mode: 'filter' | 'nav'; target?: string }
+const { lang, mode, target } = Astro.props;
+const chip = (id: string) => (id === 'sites' ? t(lang, 'casesBlock.sites') : t(lang, `casesBlock.chips.${id}`));
+const ids = [...sectors.map((s) => s.id), 'sites'];
+---
+{mode === 'filter' ? (
+  <div class="gchips" role="group" aria-label={t(lang, 'casesBlock.title')} data-gchips="filter" data-target={target}>
+    <button type="button" class="gchip is-on" aria-pressed="true" data-sector="all"><span>{t(lang, 'casesBlock.all')}</span></button>
+    {ids.map((id) => <button type="button" class="gchip" aria-pressed="false" data-sector={id}><span>{chip(id)}</span></button>)}
+  </div>
+) : (
+  <nav class="gchips gchips--nav" aria-label={t(lang, 'casesBlock.title')} data-gchips="nav" data-subbar>
+    {ids.map((id, i) => <a class:list={['gchip', i === 0 && 'is-on']} href={url(lang, 'cases', `#${id}`)} data-sector={id}><span>{chip(id)}</span></a>)}
+  </nav>
+)}
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gchips]').forEach((box) => {
+    const chips = [...box.querySelectorAll<HTMLElement>('.gchip')];
+    const mark = (el: HTMLElement) => chips.forEach((c) => {
+      const on = c === el;
+      c.classList.toggle('is-on', on);
+      if (c.tagName === 'BUTTON') c.setAttribute('aria-pressed', String(on));
+      else if (on) c.setAttribute('aria-current', 'true');
+      else c.removeAttribute('aria-current');
+      if (on && box.scrollWidth > box.clientWidth + 2) {
+        const pad = parseFloat(getComputedStyle(box).paddingLeft) || 16;
+        box.scrollTo({ left: c.offsetLeft - box.offsetLeft - pad, behavior: 'smooth' });
+      }
+    });
+    chips.forEach((c) => c.addEventListener('pointerdown', () => { c.classList.remove('is-flash'); void c.offsetWidth; c.classList.add('is-flash'); }));
+    if (box.dataset.gchips === 'filter') {
+      const row = document.getElementById(box.dataset.target!);
+      chips.forEach((c) => c.addEventListener('click', () => {
+        if (c.classList.contains('is-on')) return;
+        mark(c);
+        row?.dispatchEvent(new CustomEvent('crow:filter', { detail: { sector: c.dataset.sector } }));
+      }));
+      return;
+    }
+    // nav mode: the chip of the section in view is current; /cases/?sector=<id> → that section
+    const secs = chips.map((c) => document.getElementById(c.dataset.sector!)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { const c = chips.find((x) => x.dataset.sector === (e.target as HTMLElement).id); if (c) mark(c); }
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    secs.forEach((s) => io.observe(s));
+    window.addEventListener('scroll', () => { if (secs[0] && secs[0].getBoundingClientRect().top > innerHeight * 0.4) mark(chips[0]); }, { passive: true });
+    const id = new URL(location.href).searchParams.get('sector');
+    const sec = id && document.getElementById(id);
+    if (sec) requestAnimationFrame(() => sec.scrollIntoView());
+  });
+</script>

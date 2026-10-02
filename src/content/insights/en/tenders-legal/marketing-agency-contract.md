@@ -1,6 +1,6 @@
 ---
 title: "A contract with your marketing agency: what to put in writing so you don't argue about results"
-seoTitle: "Marketing Agency Contract: What to Include — CYBERMOVE"
+seoTitle: "Marketing Agency Contract: What to Include — Cyber Move Consulting"
 description: "A contract with a marketing agency: scope and deliverables, KPIs and how they are measured, access and data, content rights, payment, acceptance and exit terms."
 date: 2026-09-25
 direction: tenders-legal

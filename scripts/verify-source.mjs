@@ -4,6 +4,7 @@
 // Usage: node scripts/verify-source.mjs   (after npm run build with BASE_PATH unset)
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { brand } from './brand.mjs';
 
 const root = process.cwd();
 // display titles of services replaced by the owner (docs/11-fixes-2.md §D): old names in list cells → new ones
@@ -19,7 +20,8 @@ for (const p of pages) {
   if (!existsSync(file)) { console.log('MISSING', p.url); fails++; continue; }
   const html = readFileSync(file, 'utf8');
   const text = norm(html);
-  const src = readFileSync(join(root, 'content/source', p.file), 'utf8').replace(/\r/g, '');
+  // the company name rule of the rework (docs/14-rework.md §12) applies to the source text too
+  const src = brand(readFileSync(join(root, 'content/source', p.file), 'utf8').replace(/\r/g, ''));
   const fm = Object.fromEntries(src.split('---')[1].trim().split('\n').map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
   const title = norm(html.match(/<title>([\s\S]*?)<\/title>/)[1]);
   const desc = norm(html.match(/<meta name="description" content="([^"]*)"/)[1]);
@@ -29,7 +31,8 @@ for (const p of pages) {
   // home H1 comes from the skeleton by the owner's decision (docs/10-fixes.md §1)
   // service H1 = the new display title (docs/11-fixes-2.md §D)
   // service area H1 = the area name, the thesis is a subtitle (docs/13-fixes-4.md §2)
-  if (!/^\/(en\/)?$/.test(p.url) && !/\/services\/[\w-]+\/([\w-]+\/)?$/.test(p.url) && h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
+  // home and /services/ H1 changed by the owner (docs/14-rework.md §2, §8)
+  if (!/^\/(en\/)?(services\/|cases\/)?$/.test(p.url) && !/\/services\/[\w-]+\/([\w-]+\/)?$/.test(p.url) && h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
   if (!/\/(services\/[\w-]+\/[\w-]+|cases\/[\w-]+|insights\/[\w-]+\/[\w-]+)\/$/.test(p.url)) continue;
   const body = src.split('---').slice(2).join('---').split('\n');
   const stop = body.findIndex((l) => /^## (Похожие кейсы|Similar cases|Связанные кейсы|Related cases)/.test(l) && /cases\/[\w-]+\/$/.test(p.url))

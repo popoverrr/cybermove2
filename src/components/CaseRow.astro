@@ -1,0 +1,34 @@
+---
+// Horizontal case ribbon (rework §6: cases always scroll sideways). auto — the home block: endless, moves by itself
+// (~30 px/s, two copies), pauses on touch/hover and resumes 3 s after a manual swipe; otherwise — a manual row with
+// snap, a soft fade on the right and arrow buttons on desktop (drag with the mouse, Shift + wheel).
+import CaseCard from './CaseCard.astro';
+import SiteCard from './SiteCard.astro';
+import Icon from './Icon.astro';
+import { t, type Lang } from '../lib/i18n';
+import type { Case, Site } from '../lib/content';
+interface Props { lang: Lang; items: Case[]; sites?: Site[]; auto?: boolean; label?: string; id?: string }
+const { lang, items, sites = [], auto = false, label, id } = Astro.props;
+const copies = auto ? [0, 1] : [0];
+---
+<div class:list={['crow', auto && 'crow--auto']} data-crow={auto ? 'auto' : 'manual'} id={id}>
+  <div class="crow__viewport" tabindex="-1">
+    <ul class="crow__track list-reset" aria-label={label}>
+      {copies.map((copy) => (
+        <>
+          {items.map((c, i) => <CaseCard item={c} lang={lang} index={copy === 0 && i === 0 ? 1 : 99} dup={copy > 0} />)}
+          {sites.map((s) => <SiteCard site={s} lang={lang} dup={copy > 0} />)}
+        </>
+      ))}
+    </ul>
+  </div>
+  {!auto && (
+    <div class="crow__nav" aria-hidden="true">
+      <button type="button" class="crow__btn" data-crow-prev tabindex="-1" aria-label={t(lang, 'casesBlock.prev')}><Icon name="arrow" size={16} class="crow__prev-icon" /></button>
+      <button type="button" class="crow__btn" data-crow-next tabindex="-1" aria-label={t(lang, 'casesBlock.next')}><Icon name="arrow" size={16} /></button>
+    </div>
+  )}
+</div>
+<script>
+  import '../scripts/case-row';
+</script>

@@ -1,6 +1,6 @@
 ---
 title: "Positioning: how to explain what makes you different in one sentence"
-seoTitle: "Company Positioning in One Sentence — CYBERMOVE"
+seoTitle: "Company Positioning in One Sentence — Cyber Move Consulting"
 description: "Company positioning in one sentence: the segment, problem, difference and proof method, before-and-after examples and how to test it on customers."
 date: 2026-09-25
 direction: brand-content

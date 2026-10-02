@@ -51,7 +51,7 @@ export type CaseBlock =
   | { kind: 'vessel'; title: string; rows: { k: string; v: string; note: string | null }[]; former: string | null; source: { text: string; href: string } | null }
   | { kind: string; title: string; paras: string[]; items: string[]; numbered: boolean };
 export interface Case {
-  id: string; n: string; sector: string;
+  id: string; n: string; rank: number; sector: string;
   name: Localized; cardName: Localized; tags: Localized; summary: Localized; disciplinesLine: Localized; disciplines: Localized;
   link: Localized<{ text: string; href: string }> | null;
   blocks: Localized<CaseBlock[]>;
@@ -95,6 +95,9 @@ export const serviceById = find(services, 'service');
 export const caseById = find(cases, 'case');
 export const insightById = find(insights, 'insight');
 export const casesBySector = (sectorId: string) => cases.filter((c) => c.sector === sectorId);
+/** «from the largest» (content/data/case-rank.json) — the order of every case ribbon */
+export const byRank = <T extends { rank: number }>(list: T[]) => [...list].sort((a, b) => a.rank - b.rank);
+export const casesRanked = () => byRank(cases);
 export const servicesOf = (d: Direction) => d.services.map(serviceById);
 
 /** Data integrity: every reference must resolve (fails the build otherwise). */

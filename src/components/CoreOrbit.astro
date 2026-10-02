@@ -1,6 +1,6 @@
 ---
-// Signature element #7: the CORE schema (docs/09-core-orbit.md). Static SVG with final positions
-// computed at build time; src/scripts/core-orbit.ts adds rotation, pulses, parallax and hover.
+// Static SVG of the CORE schema (positions computed at build time). Since the rework it is only the no-JS /
+// no-canvas fallback of the 3D scene (CoreScene.astro, docs/14-rework.md §3).
 import { orbit, directionById } from '../lib/content';
 import { href, pick, t, type Lang } from '../lib/i18n';
 import { W, H, CX, CY, R_CORE, R_MID, R_SYS, layout, ellipsePath, point } from '../scripts/core-orbit-geo';
@@ -79,7 +79,3 @@ const sc = (d: number) => (0.82 + 0.3 * d).toFixed(3);
   <a class="orbit__pick label" href="#" data-orbit-pick hidden><span class="muted" data-pick-idx></span> <span data-pick-name></span> <span aria-hidden="true">→</span></a>
   <script type="application/json" data-orbit-nodes set:html={JSON.stringify(nodes.map((n) => ({ id: n.id, label: n.label, ring: n.ring, angle: n.angle, index: n.index })))} />
 </figure>
-
-<script>
-  import '../scripts/core-orbit';
-</script>

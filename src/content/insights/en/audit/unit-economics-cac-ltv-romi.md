@@ -1,6 +1,6 @@
 ---
 title: "Unit economics for small businesses: CAC, LTV and ROMI without spreadsheet hell"
-seoTitle: "Unit Economics: CAC, LTV and ROMI Explained — CYBERMOVE"
+seoTitle: "Unit Economics: CAC, LTV and ROMI Explained — Cyber Move Consulting"
 description: "Unit economics for small businesses: how to calculate CAC, LTV and ROMI, where to find the data, three common mistakes and a worked example in tenge."
 date: 2026-09-25
 direction: audit

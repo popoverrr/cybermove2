@@ -4,11 +4,10 @@ import Block from '../Block.astro';
 import BlockHead from '../BlockHead.astro';
 import Button from '../Button.astro';
 import DirHero from '../DirHero.astro';
-import CaseCard from '../CaseCard.astro';
+import CaseRow from '../CaseRow.astro';
 import ArticleRows from '../ArticleRows.astro';
 import FaqList from '../FaqList.astro';
 import SiteCta from '../SiteCta.astro';
-import SitesBlock from '../SitesBlock.astro';
 import { t, href, url, pick, type Lang } from '../../lib/i18n';
 import { directionById, servicesOf, caseById, insightById, type Service } from '../../lib/content';
 
@@ -110,13 +109,11 @@ const hasInsights = s.insights.length > 0;
     </div>
   </Block>
 
-  {s.id === 'websites' && <SitesBlock lang={lang} theme="light" lead={false} />}
-
   <Block theme="light" label={L('cases')} class="svc-cases">
     <div class="container">
       <BlockHead label="05" link={{ href: href(lang, 'cases/'), text: t(lang, 'home.results.link') }} />
       <h2 class="section-title reveal" data-split>{L('cases')}</h2>
-      <ul class="pgrid list-reset">{s.cases.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
+      <CaseRow lang={lang} items={s.cases.map(caseById)} />
     </div>
   </Block>
 

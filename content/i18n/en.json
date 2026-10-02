@@ -1,40 +1,40 @@
 {
   "meta": {
-    "siteName": "CYBERMOVE",
+    "siteName": "Cyber Move Consulting",
     "home": {
-      "title": "Business Consulting in Kazakhstan — CYBERMOVE",
+      "title": "Business Consulting in Kazakhstan — Cyber Move Consulting",
       "description": "Business consulting in Kazakhstan: audit and finance, websites and CRM, brand and content, ads and SEO, tenders and legal. One team, one system. Free review."
     },
     "services": {
-      "title": "Business Consulting Services — CYBERMOVE",
+      "title": "Business Consulting Services — Cyber Move Consulting",
       "description": "Business consulting services: 5 areas and 22 services — audit, digitalization, branding, PPC and SEO, tenders and legal. Get a free initial review today."
     },
     "cases": {
-      "title": "CYBERMOVE cases — 37 projects in 13 cities",
+      "title": "Cyber Move Consulting cases — 37 projects in 13 cities",
       "description": "USYK, Ukrainian Fashion Week, INTERTOP, BRSM-NAFTA, HYDROSTA and more: personal brands, retail, HoReCa, B2B, maritime, media, technology."
     },
     "insights": {
-      "title": "Business Insights and Guides — CYBERMOVE",
-      "description": "Business insights and guides from CYBERMOVE: audits and unit economics, CRM and AI, positioning, ads and SEO, public procurement and contracts."
+      "title": "Business Insights and Guides — Cyber Move Consulting",
+      "description": "Business insights and guides from Cyber Move Consulting: audits and unit economics, CRM and AI, positioning, ads and SEO, public procurement and contracts."
     },
     "about": {
-      "title": "About CYBERMOVE — Business Consulting Company",
-      "description": "CYBERMOVE is a business consulting company with 37+ projects in 13 cities and 8 industries: audit, systems, brand, ads and tenders, from diagnosis to growth."
+      "title": "About Cyber Move Consulting — Business Consulting Company",
+      "description": "Cyber Move Consulting is a business consulting company with 37+ projects in 13 cities and 8 industries: audit, systems, brand, ads and tenders, from diagnosis to growth."
     },
     "contact": {
-      "title": "Contact CYBERMOVE — get an initial review",
+      "title": "Contact Cyber Move Consulting — get an initial review",
       "description": "Tell us about the task. We come back with first conclusions and propose a way to work together. WhatsApp +7 701 825 1028."
     },
     "privacy": {
-      "title": "Privacy policy — CYBERMOVE",
-      "description": "How CYBERMOVE handles personal data submitted through the website forms."
+      "title": "Privacy policy — Cyber Move Consulting",
+      "description": "How Cyber Move Consulting handles personal data submitted through the website forms."
     },
     "notFound": {
-      "title": "Page not found — CYBERMOVE",
+      "title": "Page not found — Cyber Move Consulting",
       "description": "This page doesn't exist."
     },
     "sites": {
-      "title": "Websites we have built — CYBERMOVE",
+      "title": "Websites we have built — Cyber Move Consulting",
       "description": "A store, a company site, a business card and a media kit — from prototype to launch. Open any of them and see it live."
     }
   },
@@ -68,7 +68,7 @@
     "codes": "CHAOS · CORE · SYSTEM · GROWTH"
   },
   "footer": {
-    "tagline": "We move business forward.",
+    "tagline": "We clear the chaos. Bring structure. Grow the business.",
     "sectionsTitle": "Sections",
     "langTitle": "Language",
     "geoTitle": "Where we work",
@@ -76,31 +76,31 @@
     "copyright": "Cyber Move Consulting. All rights reserved.",
     "privacy": "Privacy policy",
     "insights": "Insights",
-    "bend": "We move business forward →"
+    "bend": "We clear the chaos. Bring structure. Grow the business."
   },
   "home": {
     "hero": {
-      "label": "Marketing · AI · Business growth",
-      "title": "We move business forward.",
-      "lead": "Marketing, brand, AI automation, business development, tenders and legal — one team, one growth system. We start with a diagnosis and see it through to results.",
-      "ctaPrimary": "Start with an audit",
-      "ctaSecondary": "See our projects"
+      "label": "Audit • Consulting • Marketing • AI",
+      "title": "We clear the chaos. Bring structure. Grow the business.",
+      "p1": "One team and one growth system. We start with a diagnosis and see it through to results.",
+      "p2": "Marketing, brand, AI automation, business development, tenders and legal",
+      "cta": "Start with an audit"
     },
     "windows": {
       "cases": {
-        "path": "cybermove / cases"
+        "path": "cyber move / cases"
       },
       "services": {
-        "path": "cybermove / services"
+        "path": "cyber move / services"
       },
       "insights": {
-        "path": "cybermove / insights"
+        "path": "cyber move / insights"
       },
       "about": {
-        "path": "cybermove / about"
+        "path": "cyber move / about"
       },
       "contact": {
-        "path": "cybermove / contact"
+        "path": "cyber move / contact"
       }
     },
     "orbit": {
@@ -190,11 +190,11 @@
   },
   "method": {
     "label": "CHAOS · CORE · SYSTEM · GROWTH",
-    "title": "Approach",
+    "title": "How we work",
     "steps": [
       {
         "stage": "CHAOS",
-        "title": "Diagnostics",
+        "title": "Audit",
         "text": "Business, market, product, data and processes."
       },
       {
@@ -204,7 +204,7 @@
       },
       {
         "stage": "SYSTEM",
-        "title": "System",
+        "title": "Systematisation",
         "text": "Marketing, digital, sales, CRM, analytics. We build and automate."
       },
       {
@@ -257,7 +257,7 @@
   },
   "about": {
     "hero": {
-      "kicker": "CYBERMOVE consulting company",
+      "kicker": "Cyber Move Consulting consulting company",
       "title": "Not an agency. A partner that runs the business as a whole.",
       "text": "We start with an audit, including the financials. We define the core of the business. We build the system: websites, CRM, telephony, AI. We package it: brand, content, PR. We bring in clients: advertising and SEO. We support the deals: tenders and legal.",
       "codes": "CHAOS · CORE · SYSTEM · GROWTH"
@@ -314,11 +314,11 @@
       ]
     },
     "approach": {
-      "title": "Approach",
+      "title": "How we work",
       "steps": [
         {
           "stage": "CHAOS",
-          "title": "Diagnostics",
+          "title": "Audit",
           "text": "Business, market, product, data and processes."
         },
         {
@@ -328,7 +328,7 @@
         },
         {
           "stage": "SYSTEM",
-          "title": "System",
+          "title": "Systematisation",
           "text": "Marketing, digital, sales, CRM, analytics. We build and automate."
         },
         {
@@ -339,7 +339,7 @@
       ]
     },
     "why": {
-      "title": "Why CYBERMOVE",
+      "title": "Why Cyber Move Consulting",
       "items": [
         {
           "title": "Business first",
@@ -553,12 +553,12 @@
       "sending": "Sending…",
       "success": "We've got your request. We'll reply within one business day.",
       "error": "Something went wrong. Message us on WhatsApp instead.",
-      "waTemplate": "Hello! A request from the CYBERMOVE website."
+      "waTemplate": "Hello! A request from the Cyber Move Consulting website."
     },
     "channels": {
       "whatsapp": "WhatsApp",
       "companyLabel": "Company",
-      "company": "CYBERMOVE · Cyber Move Consulting",
+      "company": "Cyber Move Consulting",
       "phoneLabel": "Phone"
     },
     "geo": {
@@ -589,7 +589,7 @@
     "more": "Learn more",
     "allInsights": "All insights",
     "toc": "Contents",
-    "what": "What CYBERMOVE does about it",
+    "what": "What Cyber Move Consulting does about it",
     "relatedCases": "Related cases",
     "faq": "FAQ",
     "moreTopic": "More on this topic"
@@ -631,11 +631,95 @@
     "label": "Websites · 04",
     "title": "Websites we have built.",
     "lead": "A store, a company site, a business card and a media kit — from prototype to launch. Open any of them and see it live.",
-    "metaTitle": "Websites we have built — CYBERMOVE",
+    "metaTitle": "Websites we have built — Cyber Move Consulting",
     "blockTitle": "Websites we have built",
     "open": "Visit site ↗",
     "openShort": "Open ↗",
     "all": "All websites →",
     "alt": "Home page of {domain}"
+  },
+  "casesBlock": {
+    "title": "CASES • 37 PROJECTS • 13 CITIES • 8 AREAS",
+    "all": "All",
+    "seeAll": "See all cases",
+    "sites": "Websites",
+    "sitesTitle": "Websites we build",
+    "chips": {
+      "experts": "Personal brands",
+      "politics": "Politics & media",
+      "retail": "Fashion & retail",
+      "horeca": "HoReCa & service",
+      "b2b": "Engineering & industry",
+      "maritime": "Fleet & logistics",
+      "pro": "Real estate, law, education",
+      "tech": "Digital & products"
+    },
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "homeServices": {
+    "title": "Services",
+    "items": [
+      {
+        "label": "Audit, finance, legal",
+        "to": "services/audit/"
+      },
+      {
+        "label": "Brand core, growth consulting",
+        "to": "services/brand-content/brand-core/"
+      },
+      {
+        "label": "Brand marketing",
+        "to": "services/brand-content/"
+      },
+      {
+        "label": "CRM, automation, telephony, AI",
+        "to": "services/systems/"
+      },
+      {
+        "label": "SMM, offline and social media advertising",
+        "to": "services/brand-content/smm/"
+      },
+      {
+        "label": "Full-cycle B2B and B2C promotion",
+        "to": "services/traffic/"
+      },
+      {
+        "label": "Tender consulting",
+        "to": "services/tenders-legal/"
+      },
+      {
+        "label": "Building a sales department, start to finish",
+        "to": "#sales-department"
+      },
+      {
+        "label": "HR consulting: hiring and team development",
+        "to": "#hr-consulting"
+      },
+      {
+        "label": "Business and industry events",
+        "to": "#events"
+      }
+    ],
+    "extra": [
+      {
+        "id": "sales-department",
+        "label": "Building a sales department, start to finish"
+      },
+      {
+        "id": "hr-consulting",
+        "label": "HR consulting: hiring and team development"
+      },
+      {
+        "id": "events",
+        "label": "Business and industry events"
+      }
+    ]
+  },
+  "panel": {
+    "title": "Contact us",
+    "wa": "Message us on WhatsApp",
+    "close": "Close",
+    "fab": "Contact"
   }
 }

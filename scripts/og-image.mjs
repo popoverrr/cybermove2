@@ -39,17 +39,17 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
     <text x="1140" y="58" text-anchor="end">RU · EN</text>
     <text x="60" y="578">${company.legalName}</text>
   </g>
-  <g transform="translate(60 210) scale(1.7)">${mark(C.chalk, 1.4)}</g>
-  <g font-family="IT" font-weight="600" fill="${C.chalk}">
-    <text x="262" y="330" font-size="132" letter-spacing="-3">${company.brand}</text>
+  <g transform="translate(60 222) scale(1.3)">${mark(C.chalk, 1.4)}</g>
+  <g font-family="IT" font-weight="650" fill="${C.chalk}">
+    <text x="220" y="312" font-size="86" letter-spacing="-1.5">CYBER MOVE</text>
   </g>
-  <rect x="1108" y="238" width="22" height="22" fill="${C.accent}"/>
-  <text id="sub" x="266" y="378" font-family="JB" font-size="30" fill="${C.steel}">CONSULTING</text>
-  <g font-family="IT" font-weight="500" fill="${C.chalk}" font-size="40" letter-spacing="-0.8">
-    <text x="60" y="466">${company.tagline.ru}</text>
+  <rect x="220" y="338" width="40" height="4" fill="${C.accent}"/>
+  <text id="sub" x="880" y="318" font-family="JB" font-weight="300" font-size="40" letter-spacing="7" fill="${C.steel}">CONSULTING</text>
+  <g font-family="IT" font-weight="500" fill="${C.chalk}" font-size="36" letter-spacing="-0.6">
+    <text x="60" y="432">${company.tagline.ru}</text>
   </g>
   <g font-family="IT" font-weight="500" fill="${C.steel}" font-size="28" letter-spacing="-0.4">
-    <text x="1140" y="466" text-anchor="end">${company.tagline.en}</text>
+    <text x="60" y="478">${company.tagline.en}</text>
   </g>
 </svg>`;
 
@@ -67,13 +67,13 @@ await page.setContent(html);
 await page.evaluate(() => document.fonts.ready);
 // fit the wordmark: place the accent pixel right after the rendered wordmark
 await page.evaluate(() => {
-  const word = document.querySelector('text[font-size="132"]');
+  // CONSULTING follows the name on the same line; the accent bar spans the whole logo line
+  const word = document.querySelector('text[font-size="86"]');
   const box = word.getBBox();
-  document.querySelector('rect[width="22"]').setAttribute('x', String(box.x + box.width + 10));
-  // CONSULTING spans the width of the name
   const sub = document.querySelector('#sub');
-  const w = sub.getBBox().width;
-  sub.setAttribute('letter-spacing', String((box.width - 6 - w) / 9));
+  sub.setAttribute('x', String(box.x + box.width + 22));
+  const sb = sub.getBBox();
+  document.querySelector('rect[width="40"]').setAttribute('width', String(sb.x + sb.width - box.x));
 });
 const raw = await page.screenshot({ type: 'png' });
 await browser.close();
@@ -102,9 +102,10 @@ header.writeUInt32LE(p32.length, 14); header.writeUInt32LE(22, 18);
 await writeFile(join(pub, 'favicon.ico'), Buffer.concat([header, p32]));
 
 /* ── Logo: mark + name + CONSULTING (outlines from the live logo), accent square ── */
-const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 100" width="470" height="100" role="img" aria-label="${company.brand} CONSULTING">
-  ${mark(C.space, 2.2)}${NAME.replaceAll('currentColor', C.space)}${SUB.replaceAll('currentColor', C.space)}
-  <rect x="458" y="25" width="10" height="10" fill="${C.accent}"/>
+// one line: mark · CYBER MOVE · CONSULTING (rework §12); CONSULTING moved up to the name's baseline
+const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 100" width="840" height="100" role="img" aria-label="CYBER MOVE CONSULTING">
+  ${mark(C.space, 2.2)}${NAME.replaceAll('currentColor', C.space)}<g transform="translate(352 -34)" opacity="0.72">${SUB.replaceAll('currentColor', C.space)}</g>
+  <rect x="124" y="74" width="710" height="3" fill="${C.accent}"/>
 </svg>`;
 await writeFile(join(pub, 'logo.svg'), logo);
 console.log('brand assets written to public/');

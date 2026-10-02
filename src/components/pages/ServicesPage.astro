@@ -6,6 +6,7 @@ import Button from '../Button.astro';
 import Icon from '../Icon.astro';
 import SiteCta from '../SiteCta.astro';
 import Formats from '../Formats.astro';
+import ServicesList from '../ServicesList.astro';
 import { t, href, pick, type Lang } from '../../lib/i18n';
 import { directions, directionById, servicesOf } from '../../lib/content';
 
@@ -20,9 +21,8 @@ const path = t(lang, 'home.windows.services.path');
   <Block theme="dark" label={s('hero.label')} first hero class="page-hero">
     <div class="container">
       <p class="label hero__label reveal">{s('hero.label')}</p>
-      <h1 class="hero__title reveal" data-split>{s('hero.title')}</h1>
-      <p class="lead hero__lead reveal" style="--rd:120ms">{s('hero.lead')}</p>
-      <p class="label muted hero__codes reveal" style="--rd:180ms">{s('hero.codes')}</p>
+      <h1 class="block-title-sm reveal">{t(lang, 'homeServices.title')}</h1>
+      <ServicesList lang={lang} />
     </div>
   </Block>
 

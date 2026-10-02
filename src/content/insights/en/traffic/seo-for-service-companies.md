@@ -1,6 +1,6 @@
 ---
 title: "SEO for service businesses: what pays off in six months and what never will"
-seoTitle: "SEO for Service Businesses: What Actually Works — CYBERMOVE"
+seoTitle: "SEO for Service Businesses: What Actually Works — Cyber Move Consulting"
 description: "SEO for service businesses: a page for every service, content, technical health, local signals and links. What produces results and what isn't worth the budget."
 date: 2026-09-25
 direction: traffic

@@ -1,6 +1,6 @@
 ---
 title: "Business audit: what to check before you spend money on advertising"
-seoTitle: "Business Audit Before Advertising: What to Check — CYBERMOVE"
+seoTitle: "Business Audit Before Advertising: What to Check — Cyber Move Consulting"
 description: "A business audit before running ads: six areas to check (product, positioning, funnel, sales, finance, systems), what you get out of it, and a checklist."
 date: 2026-09-25
 direction: audit

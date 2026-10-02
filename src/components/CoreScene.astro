@@ -1,0 +1,45 @@
+---
+// The CORE scene (docs/14-rework.md §3): a 3D instrument drawn on <canvas> by src/scripts/core-scene.ts (loaded as
+// its own chunk after the first screen). Without JS / canvas the static SVG schema stays. Links to the service areas
+// are duplicated in a visually hidden list for keyboard and screen readers.
+import CoreOrbit from './CoreOrbit.astro';
+import { orbit, directionById } from '../lib/content';
+import { t, href, pick, type Lang } from '../lib/i18n';
+interface Props { lang: Lang; compact?: boolean }
+const { lang, compact = false } = Astro.props;
+const sys = orbit.filter((n) => n.ring === 'system');
+const core = orbit.filter((n) => n.ring === 'core');
+const nodes = [
+  ...core.map((n, i) => ({ id: n.id, label: n.label, ring: 0, theta: (i / core.length) * Math.PI * 2 + 0.2, sys: false })),
+  ...sys.map((n, i) => {
+    const d = directionById(n.direction!);
+    const onA = i % 2 === 0; // alternate between the two system rings
+    const k = Math.floor(i / 2);
+    return {
+      id: n.id, label: n.label, sys: true, index: String(i + 1).padStart(2, '0'),
+      ring: onA ? 1 : 2, theta: onA ? (k / 6) * Math.PI * 2 : (k / 5) * Math.PI * 2 + 0.6,
+      href: href(lang, `services/${d.id}/`), name: pick(lang, d.nameFull),
+    };
+  }),
+];
+const areas = [...new Map(sys.map((n) => [n.direction!, directionById(n.direction!)])).values()];
+---
+<figure class:list={['scene', compact && 'scene--compact']} data-core-scene data-compact={compact ? '' : undefined}>
+  <canvas class="scene__canvas" role="img" aria-label={t(lang, 'home.orbit.aria')}></canvas>
+  <div class="scene__fallback"><CoreOrbit lang={lang} /></div>
+  <ul class="sr-only">
+    {areas.map((d) => <li><a href={href(lang, `services/${d.id}/`)}>{pick(lang, d.nameFull)}</a></li>)}
+  </ul>
+  <a class="orbit__pick label scene__pick" href="#" data-scene-pick hidden><span class="muted" data-pick-idx></span> <span data-pick-name></span> <span aria-hidden="true">→</span></a>
+  <script type="application/json" data-scene-nodes set:html={JSON.stringify({ nodes })} />
+</figure>
+
+<script>
+  // the scene is its own chunk, started after the first paint (never blocks the first screen)
+  const roots = document.querySelectorAll<HTMLElement>('[data-core-scene]');
+  if (roots.length && 'getContext' in document.createElement('canvas')) {
+    const go = () => import('../scripts/core-scene').then(({ initCoreScene }) => roots.forEach((r) => initCoreScene(r)));
+    if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (f: () => void, o: object) => void }).requestIdleCallback(go, { timeout: 600 });
+    else setTimeout(go, 120);
+  }
+</script>

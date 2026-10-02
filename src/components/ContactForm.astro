@@ -2,10 +2,14 @@
 import { t, ta, url, asset, pick, type Lang } from '../lib/i18n';
 import { contacts, services } from '../lib/content';
 import Icon from './Icon.astro';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+// idp: id prefix (the form exists twice on /contact/: page + contact panel); compact: panel version
+// without «company» and «format» (docs/14-rework.md §11)
+interface Props { lang: Lang; idp?: string; compact?: boolean }
+const { lang, idp = 'cf', compact = false } = Astro.props;
 const f = (k: string) => t(lang, `contact.form.${k}`);
 const formats = ta<{ id: string; label: string }[]>(lang, 'contact.form.formats');
+// services without own pages (rework §8, rows 08–10): only in the form
+const extra = ta<{ id: string; label: string }[]>(lang, 'homeServices.extra');
 const emailMode = !!contacts.formEmail;
 // WhatsApp message: intro line + "Label: value" lines (labels are the form's own labels)
 const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {contact}`, `${f('company')}: {company}`,
@@ -17,28 +21,29 @@ const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {co
   data-msg-required={f('required')} data-msg-contact={f('invalidContact')}
   data-msg-success={f('success')} data-msg-error={f('error')}>
   <div class="field">
-    <input class="field__input" id="cf-name" name="name" type="text" autocomplete="name" placeholder=" " required maxlength="120" aria-describedby="cf-name-err" />
-    <label class="field__label" for="cf-name">{f('name')}</label>
-    <p class="field__err small" id="cf-name-err" aria-live="polite"></p>
+    <input class="field__input" id={`${idp}-name`} name="name" type="text" autocomplete="name" placeholder=" " required maxlength="120" aria-describedby={`${idp}-name-err`} />
+    <label class="field__label" for={`${idp}-name`}>{f('name')}</label>
+    <p class="field__err small" id={`${idp}-name-err`} aria-live="polite"></p>
   </div>
   <div class="field">
-    <input class="field__input" id="cf-contact" name="contact" type="text" autocomplete="tel" inputmode="tel" placeholder=" " required maxlength="160" aria-describedby="cf-contact-err" />
-    <label class="field__label" for="cf-contact">{f('contact')}</label>
-    <p class="field__err small" id="cf-contact-err" aria-live="polite"></p>
+    <input class="field__input" id={`${idp}-contact`} name="contact" type="text" autocomplete="tel" inputmode="tel" placeholder=" " required maxlength="160" aria-describedby={`${idp}-contact-err`} />
+    <label class="field__label" for={`${idp}-contact`}>{f('contact')}</label>
+    <p class="field__err small" id={`${idp}-contact-err`} aria-live="polite"></p>
   </div>
-  <div class="field">
-    <input class="field__input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="160" />
-    <label class="field__label" for="cf-company">{f('company')}</label>
-  </div>
+  {!compact && <div class="field">
+    <input class="field__input" id={`${idp}-company`} name="company" type="text" autocomplete="organization" placeholder=" " maxlength="160" />
+    <label class="field__label" for={`${idp}-company`}>{f('company')}</label>
+  </div>}
   <div class="field field--select">
-    <select class="field__input" id="cf-service" name="service">
+    <select class="field__input" id={`${idp}-service`} name="service">
       <option value="" data-label="">{f('serviceNone')}</option>
       {services.map((s) => <option value={s.id} data-label={pick(lang, s.name)}>{pick(lang, s.name)}</option>)}
+      {extra.map((x) => <option value={x.id} data-label={x.label}>{x.label}</option>)}
     </select>
-    <label class="field__label is-up" for="cf-service">{f('service')}</label>
+    <label class="field__label is-up" for={`${idp}-service`}>{f('service')}</label>
   </div>
 
-  <fieldset class="chips">
+  {!compact && <fieldset class="chips">
     <legend class="label muted">{f('format')}</legend>
     <div class="chips__list">
       {formats.map((n) => (
@@ -48,11 +53,11 @@ const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {co
         </label>
       ))}
     </div>
-  </fieldset>
+  </fieldset>}
 
   <div class="field field--area">
-    <textarea class="field__input" id="cf-message" name="message" rows="4" placeholder=" " maxlength="2000"></textarea>
-    <label class="field__label" for="cf-message">{f('message')}</label>
+    <textarea class="field__input" id={`${idp}-message`} name="message" rows="4" placeholder=" " maxlength="2000"></textarea>
+    <label class="field__label" for={`${idp}-message`}>{f('message')}</label>
   </div>
 
   <div class="cform__hp" aria-hidden="true">
@@ -68,9 +73,9 @@ const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {co
         </span>
         <span class="cform__spinner" aria-hidden="true"></span>
       </button>
-      <a class="btn btn--secondary" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+      {!compact && <a class="btn btn--secondary" href={contacts.whatsapp.url} target="_blank" rel="noopener">
         <span class="btn__in"><Icon name="whatsapp" size={18} class="btn__lead-icon" /><span class="btn__text">{f('whatsapp')}</span></span>
-      </a>
+      </a>}
     </div>
     <p class="small muted cform__consent"><a class="link" href={url(lang, 'privacy')}>{f('consent')}</a>.</p>
     <p class="cform__status" role="status" aria-live="polite" hidden data-sending={f('sending')}></p>
@@ -99,7 +104,7 @@ const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {co
     const val = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value.trim() ?? '';
     const setErr = (n: string, msg: string) => {
       const input = form.elements.namedItem(n) as HTMLInputElement;
-      const err = form.querySelector<HTMLElement>(`#cf-${n}-err`);
+      const err = form.querySelector<HTMLElement>(`[id$="-${n}-err"]`);
       input.setAttribute('aria-invalid', msg ? 'true' : 'false');
       input.closest('.field')?.classList.toggle('is-invalid', !!msg);
       if (err) err.textContent = msg;

@@ -2,6 +2,7 @@
   {
     "id": "usyk",
     "n": "01",
+    "rank": 1,
     "sector": "experts",
     "name": {
       "ru": "USYK / Александр Усик",
@@ -49,8 +50,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -100,8 +101,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -163,13 +164,13 @@
     },
     "seo": {
       "ru": {
-        "title": "USYK / Александр Усик: личный бренд — кейс CYBERMOVE",
-        "description": "Шесть лет: личный бренд Александра Усика, маркетинг его продуктов и связанных проектов. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "USYK / Александр Усик: личный бренд — кейс Cyber Move Consulting",
+        "description": "Шесть лет: личный бренд Александра Усика, маркетинг его продуктов и связанных проектов. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "USYK / Александр Усик"
       },
       "en": {
-        "title": "USYK / Oleksandr Usyk: personal brand — CYBERMOVE case",
-        "description": "Six years: Oleksandr Usyk's personal brand, marketing for his products and related projects. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "USYK / Oleksandr Usyk: personal brand — Cyber Move Consulting case",
+        "description": "Six years: Oleksandr Usyk's personal brand, marketing for his products and related projects. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "USYK / Oleksandr Usyk"
       }
     }
@@ -177,6 +178,7 @@
   {
     "id": "oleg-baryshevsky",
     "n": "02",
+    "rank": 101,
     "sector": "experts",
     "name": {
       "ru": "OLEG BARYSHEVSKY",
@@ -224,8 +226,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -256,8 +258,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -301,13 +303,13 @@
     },
     "seo": {
       "ru": {
-        "title": "OLEG BARYSHEVSKY: личный бренд — кейс CYBERMOVE",
-        "description": "Три образовательных курса и чат-боты: консалтинг, запуски, техническое продюсирование. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "OLEG BARYSHEVSKY: личный бренд — кейс Cyber Move Consulting",
+        "description": "Три образовательных курса и чат-боты: консалтинг, запуски, техническое продюсирование. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "OLEG BARYSHEVSKY"
       },
       "en": {
-        "title": "OLEG BARYSHEVSKY: personal brand — CYBERMOVE case",
-        "description": "Three educational courses and chatbots: consulting, launches, technical production. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "OLEG BARYSHEVSKY: personal brand — Cyber Move Consulting case",
+        "description": "Three educational courses and chatbots: consulting, launches, technical production. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "OLEG BARYSHEVSKY"
       }
     }
@@ -315,6 +317,7 @@
   {
     "id": "tsepukh",
     "n": "03",
+    "rank": 102,
     "sector": "experts",
     "name": {
       "ru": "TSEPUKH_P",
@@ -362,8 +365,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -393,8 +396,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -437,13 +440,13 @@
     },
     "seo": {
       "ru": {
-        "title": "TSEPUKH_P: личный бренд — кейс CYBERMOVE",
-        "description": "Три курса и боты: консалтинг, запуски, техническое продюсирование. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "TSEPUKH_P: личный бренд — кейс Cyber Move Consulting",
+        "description": "Три курса и боты: консалтинг, запуски, техническое продюсирование. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "TSEPUKH_P"
       },
       "en": {
-        "title": "TSEPUKH_P: personal brand — CYBERMOVE case",
-        "description": "Three courses and bots: consulting, launches, technical production. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "TSEPUKH_P: personal brand — Cyber Move Consulting case",
+        "description": "Three courses and bots: consulting, launches, technical production. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "TSEPUKH_P"
       }
     }
@@ -451,6 +454,7 @@
   {
     "id": "kehhsha",
     "n": "04",
+    "rank": 103,
     "sector": "experts",
     "name": {
       "ru": "KEHHSHA",
@@ -498,8 +502,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -529,8 +533,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -572,13 +576,13 @@
     },
     "seo": {
       "ru": {
-        "title": "KEHHSHA: личный бренд — кейс CYBERMOVE",
-        "description": "Полное продюсирование курса, консультации и продакшн. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "KEHHSHA: личный бренд — кейс Cyber Move Consulting",
+        "description": "Полное продюсирование курса, консультации и продакшн. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "KEHHSHA"
       },
       "en": {
-        "title": "KEHHSHA: personal brand — CYBERMOVE case",
-        "description": "Full course production, consulting and content production. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "KEHHSHA: personal brand — Cyber Move Consulting case",
+        "description": "Full course production, consulting and content production. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "KEHHSHA"
       }
     }
@@ -586,6 +590,7 @@
   {
     "id": "olga-yankovskaya",
     "n": "05",
+    "rank": 104,
     "sector": "experts",
     "name": {
       "ru": "OLGA YANKOVSKAYA",
@@ -633,8 +638,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -664,8 +669,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -707,13 +712,13 @@
     },
     "seo": {
       "ru": {
-        "title": "OLGA YANKOVSKAYA: личный бренд — кейс CYBERMOVE",
-        "description": "Техническое продюсирование и консалтинг по запуску эксперта. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "OLGA YANKOVSKAYA: личный бренд — кейс Cyber Move Consulting",
+        "description": "Техническое продюсирование и консалтинг по запуску эксперта. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "OLGA YANKOVSKAYA"
       },
       "en": {
-        "title": "OLGA YANKOVSKAYA: personal brand — CYBERMOVE case",
-        "description": "Technical production and launch consulting for an expert. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "OLGA YANKOVSKAYA: personal brand — Cyber Move Consulting case",
+        "description": "Technical production and launch consulting for an expert. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "OLGA YANKOVSKAYA"
       }
     }
@@ -721,6 +726,7 @@
   {
     "id": "miss-sverona",
     "n": "06",
+    "rank": 105,
     "sector": "experts",
     "name": {
       "ru": "MISS SVERONA",
@@ -768,8 +774,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -799,8 +805,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -843,13 +849,13 @@
     },
     "seo": {
       "ru": {
-        "title": "MISS SVERONA: личный бренд — кейс CYBERMOVE",
-        "description": "Полное продюсирование экспертного проекта: стратегия, позиционирование, запуск. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "MISS SVERONA: личный бренд — кейс Cyber Move Consulting",
+        "description": "Полное продюсирование экспертного проекта: стратегия, позиционирование, запуск. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "MISS SVERONA"
       },
       "en": {
-        "title": "MISS SVERONA: personal brand — CYBERMOVE case",
-        "description": "Full production of an expert project: strategy, positioning, launch. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "MISS SVERONA: personal brand — Cyber Move Consulting case",
+        "description": "Full production of an expert project: strategy, positioning, launch. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "MISS SVERONA"
       }
     }
@@ -857,6 +863,7 @@
   {
     "id": "meshtiish",
     "n": "07",
+    "rank": 106,
     "sector": "experts",
     "name": {
       "ru": "MESHTIISH",
@@ -904,8 +911,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -935,8 +942,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -979,13 +986,13 @@
     },
     "seo": {
       "ru": {
-        "title": "MESHTIISH: личный бренд — кейс CYBERMOVE",
-        "description": "Два курса от идеи до запуска, техническое продюсирование. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "MESHTIISH: личный бренд — кейс Cyber Move Consulting",
+        "description": "Два курса от идеи до запуска, техническое продюсирование. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "MESHTIISH"
       },
       "en": {
-        "title": "MESHTIISH: personal brand — CYBERMOVE case",
-        "description": "Two courses from idea to launch, technical production. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "MESHTIISH: personal brand — Cyber Move Consulting case",
+        "description": "Two courses from idea to launch, technical production. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "MESHTIISH"
       }
     }
@@ -993,6 +1000,7 @@
   {
     "id": "udar",
     "n": "08",
+    "rank": 2,
     "sector": "politics",
     "name": {
       "ru": "Политическая партия «УДАР»",
@@ -1040,8 +1048,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1091,8 +1099,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1152,13 +1160,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Политическая партия «УДАР» — кейс CYBERMOVE",
-        "description": "Продвижение кандидатов местного и национального уровня в составе большой коммуникационной команды. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Политическая партия «УДАР» — кейс Cyber Move Consulting",
+        "description": "Продвижение кандидатов местного и национального уровня в составе большой коммуникационной команды. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Политическая партия «УДАР»"
       },
       "en": {
-        "title": "UDAR political party: politics and media — CYBERMOVE case",
-        "description": "Promoting local and national candidates as part of a large communications team. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "UDAR political party: politics and media — Cyber Move Consulting case",
+        "description": "Promoting local and national candidates as part of a large communications team. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "UDAR political party"
       }
     }
@@ -1166,6 +1174,7 @@
   {
     "id": "ukrainian-radio",
     "n": "09",
+    "rank": 6,
     "sector": "politics",
     "name": {
       "ru": "Українське радіо",
@@ -1213,8 +1222,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1247,8 +1256,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1291,13 +1300,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Українське радіо: политика и медиа — кейс CYBERMOVE",
-        "description": "Личные бренды радиоведущих, YouTube-проекты и digital-присутствие. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Українське радіо: политика и медиа — кейс Cyber Move Consulting",
+        "description": "Личные бренды радиоведущих, YouTube-проекты и digital-присутствие. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Українське радіо"
       },
       "en": {
-        "title": "Ukrainian Radio: politics and media — CYBERMOVE case",
-        "description": "Personal brands of radio hosts, YouTube projects and digital presence. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Ukrainian Radio: politics and media — Cyber Move Consulting case",
+        "description": "Personal brands of radio hosts, YouTube projects and digital presence. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Ukrainian Radio"
       }
     }
@@ -1305,6 +1314,7 @@
   {
     "id": "van-dog-agency",
     "n": "10",
+    "rank": 109,
     "sector": "politics",
     "name": {
       "ru": "VAN DOG AGENCY",
@@ -1352,8 +1362,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1386,8 +1396,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1430,13 +1440,13 @@
     },
     "seo": {
       "ru": {
-        "title": "VAN DOG AGENCY: политика и медиа — кейс CYBERMOVE",
-        "description": "Проекты для крупных украинских брендов в рекламном агентстве. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "VAN DOG AGENCY: политика и медиа — кейс Cyber Move Consulting",
+        "description": "Проекты для крупных украинских брендов в рекламном агентстве. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "VAN DOG AGENCY"
       },
       "en": {
-        "title": "VAN DOG AGENCY: politics and media — CYBERMOVE case",
-        "description": "Projects for major Ukrainian brands within an advertising agency. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "VAN DOG AGENCY: politics and media — Cyber Move Consulting case",
+        "description": "Projects for major Ukrainian brands within an advertising agency. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "VAN DOG AGENCY"
       }
     }
@@ -1444,6 +1454,7 @@
   {
     "id": "intertop",
     "n": "11",
+    "rank": 4,
     "sector": "retail",
     "name": {
       "ru": "INTERTOP / SPEX / Єврооптика",
@@ -1491,8 +1502,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1520,8 +1531,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1560,13 +1571,13 @@
     },
     "seo": {
       "ru": {
-        "title": "INTERTOP / SPEX / Єврооптика — кейс CYBERMOVE",
-        "description": "Реклама и маркетинг для крупных fashion, eyewear и retail брендов. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "INTERTOP / SPEX / Єврооптика — кейс Cyber Move Consulting",
+        "description": "Реклама и маркетинг для крупных fashion, eyewear и retail брендов. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "INTERTOP / SPEX / Єврооптика"
       },
       "en": {
-        "title": "INTERTOP / SPEX / Eurooptika — CYBERMOVE case",
-        "description": "Advertising and marketing for major fashion, eyewear and retail brands. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "INTERTOP / SPEX / Eurooptika — Cyber Move Consulting case",
+        "description": "Advertising and marketing for major fashion, eyewear and retail brands. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "INTERTOP / SPEX / Eurooptika"
       }
     }
@@ -1574,6 +1585,7 @@
   {
     "id": "sii-concept",
     "n": "12",
+    "rank": 111,
     "sector": "retail",
     "name": {
       "ru": "SII.CONCEPT / MILAN",
@@ -1621,8 +1633,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1656,8 +1668,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1704,13 +1716,13 @@
     },
     "seo": {
       "ru": {
-        "title": "SII.CONCEPT / MILAN: fashion и retail — кейс CYBERMOVE",
-        "description": "Операционное управление, запуск и международное развитие fashion и eyewear проекта. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "SII.CONCEPT / MILAN: fashion и retail — кейс Cyber Move Consulting",
+        "description": "Операционное управление, запуск и международное развитие fashion и eyewear проекта. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "SII.CONCEPT / MILAN"
       },
       "en": {
-        "title": "SII.CONCEPT / MILAN: fashion and retail — CYBERMOVE case",
-        "description": "Operational management, launch and international expansion of a fashion and eyewear project. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "SII.CONCEPT / MILAN: fashion and retail — Cyber Move Consulting case",
+        "description": "Operational management, launch and international expansion of a fashion and eyewear project. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "SII.CONCEPT / MILAN"
       }
     }
@@ -1718,6 +1730,7 @@
   {
     "id": "ukrainian-fashion-week",
     "n": "13",
+    "rank": 3,
     "sector": "retail",
     "name": {
       "ru": "UKRAINIAN FASHION WEEK",
@@ -1765,8 +1778,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1800,8 +1813,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1846,13 +1859,13 @@
     },
     "seo": {
       "ru": {
-        "title": "UKRAINIAN FASHION WEEK: fashion и retail — кейс CYBERMOVE",
-        "description": "Организация и координация fashion, спортивных, рекламных и event-проектов. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "UKRAINIAN FASHION WEEK: fashion и retail — кейс Cyber Move Consulting",
+        "description": "Организация и координация fashion, спортивных, рекламных и event-проектов. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "UKRAINIAN FASHION WEEK"
       },
       "en": {
-        "title": "UKRAINIAN FASHION WEEK: fashion and retail — CYBERMOVE case",
-        "description": "Organising and coordinating fashion, sports, advertising and event projects. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "UKRAINIAN FASHION WEEK: fashion and retail — Cyber Move Consulting case",
+        "description": "Organising and coordinating fashion, sports, advertising and event projects. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "UKRAINIAN FASHION WEEK"
       }
     }
@@ -1860,6 +1873,7 @@
   {
     "id": "good-market",
     "n": "14",
+    "rank": 14,
     "sector": "retail",
     "name": {
       "ru": "Good Market",
@@ -1898,8 +1912,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -1931,8 +1945,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -1976,13 +1990,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Good Market: fashion и retail — кейс CYBERMOVE",
-        "description": "Маркетинг и реклама сети супермаркетов при АЗК. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Good Market: fashion и retail — кейс Cyber Move Consulting",
+        "description": "Маркетинг и реклама сети супермаркетов при АЗК. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Good Market"
       },
       "en": {
-        "title": "Good Market: fashion and retail — CYBERMOVE case",
-        "description": "Marketing and advertising for a supermarket chain at fuel stations. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Good Market: fashion and retail — Cyber Move Consulting case",
+        "description": "Marketing and advertising for a supermarket chain at fuel stations. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Good Market"
       }
     }
@@ -1990,6 +2004,7 @@
   {
     "id": "brsm-nafta",
     "n": "15",
+    "rank": 5,
     "sector": "retail",
     "name": {
       "ru": "BRSM-NAFTA",
@@ -2037,8 +2052,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2070,8 +2085,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2115,13 +2130,13 @@
     },
     "seo": {
       "ru": {
-        "title": "BRSM-NAFTA: fashion и retail — кейс CYBERMOVE",
-        "description": "Маркетинг и рекламные проекты крупной сети АЗК. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "BRSM-NAFTA: fashion и retail — кейс Cyber Move Consulting",
+        "description": "Маркетинг и рекламные проекты крупной сети АЗК. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "BRSM-NAFTA"
       },
       "en": {
-        "title": "BRSM-NAFTA: fashion and retail — CYBERMOVE case",
-        "description": "Marketing and advertising projects for a major fuel station network. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "BRSM-NAFTA: fashion and retail — Cyber Move Consulting case",
+        "description": "Marketing and advertising projects for a major fuel station network. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "BRSM-NAFTA"
       }
     }
@@ -2129,6 +2144,7 @@
   {
     "id": "ecommerce",
     "n": "16",
+    "rank": 115,
     "sector": "retail",
     "name": {
       "ru": "E-commerce проекты",
@@ -2167,8 +2183,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2203,8 +2219,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2252,13 +2268,13 @@
     },
     "seo": {
       "ru": {
-        "title": "E-commerce проекты: fashion и retail — кейс CYBERMOVE",
-        "description": "Множество e-commerce проектов в разных товарных категориях. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "E-commerce проекты: fashion и retail — кейс Cyber Move Consulting",
+        "description": "Множество e-commerce проектов в разных товарных категориях. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "E-commerce проекты"
       },
       "en": {
-        "title": "E-commerce projects: fashion and retail — CYBERMOVE case",
-        "description": "Numerous e-commerce projects across product categories. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "E-commerce projects: fashion and retail — Cyber Move Consulting case",
+        "description": "Numerous e-commerce projects across product categories. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "E-commerce projects"
       }
     }
@@ -2266,6 +2282,7 @@
   {
     "id": "maharadj",
     "n": "17",
+    "rank": 15,
     "sector": "horeca",
     "name": {
       "ru": "MAHARADJ",
@@ -2313,8 +2330,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2345,8 +2362,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2390,13 +2407,13 @@
     },
     "seo": {
       "ru": {
-        "title": "MAHARADJ: HoReCa и сервис — кейс CYBERMOVE",
-        "description": "Комплексный wellness и lifestyle проект с экосистемой услуг. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "MAHARADJ: HoReCa и сервис — кейс Cyber Move Consulting",
+        "description": "Комплексный wellness и lifestyle проект с экосистемой услуг. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "MAHARADJ"
       },
       "en": {
-        "title": "MAHARADJ: HoReCa and service — CYBERMOVE case",
-        "description": "A full-scale wellness and lifestyle project with an ecosystem of services. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "MAHARADJ: HoReCa and service — Cyber Move Consulting case",
+        "description": "A full-scale wellness and lifestyle project with an ecosystem of services. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "MAHARADJ"
       }
     }
@@ -2404,6 +2421,7 @@
   {
     "id": "spa-maharadj",
     "n": "18",
+    "rank": 117,
     "sector": "horeca",
     "name": {
       "ru": "SPA MAHARADJ",
@@ -2451,8 +2469,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2482,8 +2500,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2523,13 +2541,13 @@
     },
     "seo": {
       "ru": {
-        "title": "SPA MAHARADJ: HoReCa и сервис — кейс CYBERMOVE",
-        "description": "SPA-направление внутри крупного wellness-бизнеса. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "SPA MAHARADJ: HoReCa и сервис — кейс Cyber Move Consulting",
+        "description": "SPA-направление внутри крупного wellness-бизнеса. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "SPA MAHARADJ"
       },
       "en": {
-        "title": "SPA MAHARADJ: HoReCa and service — CYBERMOVE case",
-        "description": "The SPA line within a large wellness business. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "SPA MAHARADJ: HoReCa and service — Cyber Move Consulting case",
+        "description": "The SPA line within a large wellness business. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "SPA MAHARADJ"
       }
     }
@@ -2537,6 +2555,7 @@
   {
     "id": "toscana-wine",
     "n": "19",
+    "rank": 118,
     "sector": "horeca",
     "name": {
       "ru": "Toscana Wine Shop & Wine Bar",
@@ -2575,8 +2594,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2612,8 +2631,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2661,13 +2680,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Toscana Wine Shop & Wine Bar — кейс CYBERMOVE",
-        "description": "Маркетинг проекта из двух винных баров и интернет-магазина вина в Киеве. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Toscana Wine Shop & Wine Bar — кейс Cyber Move Consulting",
+        "description": "Маркетинг проекта из двух винных баров и интернет-магазина вина в Киеве. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Toscana Wine Shop & Wine Bar"
       },
       "en": {
-        "title": "Toscana Wine Shop & Wine Bar — CYBERMOVE case",
-        "description": "Marketing for two wine bars and an online wine store in Kyiv. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Toscana Wine Shop & Wine Bar — Cyber Move Consulting case",
+        "description": "Marketing for two wine bars and an online wine store in Kyiv. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Toscana Wine Shop & Wine Bar"
       }
     }
@@ -2675,6 +2694,7 @@
   {
     "id": "gaia",
     "n": "20",
+    "rank": 119,
     "sector": "horeca",
     "name": {
       "ru": "GAIA",
@@ -2722,8 +2742,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2755,8 +2775,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2800,13 +2820,13 @@
     },
     "seo": {
       "ru": {
-        "title": "GAIA: HoReCa и сервис — кейс CYBERMOVE",
-        "description": "Ресторан в Одессе: бренд, маркетинг, digital и коммуникация. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "GAIA: HoReCa и сервис — кейс Cyber Move Consulting",
+        "description": "Ресторан в Одессе: бренд, маркетинг, digital и коммуникация. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "GAIA"
       },
       "en": {
-        "title": "GAIA: HoReCa and service — CYBERMOVE case",
-        "description": "A restaurant in Odesa: brand, marketing, digital and communications. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "GAIA: HoReCa and service — Cyber Move Consulting case",
+        "description": "A restaurant in Odesa: brand, marketing, digital and communications. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "GAIA"
       }
     }
@@ -2814,6 +2834,7 @@
   {
     "id": "barbershops-kyiv",
     "n": "21",
+    "rank": 120,
     "sector": "horeca",
     "name": {
       "ru": "Сеть барбершопов / Киев",
@@ -2852,8 +2873,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -2889,8 +2910,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -2939,13 +2960,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Сеть барбершопов / Киев: HoReCa и сервис — кейс CYBERMOVE",
-        "description": "Долгосрочное операционное управление сетью из четырёх барбершопов. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Сеть барбершопов / Киев: HoReCa и сервис — кейс Cyber Move Consulting",
+        "description": "Долгосрочное операционное управление сетью из четырёх барбершопов. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Сеть барбершопов / Киев"
       },
       "en": {
-        "title": "Barbershop chain / Kyiv: HoReCa and service — CYBERMOVE case",
-        "description": "Long-term operational management of a chain of four barbershops. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Barbershop chain / Kyiv: HoReCa and service — Cyber Move Consulting case",
+        "description": "Long-term operational management of a chain of four barbershops. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Barbershop chain / Kyiv"
       }
     }
@@ -2953,6 +2974,7 @@
   {
     "id": "fitness-room-menden",
     "n": "22",
+    "rank": 121,
     "sector": "horeca",
     "name": {
       "ru": "FITNESS ROOM MENDEN",
@@ -3000,8 +3022,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3038,8 +3060,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3089,13 +3111,13 @@
     },
     "seo": {
       "ru": {
-        "title": "FITNESS ROOM MENDEN: HoReCa и сервис — кейс CYBERMOVE",
-        "description": "Digital-присутствие немецкого фитнес-клуба. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "FITNESS ROOM MENDEN: HoReCa и сервис — кейс Cyber Move Consulting",
+        "description": "Digital-присутствие немецкого фитнес-клуба. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "FITNESS ROOM MENDEN"
       },
       "en": {
-        "title": "FITNESS ROOM MENDEN: HoReCa and service — CYBERMOVE case",
-        "description": "Digital presence for a German fitness club. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "FITNESS ROOM MENDEN: HoReCa and service — Cyber Move Consulting case",
+        "description": "Digital presence for a German fitness club. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "FITNESS ROOM MENDEN"
       }
     }
@@ -3103,6 +3125,7 @@
   {
     "id": "hydrosta-kazakhstan",
     "n": "23",
+    "rank": 10,
     "sector": "b2b",
     "name": {
       "ru": "HYDROSTA KAZAKHSTAN",
@@ -3150,8 +3173,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3184,8 +3207,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3231,13 +3254,13 @@
     },
     "seo": {
       "ru": {
-        "title": "HYDROSTA KAZAKHSTAN: B2B и инженерия — кейс CYBERMOVE",
-        "description": "Официальный дистрибьютор HYDROSTA в Казахстане: инженерные системы для промышленных и коммерческих объектов. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "HYDROSTA KAZAKHSTAN: B2B и инженерия — кейс Cyber Move Consulting",
+        "description": "Официальный дистрибьютор HYDROSTA в Казахстане: инженерные системы для промышленных и коммерческих объектов. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "HYDROSTA KAZAKHSTAN"
       },
       "en": {
-        "title": "HYDROSTA KAZAKHSTAN: B2B and engineering — CYBERMOVE case",
-        "description": "Official HYDROSTA distributor in Kazakhstan: engineering systems for industrial and commercial sites. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "HYDROSTA KAZAKHSTAN: B2B and engineering — Cyber Move Consulting case",
+        "description": "Official HYDROSTA distributor in Kazakhstan: engineering systems for industrial and commercial sites. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "HYDROSTA KAZAKHSTAN"
       }
     }
@@ -3245,6 +3268,7 @@
   {
     "id": "hsta-group",
     "n": "24",
+    "rank": 11,
     "sector": "b2b",
     "name": {
       "ru": "HSTA GROUP",
@@ -3292,8 +3316,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3326,8 +3350,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3373,13 +3397,13 @@
     },
     "seo": {
       "ru": {
-        "title": "HSTA GROUP: B2B и инженерия — кейс CYBERMOVE",
-        "description": "Инженерные системы: проектирование, поставка, монтаж и сервис. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "HSTA GROUP: B2B и инженерия — кейс Cyber Move Consulting",
+        "description": "Инженерные системы: проектирование, поставка, монтаж и сервис. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "HSTA GROUP"
       },
       "en": {
-        "title": "HSTA GROUP: B2B and engineering — CYBERMOVE case",
-        "description": "Engineering systems: design, supply, installation and service. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "HSTA GROUP: B2B and engineering — Cyber Move Consulting case",
+        "description": "Engineering systems: design, supply, installation and service. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "HSTA GROUP"
       }
     }
@@ -3387,6 +3411,7 @@
   {
     "id": "hydrosta-service",
     "n": "25",
+    "rank": 124,
     "sector": "b2b",
     "name": {
       "ru": "HYDROSTA SERVICE KAZAKHSTAN",
@@ -3434,8 +3459,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3468,8 +3493,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3514,13 +3539,13 @@
     },
     "seo": {
       "ru": {
-        "title": "HYDROSTA SERVICE KAZAKHSTAN — кейс CYBERMOVE",
-        "description": "Диагностика и обслуживание котлов и инженерных систем. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "HYDROSTA SERVICE KAZAKHSTAN — кейс Cyber Move Consulting",
+        "description": "Диагностика и обслуживание котлов и инженерных систем. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "HYDROSTA SERVICE KAZAKHSTAN"
       },
       "en": {
-        "title": "HYDROSTA SERVICE KAZAKHSTAN — CYBERMOVE case",
-        "description": "Diagnostics and maintenance of boilers and engineering systems. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "HYDROSTA SERVICE KAZAKHSTAN — Cyber Move Consulting case",
+        "description": "Diagnostics and maintenance of boilers and engineering systems. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "HYDROSTA SERVICE KAZAKHSTAN"
       }
     }
@@ -3528,6 +3553,7 @@
   {
     "id": "building-time",
     "n": "26",
+    "rank": 125,
     "sector": "b2b",
     "name": {
       "ru": "BUILDING TIME",
@@ -3575,8 +3601,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3608,8 +3634,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3654,13 +3680,13 @@
     },
     "seo": {
       "ru": {
-        "title": "BUILDING TIME: B2B и инженерия — кейс CYBERMOVE",
-        "description": "Аренда спецтехники в Алматы. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "BUILDING TIME: B2B и инженерия — кейс Cyber Move Consulting",
+        "description": "Аренда спецтехники в Алматы. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "BUILDING TIME"
       },
       "en": {
-        "title": "BUILDING TIME: B2B and engineering — CYBERMOVE case",
-        "description": "Construction equipment rental in Almaty. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "BUILDING TIME: B2B and engineering — Cyber Move Consulting case",
+        "description": "Construction equipment rental in Almaty. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "BUILDING TIME"
       }
     }
@@ -3668,6 +3694,7 @@
   {
     "id": "tpk",
     "n": "27",
+    "rank": 12,
     "sector": "b2b",
     "name": {
       "ru": "ТПК",
@@ -3715,8 +3742,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3749,8 +3776,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3796,13 +3823,13 @@
     },
     "seo": {
       "ru": {
-        "title": "ТПК: B2B и инженерия — кейс CYBERMOVE",
-        "description": "Производитель сэндвич-панелей, профнастила, фасадных кассет и панелей. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "ТПК: B2B и инженерия — кейс Cyber Move Consulting",
+        "description": "Производитель сэндвич-панелей, профнастила, фасадных кассет и панелей. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "ТПК"
       },
       "en": {
-        "title": "TPK: B2B and engineering — CYBERMOVE case",
-        "description": "Manufacturer of sandwich panels, corrugated sheets, façade cassettes and panels. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "TPK: B2B and engineering — Cyber Move Consulting case",
+        "description": "Manufacturer of sandwich panels, corrugated sheets, façade cassettes and panels. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "TPK"
       }
     }
@@ -3810,6 +3837,7 @@
   {
     "id": "furniture-factory",
     "n": "28",
+    "rank": 127,
     "sector": "b2b",
     "name": {
       "ru": "Фабрика мебели",
@@ -3848,8 +3876,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -3883,8 +3911,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -3930,13 +3958,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Фабрика мебели: B2B и инженерия — кейс CYBERMOVE",
-        "description": "Комплексный маркетинг и развитие бренда мебельной фабрики. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Фабрика мебели: B2B и инженерия — кейс Cyber Move Consulting",
+        "description": "Комплексный маркетинг и развитие бренда мебельной фабрики. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Фабрика мебели"
       },
       "en": {
-        "title": "Furniture factory: B2B and engineering — CYBERMOVE case",
-        "description": "End-to-end marketing and brand development for a furniture manufacturer. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Furniture factory: B2B and engineering — Cyber Move Consulting case",
+        "description": "End-to-end marketing and brand development for a furniture manufacturer. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Furniture factory"
       }
     }
@@ -3944,6 +3972,7 @@
   {
     "id": "medical-protective-equipment",
     "n": "29",
+    "rank": 128,
     "sector": "b2b",
     "name": {
       "ru": "MEDICAL PROTECTIVE EQUIPMENT",
@@ -3991,8 +4020,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Project management, tender support и координация коммерческого и договорного контуров."
           ],
@@ -4041,8 +4070,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Project management, tender support and coordination of the commercial and contract workstreams."
           ],
@@ -4095,13 +4124,13 @@
     },
     "seo": {
       "ru": {
-        "title": "MEDICAL PROTECTIVE EQUIPMENT — кейс CYBERMOVE",
-        "description": "Производство медицинских средств защиты, работа с крупными государственными и корпоративными заказчиками. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "MEDICAL PROTECTIVE EQUIPMENT — кейс Cyber Move Consulting",
+        "description": "Производство медицинских средств защиты, работа с крупными государственными и корпоративными заказчиками. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "MEDICAL PROTECTIVE EQUIPMENT"
       },
       "en": {
-        "title": "MEDICAL PROTECTIVE EQUIPMENT — CYBERMOVE case",
-        "description": "Manufacturing of medical protective equipment, working with major government and corporate buyers. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "MEDICAL PROTECTIVE EQUIPMENT — Cyber Move Consulting case",
+        "description": "Manufacturing of medical protective equipment, working with major government and corporate buyers. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "MEDICAL PROTECTIVE EQUIPMENT"
       }
     }
@@ -4109,6 +4138,7 @@
   {
     "id": "fort-desaix",
     "n": "30",
+    "rank": 7,
     "sector": "maritime",
     "name": {
       "ru": "FORT DESAIX",
@@ -4197,14 +4227,14 @@
           "kind": "project",
           "title": "Проект",
           "paras": [
-            "FORT DESAIX — контейнеровоз (Panamax) постройки 2010 года, длина 268,8 м, ширина 32,2 м, дедвейт 52 788 т, флаг — Мальта. Судно в составе флота, с которым команда CYBERMOVE работала по направлению управления судами."
+            "FORT DESAIX — контейнеровоз (Panamax) постройки 2010 года, длина 268,8 м, ширина 32,2 м, дедвейт 52 788 т, флаг — Мальта. Судно в составе флота, с которым команда Cyber Move Consulting работала по направлению управления судами."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Управление организацией работы на борту: экипаж и вахты, судовые процессы и регламенты, снабжение и бункеровка, документооборот, отчётность и взаимодействие с оператором, портами и классификационным обществом."
           ],
@@ -4282,14 +4312,14 @@
           "kind": "project",
           "title": "Project",
           "paras": [
-            "FORT DESAIX is a container ship (Panamax) built in 2010: 268.8 m long, 32.2 m beam, 52,788 t deadweight, Malta flag. One of the vessels the CYBERMOVE team worked with in ship management."
+            "FORT DESAIX is a container ship (Panamax) built in 2010: 268.8 m long, 32.2 m beam, 52,788 t deadweight, Malta flag. One of the vessels the Cyber Move Consulting team worked with in ship management."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Management of shipboard organisation: crew and watches, onboard processes and procedures, supplies and bunkering, documentation, reporting and liaison with the operator, ports and the classification society."
           ],
@@ -4327,13 +4357,13 @@
     },
     "seo": {
       "ru": {
-        "title": "FORT DESAIX: морской флот — кейс CYBERMOVE",
-        "description": "Опыт управления контейнеровозами: FORT DESAIX, контейнеровоз (Panamax), 268,8 м, 2010 г. постройки. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "FORT DESAIX: морской флот — кейс Cyber Move Consulting",
+        "description": "Опыт управления контейнеровозами: FORT DESAIX, контейнеровоз (Panamax), 268,8 м, 2010 г. постройки. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "FORT DESAIX"
       },
       "en": {
-        "title": "FORT DESAIX: maritime — CYBERMOVE case",
-        "description": "Ship management experience: FORT DESAIX, container ship (Panamax), 268.8 m, built 2010. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "FORT DESAIX: maritime — Cyber Move Consulting case",
+        "description": "Ship management experience: FORT DESAIX, container ship (Panamax), 268.8 m, built 2010. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "FORT DESAIX"
       }
     }
@@ -4341,6 +4371,7 @@
   {
     "id": "as-claudia",
     "n": "31",
+    "rank": 8,
     "sector": "maritime",
     "name": {
       "ru": "AS CLAUDIA",
@@ -4429,14 +4460,14 @@
           "kind": "project",
           "title": "Проект",
           "paras": [
-            "AS CLAUDIA — контейнеровоз постройки 2007 года, длина 222,16 м, ширина 30 м, дедвейт 39 337 т, флаг — Либерия. Судно в составе флота, с которым команда CYBERMOVE работала по направлению управления судами."
+            "AS CLAUDIA — контейнеровоз постройки 2007 года, длина 222,16 м, ширина 30 м, дедвейт 39 337 т, флаг — Либерия. Судно в составе флота, с которым команда Cyber Move Consulting работала по направлению управления судами."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Управление организацией работы на борту: экипаж и вахты, судовые процессы и регламенты, снабжение и бункеровка, документооборот, отчётность и взаимодействие с оператором, портами и классификационным обществом."
           ],
@@ -4514,14 +4545,14 @@
           "kind": "project",
           "title": "Project",
           "paras": [
-            "AS CLAUDIA is a container ship built in 2007: 222.16 m long, 30 m beam, 39,337 t deadweight, Liberia flag. One of the vessels the CYBERMOVE team worked with in ship management."
+            "AS CLAUDIA is a container ship built in 2007: 222.16 m long, 30 m beam, 39,337 t deadweight, Liberia flag. One of the vessels the Cyber Move Consulting team worked with in ship management."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Management of shipboard organisation: crew and watches, onboard processes and procedures, supplies and bunkering, documentation, reporting and liaison with the operator, ports and the classification society."
           ],
@@ -4559,13 +4590,13 @@
     },
     "seo": {
       "ru": {
-        "title": "AS CLAUDIA: морской флот — кейс CYBERMOVE",
-        "description": "Опыт управления контейнеровозами: AS CLAUDIA, контейнеровоз, 222,16 м, 2007 г. постройки. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "AS CLAUDIA: морской флот — кейс Cyber Move Consulting",
+        "description": "Опыт управления контейнеровозами: AS CLAUDIA, контейнеровоз, 222,16 м, 2007 г. постройки. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "AS CLAUDIA"
       },
       "en": {
-        "title": "AS CLAUDIA: maritime — CYBERMOVE case",
-        "description": "Ship management experience: AS CLAUDIA, container ship, 222.16 m, built 2007. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "AS CLAUDIA: maritime — Cyber Move Consulting case",
+        "description": "Ship management experience: AS CLAUDIA, container ship, 222.16 m, built 2007. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "AS CLAUDIA"
       }
     }
@@ -4573,6 +4604,7 @@
   {
     "id": "as-constantina",
     "n": "32",
+    "rank": 9,
     "sector": "maritime",
     "name": {
       "ru": "AS CONSTANTINA",
@@ -4661,14 +4693,14 @@
           "kind": "project",
           "title": "Проект",
           "paras": [
-            "AS CONSTANTINA — контейнеровоз постройки 2005 года, длина 221,69 м, ширина 29,86 м, дедвейт 37 883 т, флаг — Либерия. Судно в составе флота, с которым команда CYBERMOVE работала по направлению управления судами."
+            "AS CONSTANTINA — контейнеровоз постройки 2005 года, длина 221,69 м, ширина 29,86 м, дедвейт 37 883 т, флаг — Либерия. Судно в составе флота, с которым команда Cyber Move Consulting работала по направлению управления судами."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Управление организацией работы на борту: экипаж и вахты, судовые процессы и регламенты, снабжение и бункеровка, документооборот, отчётность и взаимодействие с оператором, портами и классификационным обществом."
           ],
@@ -4746,14 +4778,14 @@
           "kind": "project",
           "title": "Project",
           "paras": [
-            "AS CONSTANTINA is a container ship built in 2005: 221.69 m long, 29.86 m beam, 37,883 t deadweight, Liberia flag. One of the vessels the CYBERMOVE team worked with in ship management."
+            "AS CONSTANTINA is a container ship built in 2005: 221.69 m long, 29.86 m beam, 37,883 t deadweight, Liberia flag. One of the vessels the Cyber Move Consulting team worked with in ship management."
           ],
           "items": [],
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Management of shipboard organisation: crew and watches, onboard processes and procedures, supplies and bunkering, documentation, reporting and liaison with the operator, ports and the classification society."
           ],
@@ -4791,13 +4823,13 @@
     },
     "seo": {
       "ru": {
-        "title": "AS CONSTANTINA: морской флот — кейс CYBERMOVE",
-        "description": "Опыт управления контейнеровозами: AS CONSTANTINA, контейнеровоз, 221,69 м, 2005 г. постройки. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "AS CONSTANTINA: морской флот — кейс Cyber Move Consulting",
+        "description": "Опыт управления контейнеровозами: AS CONSTANTINA, контейнеровоз, 221,69 м, 2005 г. постройки. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "AS CONSTANTINA"
       },
       "en": {
-        "title": "AS CONSTANTINA: maritime — CYBERMOVE case",
-        "description": "Ship management experience: AS CONSTANTINA, container ship, 221.69 m, built 2005. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "AS CONSTANTINA: maritime — Cyber Move Consulting case",
+        "description": "Ship management experience: AS CONSTANTINA, container ship, 221.69 m, built 2005. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "AS CONSTANTINA"
       }
     }
@@ -4805,6 +4837,7 @@
   {
     "id": "art-mango-production",
     "n": "33",
+    "rank": 132,
     "sector": "pro",
     "name": {
       "ru": "ART MANGO PRODUCTION",
@@ -4852,8 +4885,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -4886,8 +4919,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -4931,13 +4964,13 @@
     },
     "seo": {
       "ru": {
-        "title": "ART MANGO PRODUCTION: недвижимость и право — кейс CYBERMOVE",
-        "description": "Международная выставка в Каннах об элитной недвижимости и иммиграции. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "ART MANGO PRODUCTION: недвижимость и право — кейс Cyber Move Consulting",
+        "description": "Международная выставка в Каннах об элитной недвижимости и иммиграции. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "ART MANGO PRODUCTION"
       },
       "en": {
-        "title": "ART MANGO PRODUCTION: real estate and law — CYBERMOVE case",
-        "description": "An international exhibition in Cannes on luxury real estate and immigration. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "ART MANGO PRODUCTION: real estate and law — Cyber Move Consulting case",
+        "description": "An international exhibition in Cannes on luxury real estate and immigration. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "ART MANGO PRODUCTION"
       }
     }
@@ -4945,6 +4978,7 @@
   {
     "id": "morris-group",
     "n": "34",
+    "rank": 13,
     "sector": "pro",
     "name": {
       "ru": "MORIS (Moris Group)",
@@ -4983,8 +5017,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -5016,8 +5050,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -5060,13 +5094,13 @@
     },
     "seo": {
       "ru": {
-        "title": "MORIS (Moris Group): недвижимость и право — кейс CYBERMOVE",
-        "description": "Маркетинг и PR юридической компании. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "MORIS (Moris Group): недвижимость и право — кейс Cyber Move Consulting",
+        "description": "Маркетинг и PR юридической компании. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "MORIS (Moris Group)"
       },
       "en": {
-        "title": "MORIS (Moris Group): real estate and law — CYBERMOVE case",
-        "description": "Marketing and PR for a law firm. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "MORIS (Moris Group): real estate and law — Cyber Move Consulting case",
+        "description": "Marketing and PR for a law firm. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "MORIS (Moris Group)"
       }
     }
@@ -5074,6 +5108,7 @@
   {
     "id": "education",
     "n": "35",
+    "rank": 134,
     "sector": "pro",
     "name": {
       "ru": "Образовательные проекты",
@@ -5112,8 +5147,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -5146,8 +5181,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -5191,13 +5226,13 @@
     },
     "seo": {
       "ru": {
-        "title": "Образовательные проекты — кейс CYBERMOVE",
-        "description": "Продюсирование образовательных продуктов совместно с блогерами. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "Образовательные проекты — кейс Cyber Move Consulting",
+        "description": "Продюсирование образовательных продуктов совместно с блогерами. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "Образовательные проекты"
       },
       "en": {
-        "title": "Educational projects: real estate and law — CYBERMOVE case",
-        "description": "Producing educational products together with creators. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "Educational projects: real estate and law — Cyber Move Consulting case",
+        "description": "Producing educational products together with creators. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "Educational projects"
       }
     }
@@ -5205,6 +5240,7 @@
   {
     "id": "cybermove-games",
     "n": "36",
+    "rank": 135,
     "sector": "tech",
     "name": {
       "ru": "CYBERMOVE GAMES",
@@ -5252,8 +5288,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Стратегия, координация и реализация профильных задач проекта."
           ],
@@ -5285,8 +5321,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Strategy, coordination and hands-on delivery of the project workstreams."
           ],
@@ -5328,13 +5364,13 @@
     },
     "seo": {
       "ru": {
-        "title": "CYBERMOVE GAMES: digital и VR — кейс CYBERMOVE",
-        "description": "VR-проект с платформой физического перемещения: движение телом вместо контроллеров. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "CYBERMOVE GAMES: digital и VR — кейс Cyber Move Consulting",
+        "description": "VR-проект с платформой физического перемещения: движение телом вместо контроллеров. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "CYBERMOVE GAMES"
       },
       "en": {
-        "title": "CYBERMOVE GAMES: digital and VR — CYBERMOVE case",
-        "description": "A VR project with a physical locomotion platform: moving with your body instead of controllers. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "CYBERMOVE GAMES: digital and VR — Cyber Move Consulting case",
+        "description": "A VR project with a physical locomotion platform: moving with your body instead of controllers. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "CYBERMOVE GAMES"
       }
     }
@@ -5342,6 +5378,7 @@
   {
     "id": "apicapsules",
     "n": "37",
+    "rank": 136,
     "sector": "tech",
     "name": {
       "ru": "APICAPSULES",
@@ -5389,8 +5426,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "Роль CYBERMOVE",
+          "kind": "extra",
+          "title": "Роль Cyber Move Consulting",
           "paras": [
             "Product concept, business development и координация подготовки проекта."
           ],
@@ -5430,8 +5467,8 @@
           "numbered": false
         },
         {
-          "kind": "role",
-          "title": "CYBERMOVE role",
+          "kind": "extra",
+          "title": "Cyber Move Consulting role",
           "paras": [
             "Product concept, business development and coordination of the project set-up."
           ],
@@ -5472,13 +5509,13 @@
     },
     "seo": {
       "ru": {
-        "title": "APICAPSULES: digital и VR — кейс CYBERMOVE",
-        "description": "Стартап от идеи до оформленной продуктовой концепции. Что делали, роль CYBERMOVE и дисциплины проекта.",
+        "title": "APICAPSULES: digital и VR — кейс Cyber Move Consulting",
+        "description": "Стартап от идеи до оформленной продуктовой концепции. Что делали, роль Cyber Move Consulting и дисциплины проекта.",
         "h1": "APICAPSULES"
       },
       "en": {
-        "title": "APICAPSULES: digital and VR — CYBERMOVE case",
-        "description": "A startup taken from idea to a fully shaped product concept. What we did, the CYBERMOVE role and project disciplines.",
+        "title": "APICAPSULES: digital and VR — Cyber Move Consulting case",
+        "description": "A startup taken from idea to a fully shaped product concept. What we did, the Cyber Move Consulting role and project disciplines.",
         "h1": "APICAPSULES"
       }
     }

@@ -147,51 +147,17 @@ test.describe('interactions (desktop)', () => {
     expect(await page.evaluate(() => document.activeElement?.classList.contains('hdr__menu'))).toBe(true);
   });
 
-  test('home window click navigates', async () => {
-    await page.goto('/');
-    await page.locator('[data-win="cases"]').click();
-    await expect(page).toHaveURL(/\/cases\/$/);
-  });
-
-  test('cases: 8 sections, chips lead to sections, card opens the case page', async () => {
-    await page.goto('/cases/');
-    await expect(page.locator('.csec')).toHaveCount(8);
-    await expect(page.locator('.pcard')).toHaveCount(37);
-    await expect(page.locator('#maritime .pcard')).toHaveCount(3);
-    await page.locator('.csnav .chip[data-sector="maritime"]').click();
-    await expect(page).toHaveURL(/#maritime$/);
-    await expect(page.locator('.csnav .chip[data-sector="maritime"]')).toHaveClass(/is-on/);
-    await page.goto('/cases/?sector=b2b');
-    await page.waitForTimeout(500);
-    expect(await page.evaluate(() => Math.abs(document.getElementById('b2b')!.getBoundingClientRect().top) < 400)).toBe(true);
-    await page.goto('/cases/');
-    await page.locator('#maritime .pcard__link').first().click();
-    await expect(page).toHaveURL(/\/cases\/fort-desaix\/$/);
-    await expect(page.locator('.vessel')).toBeVisible();
-  });
-
-  test('CORE schema: nodes are links to service areas, schema rotates', async () => {
-    await page.goto('/');
-    const node = page.locator('.orbit__node--sys[data-node="analytics"]');
-    await expect(node).toHaveAttribute('href', '/services/audit/');
-    await expect(page.locator('.orbit__node--sys')).toHaveCount(11);
-    const x0 = await page.locator('[data-node="crm"] .orbit__dot').getAttribute('cx');
-    await page.waitForTimeout(2500);
-    const x1 = await page.locator('[data-node="crm"] .orbit__dot').getAttribute('cx');
-    expect(x1).not.toBe(x0);
-  });
-
   test('contact: ?service preselects, validation, WhatsApp', async () => {
     await page.goto('/contact/?service=crm');
-    await expect(page.locator('select[name="service"]')).toHaveValue('crm');
+    await expect(page.locator('.contact__form select[name="service"]')).toHaveValue('crm');
     await page.evaluate(() => { (window as unknown as { __opened: string[] }).__opened = []; window.open = (u?: string | URL) => { (window as unknown as { __opened: string[] }).__opened.push(String(u)); return null; }; });
-    await page.locator('.cform__submit').click();
-    await expect(page.locator('#cf-name-err')).not.toBeEmpty();
-    await expect(page.locator('#cf-contact-err')).not.toBeEmpty();
+    await page.locator('.contact__form .cform__submit').click();
+    await expect(page.locator('.contact__form #cf-name-err')).not.toBeEmpty();
+    await expect(page.locator('.contact__form #cf-contact-err')).not.toBeEmpty();
     await page.fill('#cf-name', 'Test');
     await page.fill('#cf-contact', '+7 701 000 00 00');
-    await page.locator('.chip--check').first().click();
-    await page.locator('.cform__submit').click();
+    await page.locator('.contact__form .chip--check').first().click();
+    await page.locator('.contact__form .cform__submit').click();
     const opened = await page.evaluate(() => (window as unknown as { __opened: string[] }).__opened);
     expect(opened.length).toBe(1);
     expect(opened[0]).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
@@ -235,68 +201,70 @@ test('performance: no long tasks > 50 ms while scrolling home (4× CPU throttle)
   await ctx.close();
 });
 
-test.describe('fixes 10', () => {
-  test('case photos are never grayscale', async ({ page }) => {
-    for (const path of ['/', '/cases/', '/services/systems/', '/cases/usyk/', '/en/cases/']) {
-      await page.goto(path);
-      const gray = await page.evaluate(() => [...document.querySelectorAll('.pphoto')].filter((el) => getComputedStyle(el).filter.includes('grayscale')).length);
-      expect(gray, path).toBe(0);
+test.describe('rework (docs/14-rework.md)', () => {
+  test('home: block order, one button, one-line title at 320–414 px', async ({ browser }) => {
+    for (const w of [320, 360, 375, 414]) {
+      const ctx = await browser.newContext({ viewport: { width: w, height: 812 }, isMobile: true, hasTouch: true });
+      const page = await ctx.newPage();
+      await page.goto('/');
+      const t = page.locator('h1');
+      await expect(t).toHaveText('Убираем хаос. Структурируем. Развиваем бизнес.');
+      expect(await t.evaluate((e) => e.scrollWidth <= e.clientWidth + 1 && e.getBoundingClientRect().height < 40), `title at ${w}`).toBe(true);
+      await ctx.close();
     }
-  });
-  test('logo with CONSULTING, partner number, floating WhatsApp', async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
+    const page = await browser.newPage();
     await page.goto('/');
-    await expect(page.locator('.hdr__wm .wm__sub')).toHaveText('CONSULTING');
-    await expect(page.locator('.hdr__partner')).toContainText('+7 701 825 1028');
-    const fab = page.locator('[data-wa-fab]');
-    await expect(fab).toHaveAttribute('href', 'https://wa.me/77018251028');
-    await expect(fab).not.toHaveClass(/is-on/);
-    await page.mouse.wheel(0, 1400);
-    await expect(fab).toHaveClass(/is-on/);
-    expect(await page.evaluate(() => document.body.innerText.includes('825 10 28'))).toBe(false);
+    const order = await page.evaluate(() => [...document.querySelectorAll('main > section')].map((s) => s.className.split(' ').find((c) => /^(rhero|rcases|rbrands|rsvc|rmethod|rins|cta)$/.test(c)) || s.className));
+    expect(order).toEqual(['rhero', 'rcases', 'rbrands', 'rsvc', 'home-method', 'rins', 'cta'].map((x) => (x === 'home-method' ? 'rmethod' : x)));
+    await expect(page.locator('.rhero .btn')).toHaveCount(1);
+    await expect(page.locator('.rsvc__row')).toHaveCount(10);
+    await expect(page.locator('.cta a[href*="wa.me"]')).toHaveCount(0);
   });
-  test('home hero texts and buttons from the skeleton', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator('h1')).toHaveText('Двигаем бизнес вперёд.');
-    await expect(page.locator('.home-hero .hero__actions a').first()).toHaveAttribute('href', '/contact/?service=business-audit');
-    await expect(page.locator('.home-hero .hero__actions a').nth(1)).toHaveAttribute('href', '/cases/');
-  });
-});
-
-test.describe('fixes 2', () => {
-  test('mobile CORE: tap selects a node, caption links to the area', async ({ browser }) => {
+  test('home cases: all chips visible, ranked ribbon, filter', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     await page.goto('/');
-    await page.locator('.orbit').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(2500);
-    const node = page.locator('.orbit__node--sys.is-key').first();
-    await node.locator('.orbit__hit').tap({ force: true });
-    const pick = page.locator('[data-orbit-pick]');
-    await expect(pick).toBeVisible();
-    expect(page.url()).toMatch(/\/$/);
-    await expect(pick).toHaveAttribute('href', await node.getAttribute('href') as string);
+    const chips = page.locator('.rcases .gchip');
+    await expect(chips).toHaveCount(10);
+    const vw = 375;
+    for (const b of await chips.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().right))) expect(b).toBeLessThanOrEqual(vw);
+    const ids = await page.locator('#home-cases .pcard:not([aria-hidden])').evaluateAll((els) => els.slice(0, 2).map((e) => (e as HTMLElement).dataset.id));
+    expect(ids).toEqual(['usyk', 'udar']);
+    await page.locator('.gchip[data-sector="maritime"]').click();
+    await page.waitForTimeout(400);
+    await expect(page.locator('#home-cases .pcard:not(.is-off)')).toHaveCount(6); // 3 cases × 2 copies
+    await expect(page.locator('.rcases a[href="/cases/"]')).toHaveCount(1);
     await ctx.close();
   });
-  test('no background images on service area / service pages; new service titles', async ({ page }) => {
-    for (const path of ['/services/audit/', '/services/systems/crm/', '/en/services/traffic/seo/']) {
-      await page.goto(path);
-      await expect(page.locator('.dir-hero img')).toHaveCount(0);
-    }
-    await page.goto('/services/systems/crm/');
-    await expect(page.locator('h1')).toContainText('CRM, в которой работают');
-    await expect(page).toHaveTitle(/CRM/);
-    await page.goto('/en/contact/');
-    await expect(page.locator('select[name="service"] option[value="smm"]')).toHaveText('Social media');
+  test('/cases/: 9 sections, websites last, /sites/ is gone', async ({ page }) => {
+    await page.goto('/cases/');
+    await expect(page.locator('.csec2')).toHaveCount(9);
+    await expect(page.locator('.csec2').last()).toHaveAttribute('id', 'sites');
+    await expect(page.locator('.pgrid')).toHaveCount(0);
+    const r = await page.request.get('/sites/');
+    expect(r.status()).toBe(404); // the preview server has no redirects; on the host .htaccess → /cases/#sites
   });
-  test('mobile method strip appears inside the method block', async ({ browser }) => {
+  test('contact panel: fab + every CTA, four ways to close', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     await page.goto('/');
-    await page.locator('.home-method .method__step').nth(2).scrollIntoViewIfNeeded();
-    await page.waitForTimeout(600);
-    await expect(page.locator('.method__bar')).toBeVisible();
-    await expect(page.locator('.method__bar-stage')).not.toBeEmpty();
+    await page.locator('.rsvc__link[data-service="hr-consulting"]').click();
+    await expect(page.locator('#cpanel')).toBeVisible();
+    await expect(page.locator('#cpanel select[name="service"]')).toHaveValue('hr-consulting');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#cpanel')).toBeHidden();
+    await page.locator('[data-panel-open]').click();
+    await expect(page.locator('#cpanel')).toBeVisible();
+    await page.locator('.cpanel__close').click();
+    await expect(page.locator('#cpanel')).toBeHidden();
+    await page.locator('.rhero .btn').click();
+    await expect(page.locator('#cpanel select[name="service"]')).toHaveValue('business-audit');
     await ctx.close();
+  });
+  test('name: CYBER MOVE CONSULTING, green bar, no sound in header', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.hdr__wm .wm__type')).toHaveText(/CYBER MOVE\s+CONSULTING/);
+    await expect(page.locator('.hdr [data-music]')).toHaveCount(0);
+    await expect(page).toHaveTitle('Бизнес-консалтинг в Казахстане — Cyber Move Consulting');
   });
 });

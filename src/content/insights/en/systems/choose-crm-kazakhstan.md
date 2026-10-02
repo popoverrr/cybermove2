@@ -1,6 +1,6 @@
 ---
 title: "How to choose a CRM for your sales team in Kazakhstan"
-seoTitle: "How to Choose a CRM for Sales in Kazakhstan — CYBERMOVE"
+seoTitle: "How to Choose a CRM for Sales in Kazakhstan — Cyber Move Consulting"
 description: "How to choose a CRM for a sales team in Kazakhstan: WhatsApp, telephony, Kaspi payments, data residency, types of systems and when you don't need one yet."
 date: 2026-09-25
 direction: systems

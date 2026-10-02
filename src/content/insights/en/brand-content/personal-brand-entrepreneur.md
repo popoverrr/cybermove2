@@ -1,6 +1,6 @@
 ---
 title: "A personal brand for entrepreneurs: where to start if you have no time for social media"
-seoTitle: "Personal Branding for Entrepreneurs — CYBERMOVE"
+seoTitle: "Personal Branding for Entrepreneurs — Cyber Move Consulting"
 description: "A personal brand for entrepreneurs without daily posting: expert positioning, a monthly production day, content formats and what to delegate. A practical plan."
 date: 2026-09-25
 direction: brand-content

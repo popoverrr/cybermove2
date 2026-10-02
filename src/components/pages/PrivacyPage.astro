@@ -7,7 +7,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const sections = ta<{ h: string; p: string }[]>(lang, 'privacy.sections');
 ---
-<Base lang={lang} page="privacy" path={`cybermove / ${t(lang, 'footer.privacy').toLowerCase()}`} crumbs={[{ name: t(lang, 'privacy.title'), route: 'privacy/' }]}>
+<Base lang={lang} page="privacy" path={`cyber move / ${t(lang, 'footer.privacy').toLowerCase()}`} crumbs={[{ name: t(lang, 'privacy.title'), route: 'privacy/' }]}>
   <Block theme="light" label={t(lang, 'privacy.title')} first hero class="privacy">
     <div class="container">
       <div class="prose">

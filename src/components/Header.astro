@@ -3,25 +3,19 @@ import { t, url, otherLang, type Lang, type PageKey } from '../lib/i18n';
 import { contacts } from '../lib/content';
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { asset } from '../lib/i18n';
 
 interface Props { lang: Lang; page: PageKey | 'notFound'; altHref: string }
 const { lang, page, altHref } = Astro.props;
 const navKeys = ['services', 'cases', 'insights', 'about', 'contact'] as const;
-// the mobile menu also lists «Websites» right after «Cases» (docs/13-fixes-4.md §4.3)
-const menuKeys = ['services', 'cases', 'sites', 'insights', 'about', 'contact'] as const;
+const menuKeys = navKeys;
 const other = otherLang(lang);
 const firstLabel = '';
-// the music button is rendered only when the track is part of the build (docs/10-fixes.md §6)
-const hasMusic = existsSync(join(process.cwd(), 'public/audio/ambient.mp3'));
 ---
 <header class="hdr" id="hdr" data-state="top" data-theme="dark">
   <div class="hdr__cap" aria-hidden="true"><i class="hdr__progress"></i></div>
 
   <div class="hdr__bar">
-    <a class="hdr__brand" href={url(lang, 'home')} aria-label="CYBERMOVE">
+    <a class="hdr__brand" href={url(lang, 'home')} aria-label="Cyber Move Consulting">
       <Wordmark class="hdr__wm" />
       <Wordmark compact class="hdr__wm-c" />
     </a>
@@ -48,12 +42,6 @@ const hasMusic = existsSync(join(process.cwd(), 'public/audio/ambient.mp3'));
       </a>
     </div>
 
-    {hasMusic && (
-      <button class="hdr__music" type="button" data-music data-src={asset('audio/ambient.mp3')} aria-pressed="false"
-        data-on={t(lang, 'common.musicOn')} data-off={t(lang, 'common.musicOff')} aria-label={t(lang, 'common.musicOn')}>
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      </button>
-    )}
 
     <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu-panel" data-open-label={t(lang, 'nav.menu')} data-close-label={t(lang, 'nav.close')}>
       <span class="hdr__burger" aria-hidden="true"><i></i><i></i></span>

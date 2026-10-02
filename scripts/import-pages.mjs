@@ -6,12 +6,13 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { brand } from './brand.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(root, 'content/source');
 
 function load(lang, rel) {
-  const raw = readFileSync(join(SRC, lang, rel), 'utf8').replace(/\r/g, '');
+  const raw = brand(readFileSync(join(SRC, lang, rel), 'utf8').replace(/\r/g, ''));
   const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const fm = {};
   if (m) for (const l of m[1].split('\n')) { const i = l.indexOf(':'); fm[l.slice(0, i).trim()] = l.slice(i + 1).trim(); }
@@ -27,7 +28,7 @@ const h2 = (ls, i) => strip(ls[i].slice(3));
 const nth = (ls, re, n) => ls.filter((l) => re.test(l))[n];
 
 function build(lang) {
-  const ui = JSON.parse(readFileSync(join(root, `content/i18n/_ui.${lang}.json`), 'utf8'));
+  const ui = JSON.parse(brand(readFileSync(join(root, `content/i18n/_ui.${lang}.json`), 'utf8')));
   const home = load(lang, 'index.md'), H = home.lines;
   const svc = load(lang, 'services.md'), S = svc.lines;
   const cases = load(lang, 'cases.md'), C = cases.lines;
@@ -156,14 +157,14 @@ function build(lang) {
 
   return {
     meta: {
-      siteName: 'CYBERMOVE',
+      siteName: 'Cyber Move Consulting',
       home: meta(home.fm), services: meta(svc.fm), cases: meta(cases.fm), insights: meta(ins.fm),
       about: meta(about.fm), contact: meta(contact.fm), privacy: meta(privacy.fm), notFound: ui.meta.notFound,
       sites: { title: ui.sites.metaTitle, description: ui.sites.lead },
     },
     nav,
     common: { ...ui.common, whatsapp: waBtn[1], codes: S[sH1 + 2] },
-    footer: { ...footer, bend: ui.footer.bend },
+    footer: { ...footer, tagline: ui.home.hero.title, bend: ui.footer.bend },
     home: {
       // hero texts: from the skeleton by the owner's decision (docs/10-fixes.md §1)
       hero: ui.home.hero,
@@ -175,7 +176,8 @@ function build(lang) {
       approach: { label: H[apAt - 1], title: cells(H[apAt].slice(3)).join(' '), items: approach, link: strip(H[apAt + 4]).replace(/\s*→$/, '') },
       cta: { label: H[ctaAt], title: h2(H, ctaAt + 1), lead: H[ctaAt + 2], primary: heroBtns[0], secondary: waBtn[1] },
     },
-    method: { label: A[apprAt - 1] && /^CHAOS/.test(A[apprAt - 1]) ? A[apprAt - 1] : S[sH1 + 2], title: h2(A, apprAt), steps },
+    // «How we work» (rework §9): owner's title and step names, descriptions and codes from the source
+    method: { label: S[sH1 + 2], title: ui.algorithm.title, steps: steps.map((x, k) => ({ ...x, title: ui.algorithm.steps[k] })) },
     services: {
       hero: { label: cells(S[sH1 - 1])[0], title: strip(S[sH1].slice(2)), lead: S[sH1 + 1], codes: S[sH1 + 2] },
       resultLabel: cells(S.find((l) => /^\S+:\s*\|/.test(l)))[0].replace(/:$/, ''),
@@ -188,7 +190,7 @@ function build(lang) {
       hero: { kicker: aH1[0], title: aH1[1], text: aText, codes: after(A, (l) => l === aText) },
       numbers: { title: h2(A, numAt), items: numbers },
       what: { title: h2(A, whatAt), items: what },
-      approach: { title: h2(A, apprAt), steps },
+      approach: { title: ui.algorithm.title, steps: steps.map((x, k) => ({ ...x, title: ui.algorithm.steps[k] })) },
       why: { title: h2(A, whyAt), items: why },
       formats: { title: h2(A, fmtAt), items: formats },
       metrics: { title: h2(A, metAt), lead: A[metAt + 1], items: metrics, alsoTitle, also },
@@ -227,6 +229,8 @@ function build(lang) {
     notFound: ui.notFound,
     // «Websites» section (texts given by the owner, docs/13-fixes-4.md §4)
     sites: ui.sites,
+    // rework (docs/14-rework.md): texts given by the owner
+    casesBlock: ui.casesBlock, homeServices: ui.homeServices, panel: ui.panel,
   };
 }
 

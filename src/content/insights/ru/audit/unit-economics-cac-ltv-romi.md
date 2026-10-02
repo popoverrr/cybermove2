@@ -1,6 +1,6 @@
 ---
 title: "Юнит-экономика для малого бизнеса: CAC, LTV и ROMI без сложных таблиц"
-seoTitle: "Юнит-экономика: CAC, LTV и ROMI простыми словами — CYBERMOVE"
+seoTitle: "Юнит-экономика: CAC, LTV и ROMI простыми словами — Cyber Move Consulting"
 description: "Юнит-экономика для малого бизнеса: как посчитать CAC, LTV и ROMI, где взять данные в CRM и рекламе, три типичные ошибки и расчёт на примере."
 date: 2026-09-25
 direction: audit

@@ -1,11 +1,10 @@
 ---
-// The shared closing block of every page: «Начнём с первичного разбора.» + WhatsApp.
+// The shared closing block of every page: «Начнём с первичного разбора.» — one button that opens the contact
+// panel (the WhatsApp button was removed, docs/14-rework.md §11).
 import CtaBlock from './CtaBlock.astro';
 import { t, url, type Lang } from '../lib/i18n';
-import { contacts } from '../lib/content';
 interface Props { lang: Lang; theme?: 'dark' | 'light'; query?: string }
 const { lang, theme = 'dark', query = '' } = Astro.props;
 ---
 <CtaBlock theme={theme} label={t(lang, 'common.codes')} title={t(lang, 'home.cta.title')} lead={t(lang, 'home.cta.lead')}
-  primary={{ href: url(lang, 'contact', query), text: t(lang, 'home.cta.primary') }}
-  secondary={{ href: contacts.whatsapp.url, text: t(lang, 'home.cta.secondary'), icon: 'whatsapp', external: true }} />
+  primary={{ href: url(lang, 'contact', query), text: t(lang, 'home.cta.primary') }} />

@@ -27,7 +27,7 @@ function renderTabs() {
     strip.replaceChildren(frag);
     strip.hidden = false;
   }
-  const label = (main.dataset.path || '').replace(/^cybermove\s*\/\s*/i, '') || 'cybermove';
+  const label = (main.dataset.path || '').replace(/^cyber move\s*\/\s*/i, '') || 'cyber move consulting';
   tabs.push({ href: here, label });
   ss.setItem(TABS, JSON.stringify(tabs.slice(-4)));
 }

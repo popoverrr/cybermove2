@@ -1,6 +1,6 @@
 ---
 title: "Google Ads in Kazakhstan: how the auction works and why cost per click goes up"
-seoTitle: "Google Ads in Kazakhstan: Auction and CPC — CYBERMOVE"
+seoTitle: "Google Ads in Kazakhstan: Auction and CPC — Cyber Move Consulting"
 description: "Google Ads in Kazakhstan: how the auction works, what goes into Ad Rank, why cost per click rises and which reports to check so you stop overpaying for clicks."
 date: 2026-09-25
 direction: traffic
