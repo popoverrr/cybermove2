@@ -241,8 +241,9 @@ test.describe('rework (docs/14-rework.md)', () => {
     await expect(page.locator('.csec2')).toHaveCount(9);
     await expect(page.locator('.csec2').last()).toHaveAttribute('id', 'sites');
     await expect(page.locator('.pgrid')).toHaveCount(0);
-    const r = await page.request.get('/sites/');
-    expect(r.status()).toBe(404); // the preview server has no redirects; on the host .htaccess → /cases/#sites
+    // the preview server has no redirects (404); on the host .htaccess sends /sites/ → /cases/#sites (301)
+    const r = await page.request.get('/sites/', { maxRedirects: 0 });
+    expect([301, 404]).toContain(r.status());
   });
   test('contact panel: fab + every CTA, four ways to close', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
