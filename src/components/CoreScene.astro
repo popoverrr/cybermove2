@@ -1,35 +1,51 @@
 ---
-// The CORE scene (docs/14-rework.md §3): a 3D instrument drawn on <canvas> by src/scripts/core-scene.ts (loaded as
-// its own chunk after the first screen). Without JS / canvas the static SVG schema stays. Links to the service areas
-// are duplicated in a visually hidden list for keyboard and screen readers.
-import CoreOrbit from './CoreOrbit.astro';
+// The CORE scene (docs/14-rework.md §3, docs/15-stabilize.md §5): three concentric rings in close planes drawn on
+// <canvas> by src/scripts/core-scene.ts (its own chunk, after the first paint). Everything textual is HTML: «CORE» on
+// a plate, the drawing notes and the node labels, which stand in fixed slots (two columns) — the canvas only draws a
+// thin elbow leader from each label to its moving node. Before the script (and without JS) a CSS placeholder of the
+// same composition is shown, so the swap has no jump. The labels are links to the service areas.
 import { orbit, directionById } from '../lib/content';
 import { t, href, pick, type Lang } from '../lib/i18n';
 interface Props { lang: Lang; compact?: boolean }
 const { lang, compact = false } = Astro.props;
 const sys = orbit.filter((n) => n.ring === 'system');
 const core = orbit.filter((n) => n.ring === 'core');
+const YAW0 = 0.5;
+const sysNodes = sys.map((n, i) => {
+  const d = directionById(n.direction!);
+  const theta = (i / sys.length) * Math.PI * 2;
+  return {
+    id: n.id, label: n.label, ring: 1, theta, sys: true, index: String(i + 1).padStart(2, '0'),
+    href: href(lang, `services/${d.id}/`), name: pick(lang, d.nameFull),
+    side: Math.sin(theta + YAW0) < 0 ? -1 : 1, depth: Math.cos(theta + YAW0),
+  };
+});
+// slots: each column sorted far → near (top → bottom), so the leaders start out uncrossed
+const cols = [-1, 1].map((side) => sysNodes.filter((n) => n.side === side).sort((a, b) => a.depth - b.depth));
+const slotted = cols.flatMap((list) => {
+  const mob = new Set(list.filter((_, k) => k % 2 === 0 || list.length <= 4).slice(0, 4).map((n) => n.id));
+  const mList = list.filter((n) => mob.has(n.id));
+  const y = (k: number, n: number) => (n === 1 ? 50 : 12 + (k / (n - 1)) * 74);
+  return list.map((n, k) => ({ ...n, slot: k, yd: y(k, list.length), m: mob.has(n.id), ym: mob.has(n.id) ? y(mList.indexOf(n), mList.length) : 0 }));
+});
 const nodes = [
   ...core.map((n, i) => ({ id: n.id, label: n.label, ring: 0, theta: (i / core.length) * Math.PI * 2 + 0.2, sys: false })),
-  ...sys.map((n, i) => {
-    const d = directionById(n.direction!);
-    const onA = i % 2 === 0; // alternate between the two system rings
-    const k = Math.floor(i / 2);
-    return {
-      id: n.id, label: n.label, sys: true, index: String(i + 1).padStart(2, '0'),
-      ring: onA ? 1 : 2, theta: onA ? (k / 6) * Math.PI * 2 : (k / 5) * Math.PI * 2 + 0.6,
-      href: href(lang, `services/${d.id}/`), name: pick(lang, d.nameFull),
-    };
-  }),
+  ...slotted.map(({ depth, yd, ym, m, ...n }) => n),
 ];
-const areas = [...new Map(sys.map((n) => [n.direction!, directionById(n.direction!)])).values()];
 ---
 <figure class:list={['scene', compact && 'scene--compact']} data-core-scene data-compact={compact ? '' : undefined}>
+  <div class="scene__ph" aria-hidden="true"><i class="r0"></i><i class="r1"></i><i class="r2"></i><i class="sph"></i></div>
   <canvas class="scene__canvas" role="img" aria-label={t(lang, 'home.orbit.aria')}></canvas>
-  <div class="scene__fallback"><CoreOrbit lang={lang} /></div>
-  <ul class="sr-only">
-    {areas.map((d) => <li><a href={href(lang, `services/${d.id}/`)}>{pick(lang, d.nameFull)}</a></li>)}
-  </ul>
+  <span class="scene__core" aria-hidden="true">CORE</span>
+  <span class="scene__note scene__note--fig" aria-hidden="true">FIG. 01</span>
+  <span class="scene__note scene__note--codes" aria-hidden="true">CHAOS → CORE → SYSTEM → GROWTH</span>
+  {slotted.map((n) => (
+    <a class:list={['scene__lbl', n.side < 0 ? 'is-l' : 'is-r', !n.m && 'is-dt']} href={n.href} data-slot={n.id}
+       style={`--yd:${n.yd.toFixed(1)}%;--ym:${n.ym.toFixed(1)}%`} title={n.name}>
+      <span class="scene__idx">{n.index}</span> {n.label}
+    </a>
+  ))}
+  <span class="scene__tip" data-scene-tip hidden></span>
   <a class="orbit__pick label scene__pick" href="#" data-scene-pick hidden><span class="muted" data-pick-idx></span> <span data-pick-name></span> <span aria-hidden="true">→</span></a>
   <script type="application/json" data-scene-nodes set:html={JSON.stringify({ nodes })} />
 </figure>
@@ -39,7 +55,7 @@ const areas = [...new Map(sys.map((n) => [n.direction!, directionById(n.directio
   const roots = document.querySelectorAll<HTMLElement>('[data-core-scene]');
   if (roots.length && 'getContext' in document.createElement('canvas')) {
     const go = () => import('../scripts/core-scene').then(({ initCoreScene }) => roots.forEach((r) => initCoreScene(r)));
-    if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (f: () => void, o: object) => void }).requestIdleCallback(go, { timeout: 600 });
-    else setTimeout(go, 120);
+    const idle = () => ('requestIdleCallback' in window ? (window as unknown as { requestIdleCallback: (f: () => void, o: object) => void }).requestIdleCallback(go, { timeout: 800 }) : setTimeout(go, 120));
+    if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
   }
 </script>

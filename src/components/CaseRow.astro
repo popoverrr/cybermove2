@@ -1,27 +1,28 @@
 ---
-// Horizontal case ribbon (rework §6: cases always scroll sideways). auto — the home block: endless, moves by itself
-// (~30 px/s, two copies), pauses on touch/hover and resumes 3 s after a manual swipe; otherwise — a manual row with
-// snap, a soft fade on the right and arrow buttons on desktop (drag with the mouse, Shift + wheel).
+// Horizontal case ribbons (docs/15-stabilize.md §3).
+// auto (home): the track moves by transform (never by scrollLeft — phones round it to whole pixels and the ribbon
+// stood still), endless loop over a duplicated set, own swipe gesture (touch-action: pan-y keeps vertical page
+// scrolling with the browser). Only the «All» set (top cases by rank) is in the DOM; other categories wait in
+// <template>s and replace it on filter. manual (/cases/, service pages…): native horizontal scrolling with snap.
 import CaseCard from './CaseCard.astro';
 import SiteCard from './SiteCard.astro';
 import Icon from './Icon.astro';
 import { t, type Lang } from '../lib/i18n';
 import type { Case, Site } from '../lib/content';
-interface Props { lang: Lang; items: Case[]; sites?: Site[]; auto?: boolean; label?: string; id?: string }
-const { lang, items, sites = [], auto = false, label, id } = Astro.props;
-const copies = auto ? [0, 1] : [0];
+interface Props { lang: Lang; items: Case[]; sites?: Site[]; auto?: boolean; label?: string; id?: string; pools?: Record<string, Case[]>; sitePool?: Site[]; eagerFirst?: boolean }
+const { lang, items, sites = [], auto = false, label, id, pools = {}, sitePool = [], eagerFirst = false } = Astro.props;
 ---
 <div class:list={['crow', auto && 'crow--auto']} data-crow={auto ? 'auto' : 'manual'} id={id}>
-  <div class="crow__viewport" tabindex="-1">
+  <div class="crow__viewport">
     <ul class="crow__track list-reset" aria-label={label}>
-      {copies.map((copy) => (
-        <>
-          {items.map((c, i) => <CaseCard item={c} lang={lang} index={copy === 0 && i === 0 ? 1 : 99} dup={copy > 0} />)}
-          {sites.map((s) => <SiteCard site={s} lang={lang} dup={copy > 0} />)}
-        </>
-      ))}
+      {items.map((c, i) => <CaseCard item={c} lang={lang} index={i === 0 ? (eagerFirst ? 0 : 1) : 99} lazy={i > 1} />)}
+      {sites.map((s) => <SiteCard site={s} lang={lang} />)}
     </ul>
   </div>
+  {auto && Object.entries(pools).map(([key, list]) => (
+    <template data-pool={key}>{list.map((c) => <CaseCard item={c} lang={lang} lazy />)}</template>
+  ))}
+  {auto && sitePool.length > 0 && <template data-pool="sites">{sitePool.map((s) => <SiteCard site={s} lang={lang} />)}</template>}
   {!auto && (
     <div class="crow__nav" aria-hidden="true">
       <button type="button" class="crow__btn" data-crow-prev tabindex="-1" aria-label={t(lang, 'casesBlock.prev')}><Icon name="arrow" size={16} class="crow__prev-icon" /></button>

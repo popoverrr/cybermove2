@@ -502,3 +502,18 @@
     .method__step { opacity: 1 !important; }
   }
 }
+@layer components {
+  /* bend on phones: a composited CSS loop instead of per-frame path updates (stabilize §4) */
+  .bend.is-css .bend__svg { animation: bend-loop 40s linear infinite; animation-play-state: paused; }
+  .bend.is-css.is-on .bend__svg { animation-play-state: running; }
+  @keyframes bend-loop { to { transform: translate3d(var(--bend-unit, -50%), 0, 0); } }
+}
+@layer components {
+  /* phones (stabilize §4): the capsule never changes width here — fade it instead of animating a clip-path over a
+     blurred layer (a non-composited repaint every frame); the progress line follows scroll without a transition */
+  @media (max-width: 1023px) {
+    .hdr__cap { transition: opacity var(--dur-2) var(--ease-out); }
+    .hdr__cap::after { transition: none; }
+  }
+  .hdr__progress { transition: none; will-change: transform; }
+}

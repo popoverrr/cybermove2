@@ -67,3 +67,7 @@ if (panel && backdrop) {
     });
   });
 }
+
+// floating buttons hide over the footer (docs/15-stabilize.md §6)
+const ftr = document.querySelector('.ftr');
+if (ftr) new IntersectionObserver(([e]) => root.classList.toggle('fabs-off', e.isIntersecting)).observe(ftr);

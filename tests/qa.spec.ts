@@ -202,14 +202,16 @@ test('performance: no long tasks > 50 ms while scrolling home (4× CPU throttle)
 });
 
 test.describe('rework (docs/14-rework.md)', () => {
-  test('home: block order, one button, one-line title at 320–414 px', async ({ browser }) => {
-    for (const w of [320, 360, 375, 414]) {
+  test('home: block order, one button, three-line title at 320–430 px (stabilize §1)', async ({ browser }) => {
+    for (const w of [320, 360, 375, 414, 430]) {
       const ctx = await browser.newContext({ viewport: { width: w, height: 812 }, isMobile: true, hasTouch: true });
       const page = await ctx.newPage();
       await page.goto('/');
       const t = page.locator('h1');
       await expect(t).toHaveText('Убираем хаос. Структурируем. Развиваем бизнес.');
-      expect(await t.evaluate((e) => e.scrollWidth <= e.clientWidth + 1 && e.getBoundingClientRect().height < 40), `title at ${w}`).toBe(true);
+      const r = await t.evaluate((e) => ({ fit: e.scrollWidth <= e.clientWidth + 1, fs: parseFloat(getComputedStyle(e).fontSize), lines: [...e.querySelectorAll('.rhero__line')].map((l) => l.getClientRects().length) }));
+      expect(r.fit && r.lines.length === 3 && r.lines.every((n) => n === 1), `title at ${w}`).toBe(true);
+      if (w >= 375) expect(r.fs, `title size at ${w}`).toBeGreaterThanOrEqual(36);
       await ctx.close();
     }
     const page = await browser.newPage();

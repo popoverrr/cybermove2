@@ -10,3 +10,4 @@ import './lang';
 import './accordion';
 import './audio';
 import './subbar';
+import './cv-warm';

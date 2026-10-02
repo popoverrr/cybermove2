@@ -6,10 +6,12 @@ const listeners = new Set<Listener>();
 let lastY = typeof window !== 'undefined' ? window.scrollY : 0;
 let pending = false;
 
+// scrollY is read in the read phase: read after a DOM write it would force style + layout (docs/15-stabilize.md §4)
+let curY = lastY;
 const task = {
-  read: () => { /* reading scrollY is cheap and layout-free */ },
+  read: () => { curY = window.scrollY; },
   write: (_n: number, dt: number) => {
-    const y = window.scrollY;
+    const y = curY;
     const dy = y - lastY;
     lastY = y;
     for (const l of listeners) l(y, dy, dt);

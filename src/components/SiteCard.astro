@@ -1,20 +1,23 @@
 ---
-// A website as a case card (rework §6.2): the skeleton's window as a browser — domain in the bar, screenshot inside;
-// name, type, one line of summary. External link, new tab (sites have no pages of their own).
+// A website as a case card (rework §6.2): the skeleton's window as a browser — domain in the bar, the long
+// screenshot inside slowly scrolls down and back while the card is on screen (owner's request; transform only,
+// paused off-screen and with reduced motion). Name, type, one line of summary. External link, new tab.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { t, pick, type Lang } from '../lib/i18n';
 import type { Site } from '../lib/content';
-interface Props { site: Site; lang: Lang; as?: 'li' | 'div'; dup?: boolean }
-const { site, lang, as: Tag = 'li', dup = false } = Astro.props;
+interface Props { site: Site; lang: Lang; as?: 'li' | 'div' }
+const { site, lang, as: Tag = 'li' } = Astro.props;
 const shots = import.meta.glob<{ default: ImageMetadata }>('/src/assets/sites/*-desktop.webp', { eager: true });
 const img = shots[`/src/assets/sites/${site.id}-desktop.webp`]?.default;
 ---
-<Tag class="pcard pcard--site" data-sector="sites" data-id={site.id} aria-hidden={dup ? 'true' : undefined}>
-  <a class="pcard__link" href={site.url} target="_blank" rel="noopener" tabindex={dup ? -1 : undefined} data-cursor={t(lang, 'sites.openShort').replace(/\s*↗$/, '')}>
+<Tag class="pcard pcard--site" data-sector="sites" data-id={site.id}>
+  <a class="pcard__link" href={site.url} target="_blank" rel="noopener" data-cursor={t(lang, 'sites.openShort').replace(/\s*↗$/, '')}>
     <div class="pcard__cover pcard__cover--win">
       <span class="win__bar pcard__winbar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{site.domain}</span><span></span></span>
-      {img && <Image src={img} alt={t(lang, 'sites.alt', { domain: site.domain })} widths={[480, 800]} sizes="(min-width: 1024px) 400px, 72vw" loading="lazy" decoding="async" class="pphoto pcard__shot" />}
+      <span class="pcard__shotwrap" data-site-shot>
+        {img && <Image src={img} alt={t(lang, 'sites.alt', { domain: site.domain })} widths={[480, 720]} sizes="(min-width: 1024px) 340px, 72vw" loading="lazy" decoding="async" class="pcard__shot" />}
+      </span>
     </div>
     <div class="pcard__body">
       <p class="label muted">{pick(lang, site.type)}</p>
@@ -23,3 +26,6 @@ const img = shots[`/src/assets/sites/${site.id}-desktop.webp`]?.default;
     </div>
   </a>
 </Tag>
+<script>
+  import '../scripts/site-shots';
+</script>

@@ -324,8 +324,7 @@
     position: absolute; left: var(--s-3); top: var(--s-3); right: auto; max-width: calc(100% - var(--s-5));
     display: inline-flex; align-items: center; gap: var(--s-2);
     height: 28px; padding: 0 10px 0 8px; border-radius: 8px;
-    background: color-mix(in srgb, var(--c-space) 72%, transparent);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    background: rgba(8, 9, 11, 0.78);
     border: var(--hairline) solid rgba(242, 242, 239, 0.16);
     color: var(--c-chalk);
   }

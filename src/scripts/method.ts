@@ -59,14 +59,20 @@ document.querySelectorAll<HTMLElement>('[data-method]').forEach((root) => {
   if (barFill) {
     const list = root.querySelector<HTMLElement>('.method__steps')!;
     let queued = false;
+    // geometry cached (re-read only when the list resizes) — no layout reads per scroll frame
+    let top = 0, h = 1, vh = window.innerHeight;
+    const cache = () => { const r = list.getBoundingClientRect(); top = r.top + window.scrollY; h = r.height; vh = window.innerHeight; };
+    cache();
+    new ResizeObserver(cache).observe(list);
+    let y = window.scrollY;
+    const read = () => { y = window.scrollY; };
     const write = () => {
       queued = false;
-      const r = list.getBoundingClientRect();
-      const k = Math.min(1, Math.max(0, (window.innerHeight * 0.33 - r.top) / Math.max(1, r.height - window.innerHeight * 0.33)));
+      const k = Math.min(1, Math.max(0, (vh * 0.33 - (top - y)) / Math.max(1, h - vh * 0.33)));
       barFill!.style.transform = `scaleX(${k.toFixed(4)})`;
       return false;
     };
-    window.addEventListener('scroll', () => { if (!queued && mobileMQ.matches) { queued = true; addTask({ write }); } }, { passive: true });
+    window.addEventListener('scroll', () => { if (!queued && mobileMQ.matches) { queued = true; addTask({ read, write }); } }, { passive: true });
     addTask({ write });
   }
 });

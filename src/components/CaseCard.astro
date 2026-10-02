@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { href, pick, type Lang } from '../lib/i18n';
 import { sectors, monogram, type Case } from '../lib/content';
-interface Props { item: Case; lang: Lang; headingLevel?: 'h2' | 'h3'; index?: number; as?: 'li' | 'div'; ratio?: '4x3' | '4x5'; dup?: boolean }
+interface Props { item: Case; lang: Lang; headingLevel?: 'h2' | 'h3'; index?: number; as?: 'li' | 'div'; ratio?: '4x3' | '4x5'; dup?: boolean; lazy?: boolean }
 const { item: c, lang, headingLevel: H = 'h3', index = 99, as: Tag = 'li', ratio = '4x3', dup = false } = Astro.props;
 const sector = sectors.find((s) => s.id === c.sector);
 const logos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/live/*.webp', { eager: true });

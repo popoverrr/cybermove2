@@ -8,7 +8,37 @@ import { debounce } from './core/observe';
 const root = document.querySelector<HTMLElement>('[data-bend]');
 if (root) {
   if (reduced()) root.classList.add('is-static');
+  else if (!finePointer()) initTouch(root);
   else init(root);
+}
+
+// Phones (docs/15-stabilize.md §4): no per-frame textPath re-layout — the straight line loops by a CSS transform
+// of the whole svg (composited); the phrase length is measured once.
+function initTouch(root: HTMLElement) {
+  const svg = root.querySelector<SVGSVGElement>('svg')!;
+  const path = root.querySelector<SVGPathElement>('path')!;
+  const text = root.querySelector<SVGTextElement>('text')!;
+  const tp = root.querySelector<SVGTextPathElement>('textPath')!;
+  const phraseChars = (root.querySelector('.bend__link')?.textContent || '').length + 3;
+  const measure = () => {
+    const W = svg.clientWidth || root.clientWidth;
+    const fs = parseFloat(getComputedStyle(text).fontSize) || 120;
+    const H = Math.round(fs * 1.55), baseY = Math.round(H * 0.66);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('height', String(H));
+    path.setAttribute('d', `M0 ${baseY} L${(W * 8).toFixed(0)} ${baseY}`);
+    let unit = W;
+    try { unit = text.getSubStringLength(0, phraseChars) || W; } catch { /* keep W */ }
+    tp.setAttribute('startOffset', String(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gutter-x')) || 16));
+    root.style.setProperty('--bend-unit', `${(-unit).toFixed(1)}px`);
+    root.classList.add('is-css');
+  };
+  let lastW = innerWidth;
+  window.addEventListener('resize', debounce(() => { if (innerWidth !== lastW) { lastW = innerWidth; measure(); } }, 150));
+  (document.fonts?.ready ?? Promise.resolve()).then(measure);
+  measure();
+  new IntersectionObserver(([e]) => root.classList.toggle('is-on', e.isIntersecting)).observe(root);
+  root.classList.add('is-live');
 }
 
 function init(root: HTMLElement) {

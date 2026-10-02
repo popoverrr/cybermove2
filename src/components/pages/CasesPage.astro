@@ -37,7 +37,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
             <p class="label muted">{pad(i + 1)} · {list.length} {plural(list.length)}</p>
             <h2 class="csec2__title" id={`h-${s.id}`}>{pick(lang, s.title)}</h2>
             <p class="muted small csec2__lead">{pick(lang, s.line)}</p>
-            <CaseRow lang={lang} items={list} label={pick(lang, s.title)} />
+            <CaseRow lang={lang} items={list} label={pick(lang, s.title)} eagerFirst={i === 0} />
           </section>
         );
       })}
