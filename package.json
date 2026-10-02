@@ -14,7 +14,9 @@
     "qa": "playwright test",
     "linkcheck": "node scripts/linkcheck.mjs",
     "sizes": "node scripts/sizes.mjs",
-    "clean": "node scripts/clean.mjs"
+    "clean": "node scripts/clean.mjs",
+    "deploy": "npm run build && node scripts/deploy-ftp.mjs",
+    "deploy:dry": "node scripts/deploy-ftp.mjs --dry-run"
   },
   "engines": {
     "node": ">=20"
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "adm-zip": "^0.6.1",
+    "basic-ftp": "^6.2.1",
     "sharp": "^0.35.4",
     "typescript": "^7.0.2"
   },

@@ -18,3 +18,8 @@ docs/
 PROMPT.md
 CLAUDE.md
 qa/
+
+# FTP deploy settings (password lives only in deploy/ftp.env)
+deploy/*
+!deploy/ftp.env.example
+!deploy/nginx.conf.txt
