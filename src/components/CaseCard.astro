@@ -4,16 +4,16 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { href, pick, type Lang } from '../lib/i18n';
 import { sectors, monogram, type Case } from '../lib/content';
-interface Props { item: Case; lang: Lang; headingLevel?: 'h2' | 'h3'; index?: number; as?: 'li' | 'div' }
-const { item: c, lang, headingLevel: H = 'h3', index = 99, as: Tag = 'li' } = Astro.props;
+interface Props { item: Case; lang: Lang; headingLevel?: 'h2' | 'h3'; index?: number; as?: 'li' | 'div'; ratio?: '4x3' | '4x5' }
+const { item: c, lang, headingLevel: H = 'h3', index = 99, as: Tag = 'li', ratio = '4x3' } = Astro.props;
 const sector = sectors.find((s) => s.id === c.sector);
 const logos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/live/*.webp', { eager: true });
 const logo = c.logo ? logos[`/src/assets/live/${c.logo}`]?.default : undefined;
 ---
-<Tag class="pcard" data-sector={c.sector} data-id={c.id}>
+<Tag class:list={['pcard', ratio === '4x5' && 'pcard--tall']} data-sector={c.sector} data-id={c.id}>
   <a class="pcard__link" href={href(lang, `cases/${c.id}/`)} data-cursor>
     <div class="pcard__cover">
-      <CasePhoto item={c} lang={lang} sizes="(min-width: 1024px) 440px, (min-width: 600px) 48vw, 100vw" eager={index === 0} priority={index === 0} />
+      <CasePhoto item={c} lang={lang} ratio={ratio} vt sizes="(min-width: 1024px) 440px, (min-width: 600px) 48vw, 100vw" eager={index === 0} priority={index === 0} />
       <span class="pcard__chip" aria-hidden="true">
         {logo
           ? <Image src={logo} alt="" height={16} width={Math.round(16 * logo.width / logo.height)} densities={[2]} class="pcard__logo" />

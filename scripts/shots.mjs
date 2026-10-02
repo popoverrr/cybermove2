@@ -12,7 +12,7 @@ const PAGES = [
   ['cases', 'cases/'], ['case', 'cases/usyk/'], ['case-ship', 'cases/fort-desaix/'], ['insights', 'insights/'],
   ['article', 'insights/audit/business-audit-before-ads/'], ['about', 'about/'], ['contact', 'contact/'], ['privacy', 'privacy/'],
 ];
-const VPS = { m: { width: 390, height: 844 }, d: { width: 1440, height: 900 } };
+const VPS = { m: { width: 375, height: 812 }, d: { width: 1280, height: 900 } };
 mkdirSync('qa/screens', { recursive: true });
 const browser = await chromium.launch();
 for (const [vp, size] of Object.entries(VPS)) {

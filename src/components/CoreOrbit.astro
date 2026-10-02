@@ -76,6 +76,7 @@ const sc = (d: number) => (0.82 + 0.3 * d).toFixed(3);
       <text class="orbit__fig" x="8" y={H - 10}>CHAOS → CORE → SYSTEM → GROWTH</text>
     </g>
   </svg>
+  <a class="orbit__pick label" href="#" data-orbit-pick hidden><span class="muted" data-pick-idx></span> <span data-pick-name></span> <span aria-hidden="true">→</span></a>
   <script type="application/json" data-orbit-nodes set:html={JSON.stringify(nodes.map((n) => ({ id: n.id, label: n.label, ring: n.ring, angle: n.angle, index: n.index })))} />
 </figure>
 

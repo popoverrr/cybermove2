@@ -100,3 +100,12 @@
     html.no-vt main { animation-duration: 150ms; }
   }
 }
+
+/* Fixes 2 §A3.4: the case photo travels from its card to the cover of the case page (shared element). */
+@layer transitions {
+  ::view-transition-group(.case-photo) { animation-duration: var(--dur-4); animation-timing-function: var(--ease-out); z-index: 5; }
+  ::view-transition-old(.case-photo), ::view-transition-new(.case-photo) { height: 100%; object-fit: cover; }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(.case-photo), ::view-transition-old(.case-photo), ::view-transition-new(.case-photo) { animation: none; }
+  }
+}

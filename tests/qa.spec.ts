@@ -153,16 +153,19 @@ test.describe('interactions (desktop)', () => {
     await expect(page).toHaveURL(/\/cases\/$/);
   });
 
-  test('cases: filter by sector, card opens the case page', async () => {
+  test('cases: 8 sections, chips lead to sections, card opens the case page', async () => {
     await page.goto('/cases/');
-    const cards = page.locator('.pcard:not(.is-off)');
-    await expect(cards).toHaveCount(37);
-    const n = await page.locator('.pcard[data-sector="maritime"]').count();
-    expect(n).toBe(3);
-    await page.locator('.chip[data-sector="maritime"]').click();
-    await expect(cards).toHaveCount(n);
-    await expect(page).toHaveURL(/\?sector=maritime$/);
-    await page.locator('.pcard:not(.is-off) .pcard__link').first().click();
+    await expect(page.locator('.csec')).toHaveCount(8);
+    await expect(page.locator('.pcard')).toHaveCount(37);
+    await expect(page.locator('#maritime .pcard')).toHaveCount(3);
+    await page.locator('.csnav .chip[data-sector="maritime"]').click();
+    await expect(page).toHaveURL(/#maritime$/);
+    await expect(page.locator('.csnav .chip[data-sector="maritime"]')).toHaveClass(/is-on/);
+    await page.goto('/cases/?sector=b2b');
+    await page.waitForTimeout(500);
+    expect(await page.evaluate(() => Math.abs(document.getElementById('b2b')!.getBoundingClientRect().top) < 400)).toBe(true);
+    await page.goto('/cases/');
+    await page.locator('#maritime .pcard__link').first().click();
     await expect(page).toHaveURL(/\/cases\/fort-desaix\/$/);
     await expect(page.locator('.vessel')).toBeVisible();
   });
@@ -257,5 +260,43 @@ test.describe('fixes 10', () => {
     await expect(page.locator('h1')).toHaveText('Двигаем бизнес вперёд.');
     await expect(page.locator('.home-hero .hero__actions a').first()).toHaveAttribute('href', '/contact/?service=business-audit');
     await expect(page.locator('.home-hero .hero__actions a').nth(1)).toHaveAttribute('href', '/cases/');
+  });
+});
+
+test.describe('fixes 2', () => {
+  test('mobile CORE: tap selects a node, caption links to the area', async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    await page.goto('/');
+    await page.locator('.orbit').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(2500);
+    const node = page.locator('.orbit__node--sys.is-key').first();
+    await node.locator('.orbit__hit').tap({ force: true });
+    const pick = page.locator('[data-orbit-pick]');
+    await expect(pick).toBeVisible();
+    expect(page.url()).toMatch(/\/$/);
+    await expect(pick).toHaveAttribute('href', await node.getAttribute('href') as string);
+    await ctx.close();
+  });
+  test('no background images on service area / service pages; new service titles', async ({ page }) => {
+    for (const path of ['/services/audit/', '/services/systems/crm/', '/en/services/traffic/seo/']) {
+      await page.goto(path);
+      await expect(page.locator('.dir-hero img')).toHaveCount(0);
+    }
+    await page.goto('/services/systems/crm/');
+    await expect(page.locator('h1')).toContainText('CRM, в которой работают');
+    await expect(page).toHaveTitle(/CRM/);
+    await page.goto('/en/contact/');
+    await expect(page.locator('select[name="service"] option[value="smm"]')).toHaveText('Social media');
+  });
+  test('mobile method strip appears inside the method block', async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    await page.goto('/');
+    await page.locator('.home-method .method__step').nth(2).scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    await expect(page.locator('.method__bar')).toBeVisible();
+    await expect(page.locator('.method__bar-stage')).not.toBeEmpty();
+    await ctx.close();
   });
 });

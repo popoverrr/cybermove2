@@ -182,7 +182,7 @@ function build(lang) {
       aboutLink: strip(sAbout).replace(/\s*→$/, ''),
       formats: { title: h2(A, fmtAt), items: formats },
     },
-    cases: { hero: { label: C[cH1 - 1], title: strip(C[cH1].slice(2)), lead: C[cH1 + 1] }, filterAll: chips[0], countWord: null },
+    cases: { hero: { label: C[cH1 - 1], title: strip(C[cH1].slice(2)), lead: C[cH1 + 1] }, filterAll: chips[0], forms: ui.cases.forms },
     about: {
       hero: { kicker: aH1[0], title: aH1[1], text: aText, codes: after(A, (l) => l === aText) },
       numbers: { title: h2(A, numAt), items: numbers },

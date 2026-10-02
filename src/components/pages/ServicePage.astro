@@ -28,11 +28,11 @@ const hasInsights = s.insights.length > 0;
 ---
 <Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${d.id} / ${s.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
   jsonLd={[
-    { '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, s.name), description: seo.description, url: site + href(lang, route),
+    { '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, s.title), alternateName: [pick(lang, s.seoTitle), seo.h1].filter((x, i, a) => a.indexOf(x) === i && x !== pick(lang, s.title)), description: seo.description, url: site + href(lang, route),
       serviceType: pick(lang, s.name), category: pick(lang, d.nameFull), provider: { '@id': site + href('ru') + '#organization' } },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
   ]}>
-  <DirHero lang={lang} label={`${d.index} · ${s.index}`} crumbs={crumbs} title={seo.h1} lead={pick(lang, s.lead)} metrics={d.metrics} image={d.image} />
+  <DirHero lang={lang} label={`${d.index} · ${s.index}`} crumbs={crumbs} title={pick(lang, s.title)} lead={pick(lang, s.lead)} metrics={d.metrics} index={d.index} />
 
   <Block theme="light" label={L('includes')} class="svc-page-intro">
     <div class="container">

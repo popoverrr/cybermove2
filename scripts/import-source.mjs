@@ -61,6 +61,7 @@ const L = (f) => Object.fromEntries(LANGS.map((lang) => [lang, f(lang)]));
 const both = (f) => { const r = L(f); return r; };
 
 /* ── directions & services ── */
+const TITLES = JSON.parse(readFileSync(join(OUT, 'service-titles.json'), 'utf8'));
 const DIRS = ['audit', 'systems', 'brand-content', 'traffic', 'tenders-legal'];
 const svcIndex = load('ru', 'services.md');
 const directions = [];
@@ -130,7 +131,6 @@ DIRS.forEach((d, di) => {
     services: svcItems.ru.map((s) => s.id),
     cases: caseSlugs(secs.ru[2].lines),
     insights: articleSlugs(secs.ru[3].lines),
-    image: `dir-${d}.webp`,
     seo: L((lang) => seo(P[lang].fm)),
   });
   svcItems.ru.forEach((s, si) => {
@@ -167,7 +167,10 @@ DIRS.forEach((d, di) => {
       id: s.id,
       direction: d,
       index: String(si + 1).padStart(2, '0'),
-      name: L((lang) => svcItems[lang][si].name),
+      // display title (owner's list, docs/11-fixes-2.md §D); the source name is kept as seoTitle
+      name: TITLES[s.id],
+      title: TITLES[s.id],
+      seoTitle: L((lang) => svcItems[lang][si].name),
       line: L((lang) => svcItems[lang][si].line),
       points: L((lang) => svcItems[lang][si].points),
       lead: L((lang) => head[lang].lead),
@@ -245,7 +248,6 @@ const cases = order.map((slug) => {
   });
   const svc = parsed.ru.services.map((l) => slugFrom(hrefOf(l), /^\/services\/[\w-]+\/([\w-]+)\/$/));
   const similar = caseSlugs(parsed.ru.similar);
-  const photo = ['jpg', 'png', 'webp'].map((e) => `${slug}.${e}`).find((f) => existsSync(join(root, 'src/assets/projects', f)));
   const logo = existsSync(join(root, 'src/assets/live', `${slug}.webp`)) ? `${slug}.webp` : null;
   const alt = altOf(`${slug}-4x3.webp`);
   return {
@@ -262,7 +264,6 @@ const cases = order.map((slug) => {
     blocks: L((lang) => parsed[lang].blocks),
     services: svc,
     similar,
-    photo: photo ?? null,
     live: { '4x3': `${slug}-4x3.webp`, '16x9': `${slug}-16x9.webp` },
     logo,
     alt: alt ?? L((lang) => parsed[lang].name),

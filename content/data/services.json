@@ -5,6 +5,14 @@
     "index": "01",
     "name": {
       "ru": "Аудит бизнеса и маркетинга",
+      "en": "Business and marketing audit"
+    },
+    "title": {
+      "ru": "Аудит бизнеса и маркетинга",
+      "en": "Business and marketing audit"
+    },
+    "seoTitle": {
+      "ru": "Аудит бизнеса и маркетинга",
       "en": "Business & marketing audit"
     },
     "line": {
@@ -297,6 +305,14 @@
     "direction": "audit",
     "index": "02",
     "name": {
+      "ru": "Финансовая диагностика",
+      "en": "Financial check-up"
+    },
+    "title": {
+      "ru": "Финансовая диагностика",
+      "en": "Financial check-up"
+    },
+    "seoTitle": {
       "ru": "Финансовый аудит",
       "en": "Financial audit"
     },
@@ -584,6 +600,14 @@
     "direction": "audit",
     "index": "03",
     "name": {
+      "ru": "Куда вкладывать и что сокращать",
+      "en": "Where to invest and what to cut"
+    },
+    "title": {
+      "ru": "Куда вкладывать и что сокращать",
+      "en": "Where to invest and what to cut"
+    },
+    "seoTitle": {
       "ru": "Рекомендации по инвестициям и расходам",
       "en": "Investment & spending recommendations"
     },
@@ -871,6 +895,14 @@
     "direction": "audit",
     "index": "04",
     "name": {
+      "ru": "Стратегия и план роста",
+      "en": "Strategy and growth plan"
+    },
+    "title": {
+      "ru": "Стратегия и план роста",
+      "en": "Strategy and growth plan"
+    },
+    "seoTitle": {
       "ru": "Стратегия и roadmap",
       "en": "Strategy & roadmap"
     },
@@ -1164,6 +1196,14 @@
     "direction": "systems",
     "index": "01",
     "name": {
+      "ru": "Сайты под ключ",
+      "en": "Websites, start to finish"
+    },
+    "title": {
+      "ru": "Сайты под ключ",
+      "en": "Websites, start to finish"
+    },
+    "seoTitle": {
       "ru": "Сайты под ключ",
       "en": "Turnkey websites"
     },
@@ -1466,6 +1506,14 @@
     "direction": "systems",
     "index": "02",
     "name": {
+      "ru": "CRM, в которой работают",
+      "en": "A CRM your team actually uses"
+    },
+    "title": {
+      "ru": "CRM, в которой работают",
+      "en": "A CRM your team actually uses"
+    },
+    "seoTitle": {
       "ru": "CRM: внедрение и настройка",
       "en": "CRM: implementation & setup"
     },
@@ -1759,6 +1807,14 @@
     "direction": "systems",
     "index": "03",
     "name": {
+      "ru": "Телефония и разбор звонков",
+      "en": "Telephony and call review"
+    },
+    "title": {
+      "ru": "Телефония и разбор звонков",
+      "en": "Telephony and call review"
+    },
+    "seoTitle": {
       "ru": "Телефония",
       "en": "Telephony"
     },
@@ -2059,6 +2115,14 @@
     "direction": "systems",
     "index": "04",
     "name": {
+      "ru": "AI-помощники для продаж",
+      "en": "AI assistants for sales"
+    },
+    "title": {
+      "ru": "AI-помощники для продаж",
+      "en": "AI assistants for sales"
+    },
+    "seoTitle": {
       "ru": "AI-инструменты и агенты",
       "en": "AI tools & agents"
     },
@@ -2352,6 +2416,14 @@
     "direction": "systems",
     "index": "05",
     "name": {
+      "ru": "Автоматизация процессов",
+      "en": "Process automation"
+    },
+    "title": {
+      "ru": "Автоматизация процессов",
+      "en": "Process automation"
+    },
+    "seoTitle": {
       "ru": "Цифровизация и автоматизация",
       "en": "Digitalisation & automation"
     },
@@ -2646,6 +2718,14 @@
     "direction": "brand-content",
     "index": "01",
     "name": {
+      "ru": "Ядро бренда и позиционирование",
+      "en": "Brand core and positioning"
+    },
+    "title": {
+      "ru": "Ядро бренда и позиционирование",
+      "en": "Brand core and positioning"
+    },
+    "seoTitle": {
       "ru": "Позиционирование и ядро бренда",
       "en": "Positioning & brand core"
     },
@@ -2947,6 +3027,14 @@
     "direction": "brand-content",
     "index": "02",
     "name": {
+      "ru": "Съёмки и креативы",
+      "en": "Shoots and creatives"
+    },
+    "title": {
+      "ru": "Съёмки и креативы",
+      "en": "Shoots and creatives"
+    },
+    "seoTitle": {
       "ru": "Продакшн",
       "en": "Production"
     },
@@ -3249,6 +3337,14 @@
     "direction": "brand-content",
     "index": "03",
     "name": {
+      "ru": "Соцсети",
+      "en": "Social media"
+    },
+    "title": {
+      "ru": "Соцсети",
+      "en": "Social media"
+    },
+    "seoTitle": {
       "ru": "SMM",
       "en": "SMM"
     },
@@ -3550,6 +3646,14 @@
     "direction": "brand-content",
     "index": "04",
     "name": {
+      "ru": "PR и репутация",
+      "en": "PR and reputation"
+    },
+    "title": {
+      "ru": "PR и репутация",
+      "en": "PR and reputation"
+    },
+    "seoTitle": {
       "ru": "PR",
       "en": "PR"
     },
@@ -3846,6 +3950,14 @@
       "ru": "Личный бренд",
       "en": "Personal brand"
     },
+    "title": {
+      "ru": "Личный бренд",
+      "en": "Personal brand"
+    },
+    "seoTitle": {
+      "ru": "Личный бренд",
+      "en": "Personal brand"
+    },
     "line": {
       "ru": "Позиционирование эксперта, контент-система, запуски продуктов и курсов.",
       "en": "Expert positioning, a content system, product and course launches."
@@ -4136,6 +4248,14 @@
     "direction": "traffic",
     "index": "01",
     "name": {
+      "ru": "Реклама в соцсетях",
+      "en": "Social media ads"
+    },
+    "title": {
+      "ru": "Реклама в соцсетях",
+      "en": "Social media ads"
+    },
+    "seoTitle": {
       "ru": "Таргетированная реклама",
       "en": "Paid social"
     },
@@ -4429,6 +4549,14 @@
     "direction": "traffic",
     "index": "02",
     "name": {
+      "ru": "Реклама в Google",
+      "en": "Google advertising"
+    },
+    "title": {
+      "ru": "Реклама в Google",
+      "en": "Google advertising"
+    },
+    "seoTitle": {
       "ru": "Google Ads",
       "en": "Google Ads"
     },
@@ -4723,6 +4851,14 @@
     "direction": "traffic",
     "index": "03",
     "name": {
+      "ru": "Реклама в TikTok",
+      "en": "TikTok advertising"
+    },
+    "title": {
+      "ru": "Реклама в TikTok",
+      "en": "TikTok advertising"
+    },
+    "seoTitle": {
       "ru": "TikTok Ads",
       "en": "TikTok Ads"
     },
@@ -5016,6 +5152,14 @@
     "direction": "traffic",
     "index": "04",
     "name": {
+      "ru": "Поисковое продвижение",
+      "en": "Search visibility"
+    },
+    "title": {
+      "ru": "Поисковое продвижение",
+      "en": "Search visibility"
+    },
+    "seoTitle": {
       "ru": "SEO-продвижение",
       "en": "SEO"
     },
@@ -5317,6 +5461,14 @@
     "direction": "tenders-legal",
     "index": "01",
     "name": {
+      "ru": "Поиск и отбор тендеров",
+      "en": "Finding the right tenders"
+    },
+    "title": {
+      "ru": "Поиск и отбор тендеров",
+      "en": "Finding the right tenders"
+    },
+    "seoTitle": {
       "ru": "Мониторинг и анализ тендеров",
       "en": "Tender monitoring & analysis"
     },
@@ -5602,6 +5754,14 @@
     "direction": "tenders-legal",
     "index": "02",
     "name": {
+      "ru": "Заявки на тендеры",
+      "en": "Tender bids"
+    },
+    "title": {
+      "ru": "Заявки на тендеры",
+      "en": "Tender bids"
+    },
+    "seoTitle": {
       "ru": "Подготовка заявок и документации",
       "en": "Bid preparation & documentation"
     },
@@ -5902,6 +6062,14 @@
     "direction": "tenders-legal",
     "index": "03",
     "name": {
+      "ru": "Договоры",
+      "en": "Contracts"
+    },
+    "title": {
+      "ru": "Договоры",
+      "en": "Contracts"
+    },
+    "seoTitle": {
       "ru": "Договорная работа",
       "en": "Contract work"
     },
@@ -6195,6 +6363,14 @@
     "direction": "tenders-legal",
     "index": "04",
     "name": {
+      "ru": "Юридическое сопровождение компании",
+      "en": "Legal support for the company"
+    },
+    "title": {
+      "ru": "Юридическое сопровождение компании",
+      "en": "Legal support for the company"
+    },
+    "seoTitle": {
       "ru": "Корпоративное сопровождение",
       "en": "Corporate support"
     },

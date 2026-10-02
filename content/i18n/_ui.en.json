@@ -64,5 +64,12 @@
     "title": "This page doesn't exist.",
     "lead": "It may have moved when the website was updated.",
     "home": "Back to home"
+  },
+  "cases": {
+    "forms": [
+      "case",
+      "cases",
+      "cases"
+    ]
   }
 }

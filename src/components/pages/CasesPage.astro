@@ -1,9 +1,11 @@
 ---
+// /cases/: 8 sections by industry in the order of the live site (docs/11-fixes-2.md §B).
+// The chips are navigation to the sections (anchors #<sector id>); /cases/?sector=<id> scrolls to the section.
 import Base from '../../layouts/Base.astro';
 import Block from '../Block.astro';
 import CaseCard from '../CaseCard.astro';
 import SiteCta from '../SiteCta.astro';
-import { t, pick, type Lang } from '../../lib/i18n';
+import { t, ta, pick, type Lang } from '../../lib/i18n';
 import { cases, sectors, casesBySector } from '../../lib/content';
 
 interface Props { lang: Lang }
@@ -11,30 +13,51 @@ const { lang } = Astro.props;
 const c = (k: string) => t(lang, `cases.${k}`);
 const path = t(lang, 'home.windows.cases.path');
 const site = Astro.site!.origin;
+const forms = ta<string[]>(lang, 'cases.forms');
+// «1 кейс / 3 кейса / 7 кейсов», «1 case / 3 cases»
+const plural = (n: number) => {
+  if (lang !== 'ru') return n === 1 ? forms[0] : forms[1];
+  const m10 = n % 10, m100 = n % 100;
+  return m10 === 1 && m100 !== 11 ? forms[0] : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? forms[1] : forms[2];
+};
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <Base lang={lang} page="cases" path={path} crumbs={[{ name: t(lang, 'nav.cases'), route: 'cases/' }]}
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: c('hero.title'), inLanguage: lang,
     hasPart: cases.map((x) => ({ '@type': 'CreativeWork', name: pick(lang, x.name), url: `${site}${Astro.url.pathname}${x.id}/` })) }]}>
-  <Block theme="dark" label={c('hero.label')} first hero class="page-hero projects-block">
+  <Block theme="dark" label={c('hero.label')} first hero class="page-hero projects-block cases-page">
     <div class="container">
       <p class="label hero__label reveal">{c('hero.label')}</p>
       <h1 class="hero__title reveal" data-split>{c('hero.title')}</h1>
       <p class="lead hero__lead reveal" style="--rd:120ms">{c('hero.lead')}</p>
+    </div>
 
-      <div class="pfilter reveal" role="group" aria-label={c('hero.title')} data-filter>
-        <button type="button" class="chip is-on" aria-pressed="true" data-sector="all">
-          <span>{c('filterAll')}</span><span class="chip__count num">{String(cases.length).padStart(2, '0')}</span>
-        </button>
-        {sectors.map((s) => (
-          <button type="button" class="chip" aria-pressed="false" data-sector={s.id}>
-            <span>{pick(lang, s.title)}</span><span class="chip__count num">{String(casesBySector(s.id).length).padStart(2, '0')}</span>
-          </button>
-        ))}
+    <nav class="csnav reveal" aria-label={c('hero.title')} data-csnav>
+      <div class="container">
+        <ol class="csnav__list list-reset">
+          {sectors.map((s, i) => (
+            <li><a class:list={['chip', i === 0 && 'is-on']} href={`#${s.id}`} data-sector={s.id}>
+              <span>{pick(lang, s.title)}</span><span class="chip__count num" data-count={casesBySector(s.id).length} data-pad="2">{pad(casesBySector(s.id).length)}</span>
+            </a></li>
+          ))}
+        </ol>
       </div>
+    </nav>
 
-      <ul class="pgrid list-reset" id="cases-grid" aria-live="polite">
-        {cases.map((x, i) => <CaseCard item={x} lang={lang} index={i} />)}
-      </ul>
+    <div class="container">
+      {sectors.map((s, i) => {
+        const list = casesBySector(s.id);
+        return (
+          <section class="csec" id={s.id} aria-labelledby={`h-${s.id}`} data-csec={s.id}>
+            <p class="label muted csec__label reveal">{pad(i + 1)} · {list.length} {plural(list.length)}</p>
+            <h2 class="csec__title reveal" id={`h-${s.id}`} data-split>{pick(lang, s.title)}</h2>
+            <p class="muted csec__lead reveal">{pick(lang, s.line)}</p>
+            <ul class="pgrid list-reset">
+              {list.map((x) => <CaseCard item={x} lang={lang} index={cases.indexOf(x)} />)}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   </Block>
 
@@ -42,33 +65,29 @@ const site = Astro.site!.origin;
 </Base>
 
 <script>
-  import { flipSwap } from '../../scripts/core/flip';
-
-  /* ── Sector filter (interaction #3, FLIP) ── */
-  const filter = document.querySelector<HTMLElement>('[data-filter]');
-  const cards = [...document.querySelectorAll<HTMLElement>('.pcard')];
-  if (filter) {
-    const chips = [...filter.querySelectorAll<HTMLButtonElement>('.chip')];
-    const mark = (chip: HTMLButtonElement) =>
-      chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', String(on)); });
-    const match = (id: string) => (el: HTMLElement) => id === 'all' || el.dataset.sector === id;
-    filter.addEventListener('click', (e) => {
-      const chip = (e.target as Element).closest<HTMLButtonElement>('.chip');
-      if (!chip || chip.classList.contains('is-on')) return;
-      mark(chip);
-      const id = chip.dataset.sector!;
-      flipSwap(cards, match(id));
-      // keep the filter shareable: /cases/?sector=<id> (no param for "All")
-      const u = new URL(location.href);
-      if (id === 'all') u.searchParams.delete('sector'); else u.searchParams.set('sector', id);
-      history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+  // Chips follow the section in view; the active chip is kept visible in the horizontal row.
+  const nav = document.querySelector<HTMLElement>('[data-csnav]');
+  if (nav) {
+    const chips = [...nav.querySelectorAll<HTMLAnchorElement>('.chip')];
+    const list = nav.querySelector<HTMLElement>('.csnav__list')!;
+    const mark = (id: string) => chips.forEach((c) => {
+      const on = c.dataset.sector === id;
+      c.classList.toggle('is-on', on);
+      if (on) {
+        c.setAttribute('aria-current', 'true');
+        if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: c.offsetLeft - 16, behavior: 'smooth' });
+      } else c.removeAttribute('aria-current');
     });
-    // ?sector=<id> preselects a filter on load (instantly, no animation)
-    const initialSector = new URL(location.href).searchParams.get('sector');
-    const initialChip = chips.find((c) => c.dataset.sector === initialSector);
-    if (initialChip && initialSector !== 'all') {
-      mark(initialChip);
-      cards.forEach((el) => el.classList.toggle('is-off', !match(initialSector!)(el)));
-    }
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) mark((e.target as HTMLElement).dataset.csec!);
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    const secs = [...document.querySelectorAll<HTMLElement>('[data-csec]')];
+    secs.forEach((s) => io.observe(s));
+    // above the first section the first chip is current (and the row is scrolled back to the start)
+    window.addEventListener('scroll', () => { if (secs[0].getBoundingClientRect().top > window.innerHeight * 0.4) mark(secs[0].dataset.csec!); }, { passive: true });
+    // old links: /cases/?sector=<id> → the section
+    const id = new URL(location.href).searchParams.get('sector');
+    const target = id && document.getElementById(id);
+    if (target && target.matches('[data-csec]')) requestAnimationFrame(() => { target.scrollIntoView(); mark(id!); });
   }
 </script>

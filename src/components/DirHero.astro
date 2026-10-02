@@ -1,19 +1,16 @@
 ---
 // Hero of a service-area / service page: breadcrumbs, H1 (key phrase as a kicker + thesis), lead, mono metrics,
-// the area's background image in the skeleton's photo treatment.
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+// a hairline grid and the area's large index as the only decor (no photos, docs/11-fixes-2.md §C).
 import Block from './Block.astro';
 import Crumbs from './Crumbs.astro';
 import type { Crumb } from '../layouts/Base.astro';
 import type { Lang } from '../lib/i18n';
-interface Props { lang: Lang; label: string; crumbs: Crumb[]; kicker?: string; title: string; lead: string; metrics?: string; image?: string }
-const { lang, label, crumbs, kicker, title, lead, metrics, image } = Astro.props;
-const imgs = import.meta.glob<{ default: ImageMetadata }>('/src/assets/live/dir-*.webp', { eager: true });
-const img = image ? imgs[`/src/assets/live/${image}`]?.default : undefined;
+interface Props { lang: Lang; label: string; crumbs: Crumb[]; kicker?: string; title: string; lead: string; metrics?: string; index?: string }
+const { lang, label, crumbs, kicker, title, lead, metrics, index } = Astro.props;
 ---
 <Block theme="dark" label={label} first hero class="page-hero dir-hero">
-  {img && <div class="dir-hero__bg" aria-hidden="true"><Image src={img} alt="" widths={[640, 1280, Math.min(img.width, 1920)]} sizes="100vw" loading="eager" class="dir-hero__img" /></div>}
+  <div class="dir-hero__grid" aria-hidden="true"></div>
+  {index && <span class="dir-hero__index" aria-hidden="true">{index}</span>}
   <div class="container">
     <Crumbs lang={lang} items={crumbs} />
     <h1 class="hero__title reveal">

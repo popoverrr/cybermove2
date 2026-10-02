@@ -1,25 +1,27 @@
 ---
-// Case photo with the skeleton's treatment (grayscale → colour on hover/focus in previews).
-// Source: the larger original in src/assets/projects/ when there is one, otherwise the live-site image
-// (src/assets/live/<slug>-4x3|16x9.webp); generated cover as the last resort.
+// Case photo — only the images of the live site (src/assets/live/<slug>-<ratio>.webp, docs/11-fixes-2.md §E),
+// shown in their own proportion, never upscaled, always in colour. alt — from content/source/images.json.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Cover from './Cover.astro';
 import { monogram, type Case } from '../lib/content';
 import { pick, type Lang } from '../lib/i18n';
-interface Props { item: Case; lang: Lang; sizes: string; ratio?: '4x3' | '16x9'; class?: string; eager?: boolean; priority?: boolean; thumb?: boolean; decorative?: boolean }
-const { item, lang, sizes, ratio = '4x3', class: cls = '', eager = false, priority = false, thumb = false, decorative = false } = Astro.props;
-const originals = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+import images from '../../content/source/images.json';
+interface Props { item: Case; lang: Lang; sizes: string; ratio?: '4x3' | '16x9' | '4x5'; class?: string; eager?: boolean; priority?: boolean; thumb?: boolean; decorative?: boolean; vt?: boolean }
+const { item, lang, sizes, ratio = '4x3', class: cls = '', eager = false, priority = false, thumb = false, decorative = false, vt = false } = Astro.props;
 const live = import.meta.glob<{ default: ImageMetadata }>('/src/assets/live/*.webp', { eager: true });
-const img = (item.photo ? originals[`/src/assets/projects/${item.photo}`]?.default : undefined)
-  ?? live[`/src/assets/live/${item.live[ratio]}`]?.default;
+const file = (r: string) => `${item.id}-${r}.webp`;
+const used = live[`/src/assets/live/${file(ratio)}`] ? ratio : '4x3';
+const img = live[`/src/assets/live/${file(used)}`]?.default;
+if (!img) console.warn(`[case photo] no live image for ${item.id}`);
 const widths = !img ? [] : thumb
   ? [Math.min(img.width, 480)]
-  : [...new Set([400, 560, 720, 960, 1280].filter((w) => w < img.width).concat(Math.min(img.width, ratio === '16x9' ? 1600 : 960)))];
-const alt = decorative ? '' : pick(lang, item.alt);
+  : [...new Set([400, 640, 960, 1280].filter((w) => w < img.width).concat(img.width))];
+const altMap = (images as { save_as: string; alt: Record<string, string> }[]).find((x) => x.save_as === file(used))?.alt;
+const alt = decorative ? '' : (altMap?.[lang] || pick(lang, item.alt));
 ---
 {img
-  ? <Picture src={img} formats={['avif', 'webp']} fallbackFormat="jpg" quality={66} widths={widths} sizes={sizes} alt={alt}
+  ? <Picture src={img} formats={['avif', 'webp']} fallbackFormat="webp" quality={72} widths={widths} sizes={sizes} alt={alt}
       loading={eager ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} decoding="async" class:list={['pphoto', cls]}
-      style="object-position:50% 45%" />
+      style={vt ? `view-transition-name:case-${item.id};view-transition-class:case-photo` : undefined} />
   : <Cover id={item.id} monogram={monogram(pick(lang, item.name))} class={cls} />}

@@ -244,7 +244,11 @@
       "lead": "From a world champion's personal brand to engineering systems in Kazakhstan and ship management."
     },
     "filterAll": "All",
-    "countWord": null
+    "forms": [
+      "case",
+      "cases",
+      "cases"
+    ]
   },
   "about": {
     "hero": {

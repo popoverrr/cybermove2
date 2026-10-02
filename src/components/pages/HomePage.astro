@@ -119,13 +119,13 @@ const svcPath = t(lang, 'home.windows.services.path');
       <dl class="stats list-reset">
         {stats.map((s, i) => (
           <div class="stats__item reveal" style={`--rd:${i * 60}ms`}>
-            <dt class="stats__num num"><span data-count={s.value}>{s.value}</span>{s.suffix}</dt>
+            <dt class="stats__num num"><span data-count={s.value}>{s.value}</span>{s.suffix && <span class="stats__suffix">{s.suffix}</span>}</dt>
             <dd class="muted">{s.label}</dd>
           </div>
         ))}
       </dl>
       <ul class="pgrid pgrid--home list-reset">
-        {featured.map((c, i) => <CaseCard item={c} lang={lang} index={i + 1} />)}
+        {featured.map((c, i) => <CaseCard item={c} lang={lang} index={i + 1} ratio="4x5" />)}
       </ul>
       <div class="reveal results__all"><Button href={url(lang, 'cases')} variant="secondary">{h('results.link')}</Button></div>
     </div>

@@ -51,12 +51,17 @@ function countUp(el: HTMLElement) {
   const to = parseFloat(el.dataset.count || '0');
   const pad = el.dataset.pad ? parseInt(el.dataset.pad, 10) : 0;
   const fmt = (v: number) => String(Math.round(v)).padStart(pad, '0');
-  if (reduced()) { el.textContent = fmt(to); return; }
+  if (el.dataset.counted) return; // once per page load
+  el.dataset.counted = '1';
+  // the box keeps the width of the final value, so nothing jumps while counting (tabular-nums)
+  el.style.minWidth = `${fmt(to).length}ch`;
+  if (reduced()) { el.textContent = fmt(to); el.classList.add('is-counted'); return; }
   const start = performance.now();
   addTask({
     write: (now) => {
-      const p = Math.min(1, (now - start) / 900);
+      const p = Math.min(1, (now - start) / 1200);
       el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+      if (p >= 1) el.classList.add('is-counted');
       return p < 1;
     },
   });

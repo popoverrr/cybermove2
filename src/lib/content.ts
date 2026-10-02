@@ -33,12 +33,13 @@ export interface Direction {
   id: string; index: string; stage: string;
   name: Localized; nameFull: Localized; kicker: Localized; thesis: Localized; lead: Localized;
   metrics: string; codes: string; intro: Localized<string[]>; result: Localized;
-  services: string[]; cases: string[]; insights: string[]; image: string; seo: Localized<Seo>;
+  services: string[]; cases: string[]; insights: string[]; seo: Localized<Seo>;
 }
 export interface Titled { t: string; d: string }
 export interface Service {
   id: string; direction: string; index: string;
-  name: Localized; line: Localized; points: Localized<string[]>; lead: Localized; intro: Localized<string[]>;
+  /** display title (= title); seoTitle — the live-site name, kept for JSON-LD alternateName */
+  name: Localized; title: Localized; seoTitle: Localized; line: Localized; points: Localized<string[]>; lead: Localized; intro: Localized<string[]>;
   includes: Localized<Titled[]>;
   steps: Localized<{ stage: string; t: string; d: string; time: string | null }[]>;
   stepsNote: Localized<string | null>; timeLabel: Localized<string | null>;
@@ -54,7 +55,7 @@ export interface Case {
   link: Localized<{ text: string; href: string }> | null;
   blocks: Localized<CaseBlock[]>;
   services: string[]; similar: string[];
-  photo: string | null; live: { '4x3': string; '16x9': string }; logo: string | null;
+  live: { '4x3': string; '16x9': string }; logo: string | null;
   alt: Localized; seo: Localized<Seo>;
 }
 export interface Sector { id: string; title: Localized; line: Localized }

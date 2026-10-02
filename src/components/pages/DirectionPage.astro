@@ -26,7 +26,7 @@ const label = `${d.index} · ${d.stage}`;
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, d.nameFull), description: seo.description, serviceType: pick(lang, d.kicker),
     url: site + href(lang, route), provider: { '@id': site + href('ru') + '#organization' },
     hasOfferCatalog: { '@type': 'OfferCatalog', name: pick(lang, d.nameFull), itemListElement: svcs.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: pick(lang, s.name), url: site + href(lang, `${route}${s.id}/`) } })) } }]}>
-  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} image={d.image} />
+  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} index={d.index} />
 
   <Block theme="light" label={label} class="dir-intro">
     <div class="container">

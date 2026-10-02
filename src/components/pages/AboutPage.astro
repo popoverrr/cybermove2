@@ -38,7 +38,7 @@ const num = (v: string) => { const m = v.match(/^(\d+)(.*)$/); return m ? { n: m
       <dl class="stats list-reset">
         {numbers.map((s, i) => { const v = num(s.value); return (
           <div class="stats__item reveal" style={`--rd:${i * 60}ms`}>
-            <dt class="stats__num num"><span data-count={v.n}>{v.n}</span>{v.s}</dt>
+            <dt class="stats__num num"><span data-count={v.n}>{v.n}</span>{v.s && <span class="stats__suffix">{v.s}</span>}</dt>
             <dd class="muted">{s.label}</dd>
           </div>
         ); })}

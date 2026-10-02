@@ -42,7 +42,7 @@ const theme = () => (k++ % 2 === 0 ? 'dark' : 'light') as 'dark' | 'light';
       </ul>
       {link && <p class="reveal case-hero__ext" style="--rd:200ms"><a class="link link--arrow" href={link.href} target="_blank" rel="noopener"><span>{link.text}</span><Icon name="arrow-ne" size={14} /></a></p>}
       <div class="case-hero__photo reveal" style="--rd:160ms">
-        <CasePhoto item={c} lang={lang} ratio="16x9" sizes="(min-width: 1440px) 1360px, 100vw" eager priority />
+        <CasePhoto item={c} lang={lang} ratio="16x9" vt sizes="(min-width: 1440px) 1360px, 100vw" eager priority />
       </div>
     </div>
   </Block>
@@ -113,7 +113,7 @@ const theme = () => (k++ % 2 === 0 ? 'dark' : 'light') as 'dark' | 'light';
 
   <Block theme={theme()} label={L('similar')} class="case-similar">
     <div class="container">
-      <BlockHead label={L('similar')} link={{ href: url(lang, 'cases', `?sector=${c.sector}`), text: pick(lang, sector.title) }} />
+      <BlockHead label={L('similar')} link={{ href: url(lang, 'cases', `#${c.sector}`), text: pick(lang, sector.title) }} />
       <h2 class="section-title reveal" data-split>{L('similar')}</h2>
       <ul class="pgrid list-reset">{c.similar.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
       <div class="case-next reveal">

@@ -12,6 +12,7 @@ const list = JSON.parse(await readFile(join(process.cwd(), 'content', 'source', 
 await mkdir(OUT, { recursive: true });
 const failed = [];
 for (const img of list) {
+  if (img.save_as.startsWith("dir-")) continue; // old-site backgrounds of the service areas are not used (docs/11-fixes-2.md §C)
   try {
     const res = await fetch(ORIGIN + img.path);
     if (!res.ok) throw new Error('HTTP ' + res.status);
