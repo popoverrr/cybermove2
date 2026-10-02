@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import SiteShowcase from '../SiteShowcase.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, href, pick, type Lang } from '../../lib/i18n';
+import { sites, serviceById } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const site = Astro.site!.origin;
+const svc = serviceById('websites');
+---
+<Base lang={lang} page="sites" path={`cybermove / ${t(lang, 'nav.sites').toLowerCase()}`} crumbs={[{ name: t(lang, 'nav.sites'), route: 'sites/' }]}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: t(lang, 'sites.title'), description: t(lang, 'sites.lead'), inLanguage: lang,
+    hasPart: sites.map((s) => ({ '@type': 'WebSite', name: s.name, url: s.url, description: pick(lang, s.summary) })) }]}>
+  <Block theme="dark" label={t(lang, 'sites.label')} first hero class="page-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{t(lang, 'sites.label')}</p>
+      <h1 class="hero__title reveal" data-split>{t(lang, 'sites.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{t(lang, 'sites.lead')}</p>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={t(lang, 'sites.label')} flow="continue" class="sites-page">
+    <div class="container sites-list">
+      {sites.map((s, i) => <SiteShowcase site={s} index={i} lang={lang} flip={i % 2 === 1} eager={i === 0} />)}
+    </div>
+  </Block>
+
+  <Block theme="light" label={pick(lang, svc.name)} class="sites-service">
+    <div class="container">
+      <BlockHead label={`02 · ${pick(lang, svc.name)}`} />
+      <ol class="numrows list-reset">
+        <li class="numrows__row reveal">
+          <span class="label muted num">01</span>
+          <a class="numrows__link" href={href(lang, 'services/systems/websites/')}>
+            <span class="numrows__text">{pick(lang, svc.name)}</span>
+            <span class="numrows__sub muted small">{pick(lang, svc.line)}</span>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </Block>
+
+  <SiteCta lang={lang} />
+</Base>

@@ -26,7 +26,7 @@ const label = `${d.index} · ${d.stage}`;
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, d.nameFull), description: seo.description, serviceType: pick(lang, d.kicker),
     url: site + href(lang, route), provider: { '@id': site + href('ru') + '#organization' },
     hasOfferCatalog: { '@type': 'OfferCatalog', name: pick(lang, d.nameFull), itemListElement: svcs.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: pick(lang, s.name), url: site + href(lang, `${route}${s.id}/`) } })) } }]}>
-  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} index={d.index} />
+  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.name)} sub={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} index={d.index} />
 
   <Block theme="light" label={label} class="dir-intro">
     <div class="container">
@@ -55,6 +55,7 @@ const label = `${d.index} · ${d.stage}`;
             </div>
             <ul class="tags list-reset srows__tags" role="list">{pick(lang, s.points).map((p) => <li class="tag">{p}</li>)}</ul>
             <a class="link link--arrow srows__more" href={href(lang, `${route}${s.id}/`)}><span>{L('serviceMore')}</span><Icon name="arrow" size={14} /></a>
+            {s.id === 'websites' && <a class="link link--arrow srows__more" href={href(lang, 'sites/')}><span>{t(lang, 'sites.all').replace(/\s*→$/, '')}</span><Icon name="arrow" size={14} /></a>}
           </li>
         ))}
       </ol>

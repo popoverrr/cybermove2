@@ -8,6 +8,7 @@ import CaseCard from '../CaseCard.astro';
 import ArticleRows from '../ArticleRows.astro';
 import FaqList from '../FaqList.astro';
 import SiteCta from '../SiteCta.astro';
+import SitesBlock from '../SitesBlock.astro';
 import { t, href, url, pick, type Lang } from '../../lib/i18n';
 import { directionById, servicesOf, caseById, insightById, type Service } from '../../lib/content';
 
@@ -108,6 +109,8 @@ const hasInsights = s.insights.length > 0;
       </ol>
     </div>
   </Block>
+
+  {s.id === 'websites' && <SitesBlock lang={lang} theme="light" lead={false} />}
 
   <Block theme="light" label={L('cases')} class="svc-cases">
     <div class="container">

@@ -16,7 +16,8 @@
     "sizes": "node scripts/sizes.mjs",
     "clean": "node scripts/clean.mjs",
     "deploy": "npm run build && node scripts/deploy-ftp.mjs",
-    "deploy:dry": "node scripts/deploy-ftp.mjs --dry-run"
+    "deploy:dry": "node scripts/deploy-ftp.mjs --dry-run",
+    "sites": "node scripts/capture-sites.mjs"
   },
   "engines": {
     "node": ">=20"

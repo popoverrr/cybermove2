@@ -28,7 +28,8 @@ for (const p of pages) {
   if (desc !== norm(fm.description)) { console.log('DESC', p.url); fails++; }
   // home H1 comes from the skeleton by the owner's decision (docs/10-fixes.md §1)
   // service H1 = the new display title (docs/11-fixes-2.md §D)
-  if (!/^\/(en\/)?$/.test(p.url) && !/\/services\/[\w-]+\/[\w-]+\/$/.test(p.url) && h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
+  // service area H1 = the area name, the thesis is a subtitle (docs/13-fixes-4.md §2)
+  if (!/^\/(en\/)?$/.test(p.url) && !/\/services\/[\w-]+\/([\w-]+\/)?$/.test(p.url) && h1.replace(/\s/g, '') !== norm(fm.h1).replace(/\s/g, '')) { console.log('H1', p.url, '|', h1, '≠', fm.h1); fails++; }
   if (!/\/(services\/[\w-]+\/[\w-]+|cases\/[\w-]+|insights\/[\w-]+\/[\w-]+)\/$/.test(p.url)) continue;
   const body = src.split('---').slice(2).join('---').split('\n');
   const stop = body.findIndex((l) => /^## (Похожие кейсы|Similar cases|Связанные кейсы|Related cases)/.test(l) && /cases\/[\w-]+\/$/.test(p.url))

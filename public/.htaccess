@@ -30,7 +30,7 @@ ErrorDocument 404 /404.html
   RewriteRule ^(en/)?team/?$ /$1about/ [L,R=301,NC]
 
   # ── Trailing slash for known pages ──
-  RewriteRule ^(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy)$ /$1$2/ [L,R=301]
+  RewriteRule ^(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy|sites)$ /$1$2/ [L,R=301]
   RewriteRule ^en$ /en/ [L,R=301]
 </IfModule>
 

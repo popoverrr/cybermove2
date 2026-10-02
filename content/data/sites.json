@@ -1,0 +1,57 @@
+{
+  "_comment": "Сайты, сделанные CYBER MOVE CONSULTING. Тексты согласованы владельцем — использовать дословно. Порядок = порядок показа.",
+  "items": [
+    {
+      "id": "oasis-ikigai",
+      "name": "OASIS IKIGAI",
+      "domain": "oasis-ikigai.com.ua",
+      "url": "https://oasis-ikigai.com.ua/",
+      "type": { "ru": "Интернет-магазин", "en": "Online store" },
+      "summary": { "ru": "Магазин японских витаминов и добавок с доставкой по Украине.", "en": "A store for Japanese vitamins and supplements, delivered across Ukraine." },
+      "description": { "ru": "Каталог с подбором по цели — красота, энергия, сон, иммунитет, — страницы брендов, журнал и ответы на частые вопросы. Три языка, оплата при получении, доставка Новой почтой.", "en": "A catalogue with selection by goal — beauty, energy, sleep, immunity — plus brand pages, a journal and an FAQ. Three languages, cash on delivery, shipping by Nova Poshta." },
+      "languages": ["UA", "RU", "EN"],
+      "tags": { "ru": ["Каталог", "Подбор по цели", "Журнал", "3 языка"], "en": ["Catalogue", "Selection by goal", "Journal", "3 languages"] },
+      "direction": "systems",
+      "capture": { "dismiss": ["button:has-text(\"Русский\")"], "lang": "ru" }
+    },
+    {
+      "id": "visa-navigator",
+      "name": "VISA NAVIGATOR",
+      "domain": "visa-navigator.kz",
+      "url": "https://visa-navigator.kz/",
+      "type": { "ru": "Сайт компании", "en": "Company website" },
+      "summary": { "ru": "Визы, разрешения на работу и регистрация бизнеса в Казахстане.", "en": "Visas, work permits and business registration in Kazakhstan." },
+      "description": { "ru": "Сайт миграционного сервиса для иностранцев и компаний: подбор визы, раздел для бизнеса, пошаговый процесс, личный кабинет со статусом заявки, блог и вопросы-ответы. Четыре языка, включая китайский и турецкий.", "en": "A website for a migration service that works with foreign nationals and companies: visa selection, a business section, a step-by-step process, a client account with application status, a blog and an FAQ. Four languages, including Chinese and Turkish." },
+      "languages": ["RU", "EN", "中文", "TR"],
+      "tags": { "ru": ["Подбор визы", "Личный кабинет", "Блог", "4 языка"], "en": ["Visa selection", "Client account", "Blog", "4 languages"] },
+      "direction": "systems",
+      "capture": { "dismiss": ["button:has-text(\"Русский\")"], "lang": "ru" }
+    },
+    {
+      "id": "s-abroad",
+      "name": "S ABROAD",
+      "domain": "s-abroad.asia",
+      "url": "https://s-abroad.asia/",
+      "type": { "ru": "Сайт-визитка", "en": "Business card site" },
+      "summary": { "ru": "Образовательное агентство: поступление, языковые курсы, каникулы и визы.", "en": "An education agency: admissions, language courses, holidays abroad and visas." },
+      "description": { "ru": "Одна страница в виде посадочного талона: направления, контакты менеджеров, соцсети и запись на консультацию в WhatsApp в одно касание. Контакт можно сохранить в телефон. Четыре языка.", "en": "A single page designed as a boarding pass: destinations, manager contacts, social links and a one-tap WhatsApp consultation. The contact can be saved straight to the phone. Four languages." },
+      "languages": ["RU", "KZ", "EN", "CZ"],
+      "tags": { "ru": ["Одна страница", "WhatsApp", "Сохранение контакта", "4 языка"], "en": ["Single page", "WhatsApp", "Save contact", "4 languages"] },
+      "direction": "systems",
+      "capture": { "dismiss": [], "lang": "ru" }
+    },
+    {
+      "id": "mir-mediakit",
+      "name": "MIR",
+      "domain": "mir-mediakit.asia",
+      "url": "https://mir-mediakit.asia/",
+      "type": { "ru": "Медиакит", "en": "Media kit" },
+      "summary": { "ru": "Медиакит художника и бьюти-блогера Мирахмада Миркобилжонова.", "en": "The media kit of artist and beauty blogger Mirakhmad Mirkobilzhonov." },
+      "description": { "ru": "Сайт для рекламодателей: площадки и аудитория, партнёры, кейсы интеграций, статистика и форматы сотрудничества — с кнопкой «Обсудить рекламу» на каждом экране. Два языка.", "en": "A site for advertisers: platforms and audience, partners, integration cases, statistics and collaboration formats — with a “Discuss advertising” button on every screen. Two languages." },
+      "languages": ["RU", "EN"],
+      "tags": { "ru": ["Личный бренд", "Статистика", "Кейсы", "2 языка"], "en": ["Personal brand", "Statistics", "Cases", "2 languages"] },
+      "direction": "brand-content",
+      "capture": { "dismiss": [], "lang": "ru" }
+    }
+  ]
+}

@@ -12,3 +12,4 @@ import './audio';
 import './subbar';
 import './steps-line';
 import './ribbon';
+import './sites';

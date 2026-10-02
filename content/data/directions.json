@@ -4,12 +4,16 @@
     "index": "01",
     "stage": "CORE",
     "name": {
-      "ru": "Аудит",
-      "en": "Audit"
+      "ru": "Аудит и финансы",
+      "en": "Audit and finance"
     },
     "nameFull": {
       "ru": "Аудит и финансы",
-      "en": "Audit & finance"
+      "en": "Audit and finance"
+    },
+    "shortName": {
+      "ru": "Аудит",
+      "en": "Audit"
     },
     "kicker": {
       "ru": "Аудит бизнеса",
@@ -75,12 +79,16 @@
     "index": "02",
     "stage": "SYSTEM",
     "name": {
-      "ru": "Системы",
-      "en": "Systems"
+      "ru": "Сайты, CRM, телефония и AI",
+      "en": "Websites, CRM, telephony and AI"
     },
     "nameFull": {
       "ru": "Сайты, CRM, телефония и AI",
-      "en": "Websites, CRM, telephony & AI"
+      "en": "Websites, CRM, telephony and AI"
+    },
+    "shortName": {
+      "ru": "Системы",
+      "en": "Systems"
     },
     "kicker": {
       "ru": "Цифровизация бизнеса",
@@ -146,12 +154,16 @@
     "index": "03",
     "stage": "SYSTEM",
     "name": {
-      "ru": "Бренд и контент",
-      "en": "Brand & content"
+      "ru": "Бренд, контент, PR",
+      "en": "Brand, content, PR"
     },
     "nameFull": {
       "ru": "Бренд, контент, PR",
       "en": "Brand, content, PR"
+    },
+    "shortName": {
+      "ru": "Бренд и контент",
+      "en": "Brand & content"
     },
     "kicker": {
       "ru": "Брендинг и контент",
@@ -216,12 +228,16 @@
     "index": "04",
     "stage": "SYSTEM",
     "name": {
-      "ru": "Трафик",
-      "en": "Traffic"
+      "ru": "Реклама и SEO",
+      "en": "Advertising and SEO"
     },
     "nameFull": {
       "ru": "Реклама и SEO",
-      "en": "Advertising & SEO"
+      "en": "Advertising and SEO"
+    },
+    "shortName": {
+      "ru": "Трафик",
+      "en": "Traffic"
     },
     "kicker": {
       "ru": "Реклама и SEO",
@@ -287,9 +303,13 @@
     "stage": "SYSTEM",
     "name": {
       "ru": "Тендеры и право",
-      "en": "Tenders & legal"
+      "en": "Tenders and legal"
     },
     "nameFull": {
+      "ru": "Тендеры и право",
+      "en": "Tenders and legal"
+    },
+    "shortName": {
       "ru": "Тендеры и право",
       "en": "Tenders & legal"
     },

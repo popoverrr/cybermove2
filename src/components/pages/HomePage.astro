@@ -10,6 +10,7 @@ import SectorMorph from '../SectorMorph.astro';
 import CaseCard from '../CaseCard.astro';
 import CoreOrbit from '../CoreOrbit.astro';
 import CtaBlock from '../CtaBlock.astro';
+import SitesBlock from '../SitesBlock.astro';
 import WindowFrame from '../WindowFrame.astro';
 import { t, ta, url, href, pick, type Lang } from '../../lib/i18n';
 import { directions, servicesOf, caseById, contacts, company } from '../../lib/content';
@@ -62,8 +63,10 @@ const svcPath = t(lang, 'home.windows.services.path');
             <a class="svc__link" href={href(lang, `services/${d.id}/`)}>
               <span class="svc__idx label muted">{d.index}</span>
               <span class="svc__main">
-                <span class="svc__title h3">{pick(lang, d.thesis)}</span>
-                <span class="svc__lead muted"><span class="label svc__name">{d.index} — {pick(lang, d.name)} · {d.codes}</span><br />{pick(lang, d.lead)}</span>
+                <span class="svc__title h3">{pick(lang, d.name)}</span>
+                <span class="svc__thesis">{pick(lang, d.thesis)}</span>
+                <span class="svc__codes label muted">{d.codes}</span>
+                <span class="svc__lead muted">{pick(lang, d.lead)}</span>
               </span>
               <Icon name="arrow" size={20} class="svc__arrow" />
             </a>
@@ -131,8 +134,11 @@ const svcPath = t(lang, 'home.windows.services.path');
     </div>
   </Block>
 
+  <!-- 6b · Websites we have built (fixes 4 §4.3) -->
+  <SitesBlock lang={lang} theme="light" />
+
   <!-- 7 · Approach (principles) -->
-  <Block theme="light" label={h('approach.label')} class="home-approach">
+  <Block theme="dark" label={h('approach.label')} class="home-approach">
     <div class="container">
       <BlockHead label={h('approach.label')} link={{ href: url(lang, 'about'), text: h('approach.link') }} />
       <h2 class="section-title reveal" data-split>{h('approach.title')}</h2>
@@ -150,7 +156,7 @@ const svcPath = t(lang, 'home.windows.services.path');
 
   <!-- 8 · Final CTA -->
   <CtaBlock
-    theme="dark"
+    theme="light"
     label={h('cta.label')}
     title={h('cta.title')}
     lead={h('cta.lead')}

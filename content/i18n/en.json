@@ -32,6 +32,10 @@
     "notFound": {
       "title": "Page not found — CYBERMOVE",
       "description": "This page doesn't exist."
+    },
+    "sites": {
+      "title": "Websites we have built — CYBERMOVE",
+      "description": "A store, a company site, a business card and a media kit — from prototype to launch. Open any of them and see it live."
     }
   },
   "nav": {
@@ -43,6 +47,7 @@
     "tabsLabel": "Recently opened pages",
     "crumbs": "Breadcrumbs",
     "partner": "Partnerships · WhatsApp",
+    "sites": "Websites",
     "services": "Services",
     "cases": "Cases",
     "about": "About",
@@ -621,5 +626,16 @@
     "title": "This page doesn't exist.",
     "lead": "It may have moved when the website was updated.",
     "home": "Back to home"
+  },
+  "sites": {
+    "label": "Websites · 04",
+    "title": "Websites we have built.",
+    "lead": "A store, a company site, a business card and a media kit — from prototype to launch. Open any of them and see it live.",
+    "metaTitle": "Websites we have built — CYBERMOVE",
+    "blockTitle": "Websites we have built",
+    "open": "Visit site ↗",
+    "openShort": "Open ↗",
+    "all": "All websites →",
+    "alt": "Home page of {domain}"
   }
 }

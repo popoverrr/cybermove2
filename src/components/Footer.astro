@@ -8,7 +8,7 @@ interface Props { lang: Lang; altHref: string }
 const { lang, altHref } = Astro.props;
 const other = otherLang(lang);
 const year = new Date().getFullYear();
-const sectionLinks = (['services', 'cases', 'insights', 'about', 'contact'] as const).map((k) => ({ href: url(lang, k), text: t(lang, `nav.${k}`) }));
+const sectionLinks = (['services', 'cases', 'sites', 'insights', 'about', 'contact'] as const).map((k) => ({ href: url(lang, k), text: t(lang, `nav.${k}`) }));
 ---
 <footer class="ftr" data-theme="dark" data-label="CYBERMOVE">
   <BendText lang={lang} />

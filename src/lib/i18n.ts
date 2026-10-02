@@ -66,11 +66,12 @@ export function pick<T>(lang: Lang, field: Localized<T>): T {
   return typoDeep(lang, v) as T;
 }
 
-export type PageKey = 'home' | 'services' | 'cases' | 'insights' | 'about' | 'contact' | 'privacy';
+export type PageKey = 'home' | 'services' | 'cases' | 'sites' | 'insights' | 'about' | 'contact' | 'privacy';
 export const pageSlugs: Record<PageKey, string> = {
   home: '',
   services: 'services/',
   cases: 'cases/',
+  sites: 'sites/',
   insights: 'insights/',
   about: 'about/',
   contact: 'contact/',

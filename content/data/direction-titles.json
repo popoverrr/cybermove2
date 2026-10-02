@@ -1,0 +1,8 @@
+{
+  "_comment": "Display names of the five service areas (docs/13-fixes-4.md §2): one name everywhere — large in lists, H1 of the area page, rubrics, chips.",
+  "audit": { "ru": "Аудит и финансы", "en": "Audit and finance" },
+  "systems": { "ru": "Сайты, CRM, телефония и AI", "en": "Websites, CRM, telephony and AI" },
+  "brand-content": { "ru": "Бренд, контент, PR", "en": "Brand, content, PR" },
+  "traffic": { "ru": "Реклама и SEO", "en": "Advertising and SEO" },
+  "tenders-legal": { "ru": "Тендеры и право", "en": "Tenders and legal" }
+}

@@ -1,0 +1,52 @@
+---
+// A website we built (docs/13-fixes-4.md §4.2): the skeleton's window as a browser window — domain in the bar,
+// a real long screenshot inside that scrolls (hover on desktop, page scroll on phones), the mobile screenshot
+// in a hairline «phone» at the corner; text with index, type, name, summary, description, languages, tags, link.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Tag from './Tag.astro';
+import Icon from './Icon.astro';
+import { t, pick, type Lang } from '../lib/i18n';
+import type { Site } from '../lib/content';
+interface Props { site: Site; index: number; lang: Lang; compact?: boolean; flip?: boolean; eager?: boolean; heading?: 'h2' | 'h3' }
+const { site, index, lang, compact = false, flip = false, eager = false, heading: H = 'h3' } = Astro.props;
+const shots = import.meta.glob<{ default: ImageMetadata }>('/src/assets/sites/*.webp', { eager: true });
+const desk = shots[`/src/assets/sites/${site.id}-desktop.webp`]?.default;
+const mob = shots[`/src/assets/sites/${site.id}-mobile.webp`]?.default;
+const alt = t(lang, 'sites.alt', { domain: site.domain });
+const idx = String(index + 1).padStart(2, '0');
+---
+{desk && (
+<article class:list={['site', compact && 'site--compact', flip && 'site--flip']} data-site>
+  <a class="win site__win" href={site.url} target="_blank" rel="noopener" data-cursor={t(lang, 'sites.openShort').replace(/\s*↗$/, '')}
+    aria-label={`${site.name} — ${site.domain}`}>
+    <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{site.domain}</span><span></span></div>
+    <div class="site__screen">
+      <div class="site__strip" data-site-strip>
+        <Image src={desk} alt={alt} widths={[480, 800, 1200, 1440].filter((w) => w <= desk.width)} sizes={compact ? '(min-width: 1024px) 620px, 100vw' : '(min-width: 1024px) 760px, 100vw'}
+          loading={eager ? 'eager' : 'lazy'} decoding="async" class="site__desk" />
+      </div>
+    </div>
+    {mob && (
+      <span class="site__phone" aria-hidden="true">
+        <Image src={mob} alt="" widths={[200, 390]} sizes="(min-width: 1024px) 150px, 26vw" loading={eager ? 'eager' : 'lazy'} decoding="async" class="site__mob" />
+      </span>
+    )}
+  </a>
+  <div class="site__text">
+    <p class="label muted site__meta"><span class="num">{idx}</span> · {pick(lang, site.type)}</p>
+    <H class="site__name">{site.name}</H>
+    <p class:list={['site__summary', !compact && 'lead']}>{pick(lang, site.summary)}</p>
+    {!compact && <p class="muted site__desc">{pick(lang, site.description)}</p>}
+    {!compact && (
+      <>
+        <p class="label site__langs">{site.languages.join(' · ')}</p>
+        <ul class="tags list-reset site__tags" role="list">{pick(lang, site.tags).map((x) => <li><Tag>{x}</Tag></li>)}</ul>
+        <a class="btn btn--secondary btn--sm site__open" href={site.url} target="_blank" rel="noopener" data-magnetic>
+          <span class="btn__in"><span class="btn__text">{t(lang, 'sites.open').replace(/\s*↗$/, '')}</span><Icon name="arrow-ne" class="btn__arrow" /></span>
+        </a>
+      </>
+    )}
+  </div>
+</article>
+)}

@@ -3,7 +3,8 @@
 // Sector names are real links to /cases/#<id> (desktop: hover previews, click navigates;
 // touch: first tap previews). Every brand name links to its case page /cases/<slug>/.
 import { pick, url, href, type Lang } from '../lib/i18n';
-import { sectors, cases, casesBySector } from '../lib/content';
+import { sectors, cases, casesBySector, monogram } from '../lib/content';
+import CasePhoto from './CasePhoto.astro';
 interface Props { lang: Lang; label: string; allLabel: string }
 const { lang, label, allLabel } = Astro.props;
 const first = sectors[0].id;
@@ -27,7 +28,18 @@ const sectorHref = (id: string) => url(lang, 'cases', `#${id}`);
     <ul class="sm__names list-reset">
       {cases.map((c) => (
         <li class:list={['sm__name', c.sector !== first && 'is-off']} data-sector={c.sector}>
-          <a class="sm__name-link" href={href(lang, `cases/${c.id}/`)}>{pick(lang, c.cardName)}</a><span class="sm__sep" aria-hidden="true"> · </span>
+          <a class="sm__name-link" data-case={c.id} href={href(lang, `cases/${c.id}/`)}>{pick(lang, c.cardName)}</a><span class="sm__sep" aria-hidden="true"> · </span>
+        </li>
+      ))}
+    </ul>
+    <!-- photos of the active sector's cases (fixes 4 §3): a horizontal row with snap, links to the cases -->
+    <ul class="sm__thumbs list-reset" aria-label={label}>
+      {cases.map((c) => (
+        <li class:list={['sm__thumb', c.sector !== first && 'is-off']} data-sector={c.sector}>
+          <a class="sm__thumb-link" href={href(lang, `cases/${c.id}/`)} data-case={c.id} tabindex="-1">
+            <span class="sm__thumb-img"><CasePhoto item={c} lang={lang} sizes="160px" thumb decorative /></span>
+            <span class="sm__thumb-cap label">{monogram(pick(lang, c.cardName))}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -48,6 +60,39 @@ const sectorHref = (id: string) => url(lang, 'cases', `#${id}`);
     const bar = root.querySelector<HTMLElement>('.sm__bar')!;
     let active = tabs[0].dataset.sector!;
     const pos = root.querySelector<HTMLElement>('[data-sm-pos]');
+    const thumbs = [...root.querySelectorAll<HTMLElement>('.sm__thumb')];
+    const row = root.querySelector<HTMLElement>('.sm__thumbs')!;
+    // old thumbs leave (opacity + 8 px), new ones arrive with a 30 ms cascade
+    let swapT = 0;
+    const swapThumbs = (id: string) => {
+      clearTimeout(swapT);
+      thumbs.forEach((t) => { if (!t.classList.contains('is-off')) t.classList.add('is-leaving'); });
+      swapT = window.setTimeout(() => {
+        let k = 0;
+        thumbs.forEach((t) => {
+          const on = t.dataset.sector === id;
+          t.classList.remove('is-leaving');
+          t.classList.toggle('is-off', !on);
+          if (on) { t.style.setProperty('--d', `${k++ * 30}ms`); t.classList.remove('is-in'); void t.offsetWidth; t.classList.add('is-in'); }
+        });
+        row.scrollLeft = 0;
+      }, 160);
+    };
+    // name ↔ thumb highlight
+    const pair = (caseId: string, on: boolean, scroll = false) => {
+      root.querySelectorAll<HTMLElement>(`[data-case="${caseId}"]`).forEach((el) => el.classList.toggle('is-hot', on));
+      if (on && scroll) {
+        const t = root.querySelector<HTMLElement>(`.sm__thumb-link[data-case="${caseId}"]`)?.parentElement;
+        if (t) row.scrollTo({ left: t.offsetLeft - row.offsetLeft, behavior: 'smooth' });
+      }
+    };
+    root.querySelectorAll<HTMLElement>('.sm__name-link, .sm__thumb-link').forEach((a) => {
+      const id = a.dataset.case!, isName = a.classList.contains('sm__name-link');
+      a.addEventListener('pointerenter', () => pair(id, true, isName));
+      a.addEventListener('pointerleave', () => pair(id, false));
+      a.addEventListener('focus', () => pair(id, true, isName));
+      a.addEventListener('blur', () => pair(id, false));
+    });
     let interacted = false;
 
     const markLast = () => {
@@ -71,6 +116,7 @@ const sectorHref = (id: string) => url(lang, 'cases', `#${id}`);
       lines.forEach((l) => l.classList.toggle('is-on', l.dataset.sector === id));
       if (pos) pos.textContent = String(tabs.findIndex((x) => x.dataset.sector === id) + 1).padStart(2, '0');
       flipSwap(names, (el) => el.dataset.sector === id).then(markLast);
+      swapThumbs(id);
       markLast();
       // keep the active chip visible in the horizontal chip row (mobile) without scrolling the page
       const t = tabs.find((x) => x.dataset.sector === id);
@@ -121,7 +167,7 @@ const sectorHref = (id: string) => url(lang, 'cases', `#${id}`);
 
     // horizontal swipe over the sector area switches to the next / previous sector (vertical scroll untouched)
     let sx = 0, sy = 0, tracking = false;
-    const panel = root.querySelector<HTMLElement>('.sm__panel')!;
+    const panel = root.querySelector<HTMLElement>('.sm__names')!;
     panel.addEventListener('touchstart', (e) => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; tracking = true; }, { passive: true });
     panel.addEventListener('touchend', (e) => {
       if (!tracking) return;

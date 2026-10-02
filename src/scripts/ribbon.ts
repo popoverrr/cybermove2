@@ -4,7 +4,8 @@
 import { addTask } from './core/raf';
 import { reduced } from './core/motion';
 
-const SPEED = 20; // px/s
+// px/s — set in tokens.css (--speed-ribbon), read once
+const SPEED = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--speed-ribbon')) || 32;
 
 document.querySelectorAll<HTMLElement>('[data-ribbon]').forEach((ribbon) => {
   if (reduced()) return;

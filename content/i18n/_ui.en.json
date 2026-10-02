@@ -13,7 +13,8 @@
     "skip": "Skip to content",
     "tabsLabel": "Recently opened pages",
     "crumbs": "Breadcrumbs",
-    "partner": "Partnerships · WhatsApp"
+    "partner": "Partnerships · WhatsApp",
+    "sites": "Websites"
   },
   "common": {
     "open": "Open",
@@ -71,5 +72,16 @@
       "cases",
       "cases"
     ]
+  },
+  "sites": {
+    "label": "Websites · 04",
+    "title": "Websites we have built.",
+    "lead": "A store, a company site, a business card and a media kit — from prototype to launch. Open any of them and see it live.",
+    "metaTitle": "Websites we have built — CYBERMOVE",
+    "blockTitle": "Websites we have built",
+    "open": "Visit site ↗",
+    "openShort": "Open ↗",
+    "all": "All websites →",
+    "alt": "Home page of {domain}"
   }
 }

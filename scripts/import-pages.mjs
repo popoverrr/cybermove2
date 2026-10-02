@@ -159,6 +159,7 @@ function build(lang) {
       siteName: 'CYBERMOVE',
       home: meta(home.fm), services: meta(svc.fm), cases: meta(cases.fm), insights: meta(ins.fm),
       about: meta(about.fm), contact: meta(contact.fm), privacy: meta(privacy.fm), notFound: ui.meta.notFound,
+      sites: { title: ui.sites.metaTitle, description: ui.sites.lead },
     },
     nav,
     common: { ...ui.common, whatsapp: waBtn[1], codes: S[sH1 + 2] },
@@ -224,6 +225,8 @@ function build(lang) {
       discuss: discussSimilar, next: nextCase, vessel: shipH2[0],
     },
     notFound: ui.notFound,
+    // «Websites» section (texts given by the owner, docs/13-fixes-4.md §4)
+    sites: ui.sites,
   };
 }
 

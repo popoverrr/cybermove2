@@ -8,7 +8,7 @@ location ~* ^/(partners)/?$ { return 301 /cases/; }
 location ~* ^/(marketing|brand-development)/?$ { return 301 /services/; }
 location ~* ^/(en/)?projects/?$ { return 301 /$1cases/; }
 location ~* ^/(en/)?team/?$ { return 301 /$1about/; }
-location ~ ^/(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy)$ { return 301 /$1$2/; }
+location ~ ^/(en/)?((services|cases|insights)(/[\w-]+){0,2}|about|contact|privacy|sites)$ { return 301 /$1$2/; }
 
 location ^~ /_astro/ {
   add_header Cache-Control "public, max-age=31536000, immutable";

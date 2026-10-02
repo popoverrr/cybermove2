@@ -61,6 +61,7 @@ const L = (f) => Object.fromEntries(LANGS.map((lang) => [lang, f(lang)]));
 const both = (f) => { const r = L(f); return r; };
 
 /* ── directions & services ── */
+const DIR_TITLES = JSON.parse(readFileSync(join(OUT, 'direction-titles.json'), 'utf8'));
 const TITLES = JSON.parse(readFileSync(join(OUT, 'service-titles.json'), 'utf8'));
 const DIRS = ['audit', 'systems', 'brand-content', 'traffic', 'tenders-legal'];
 const svcIndex = load('ru', 'services.md');
@@ -119,8 +120,10 @@ DIRS.forEach((d, di) => {
     id,
     index: label.slice(0, 2),
     stage: label.split('·')[1].trim(),
-    name: L((lang) => idxSec[lang].title),
-    nameFull: L((lang) => about[lang][d]),
+    // one display name everywhere (docs/13-fixes-4.md §2); the live-site short name is kept as shortName
+    name: DIR_TITLES[d],
+    nameFull: DIR_TITLES[d],
+    shortName: L((lang) => idxSec[lang].title),
     kicker: L((lang) => h1Cells[lang][0]),
     thesis: L((lang) => h1Cells[lang][1] ?? home[lang].thesis),
     lead: L((lang) => head[lang].lead),

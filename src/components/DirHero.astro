@@ -5,8 +5,8 @@ import Block from './Block.astro';
 import Crumbs from './Crumbs.astro';
 import type { Crumb } from '../layouts/Base.astro';
 import type { Lang } from '../lib/i18n';
-interface Props { lang: Lang; label: string; crumbs: Crumb[]; kicker?: string; title: string; lead: string; metrics?: string; index?: string }
-const { lang, label, crumbs, kicker, title, lead, metrics, index } = Astro.props;
+interface Props { lang: Lang; label: string; crumbs: Crumb[]; kicker?: string; title: string; lead: string; metrics?: string; index?: string; sub?: string }
+const { lang, label, crumbs, kicker, title, lead, metrics, index, sub } = Astro.props;
 ---
 <Block theme="dark" label={label} first hero class="page-hero dir-hero">
   <div class="dir-hero__grid" aria-hidden="true"></div>
@@ -17,6 +17,7 @@ const { lang, label, crumbs, kicker, title, lead, metrics, index } = Astro.props
       {kicker && <span class="label hero__label hero__kicker">{kicker}</span>}{kicker && ' '}
       <span class="hero__thesis" data-split>{title}</span>
     </h1>
+    {sub && <p class="dir-hero__sub reveal" style="--rd:80ms">{sub}</p>}
     <p class="lead hero__lead reveal" style="--rd:120ms">{lead}</p>
     {metrics && <p class="label hero__codes reveal" style="--rd:180ms">{metrics}</p>}
   </div>

@@ -104,6 +104,9 @@
     --hairline: 1px;
     --tap: 44px;
     --header-h: 76px;
+    /* ribbon speeds (docs/13-fixes-4.md §1) — the only place to tune them */
+    --speed-marquee: 46s;   /* brands strip: one loop; 60s × 1/1.3 */
+    --speed-ribbon: 32;     /* «Cases» window ribbon, px/s (read by scripts/ribbon.ts) */
 
     /* motion */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

@@ -10,6 +10,8 @@ import { asset } from '../lib/i18n';
 interface Props { lang: Lang; page: PageKey | 'notFound'; altHref: string }
 const { lang, page, altHref } = Astro.props;
 const navKeys = ['services', 'cases', 'insights', 'about', 'contact'] as const;
+// the mobile menu also lists «Websites» right after «Cases» (docs/13-fixes-4.md §4.3)
+const menuKeys = ['services', 'cases', 'sites', 'insights', 'about', 'contact'] as const;
 const other = otherLang(lang);
 const firstLabel = '';
 // the music button is rendered only when the track is part of the build (docs/10-fixes.md §6)
@@ -69,7 +71,7 @@ const hasMusic = existsSync(join(process.cwd(), 'public/audio/ambient.mp3'));
         <button type="button" class="menu__close" data-menu-close aria-label={t(lang, 'nav.close')}><Icon name="close" size={14} /></button>
       </div>
       <ol class="menu__links list-reset">
-        {navKeys.map((k, i) => (
+        {menuKeys.map((k, i) => (
           <li style={`--i:${i}`}>
             <a href={url(lang, k)} aria-current={page === k ? 'page' : undefined}>
               <span class="label muted">0{i + 1}</span><span class="menu__link-text">{t(lang, `nav.${k}`)}</span>

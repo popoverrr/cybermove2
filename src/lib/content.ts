@@ -9,6 +9,7 @@ import casesJson from '../../content/data/cases.json';
 import sectorsJson from '../../content/data/sectors.json';
 import insightsJson from '../../content/data/insights.json';
 import orbitJson from '../../content/data/core-orbit.json';
+import sitesJson from '../../content/data/sites.json';
 import type { Localized } from './i18n';
 
 export interface Company { brand: string; legalName: string; domain: string | null; tagline: Localized; foundedYear: number | null }
@@ -65,6 +66,11 @@ export interface InsightMeta {
 export interface Rubric { id: string; h1: Localized; lead: Localized; seo: Localized<Seo> }
 export interface OrbitNode { id: string; label: string; ring: 'core' | 'system'; angle: number; direction?: string }
 
+export interface Site {
+  id: string; name: string; domain: string; url: string;
+  type: Localized; summary: Localized; description: Localized; languages: string[]; tags: Localized<string[]>; direction: string;
+}
+export const sites = sitesJson.items as unknown as Site[];
 export const company = companyJson as Company;
 export const contacts = contactsJson as unknown as Contacts;
 export const regions = geographyJson.regions as Region[];
