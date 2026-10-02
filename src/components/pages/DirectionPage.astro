@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Icon from '../Icon.astro';
+import DirHero from '../DirHero.astro';
+import CaseCard from '../CaseCard.astro';
+import ArticleRows from '../ArticleRows.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, href, pick, localHref, type Lang } from '../../lib/i18n';
+import { directions, servicesOf, caseById, insightById, type Direction } from '../../lib/content';
+
+interface Props { lang: Lang; d: Direction }
+const { lang, d } = Astro.props;
+const L = (k: string) => t(lang, `direction.${k}`);
+const seo = pick(lang, d.seo);
+const svcs = servicesOf(d);
+const route = `services/${d.id}/`;
+const crumbs = [{ name: t(lang, 'nav.services'), route: 'services/' }, { name: pick(lang, d.name), route }];
+const [intro, ...notes] = pick(lang, d.intro);
+const site = Astro.site!.origin;
+const others = directions.filter((x) => x.id !== d.id);
+const label = `${d.index} · ${d.stage}`;
+---
+<Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${d.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, d.nameFull), description: seo.description, serviceType: pick(lang, d.kicker),
+    url: site + href(lang, route), provider: { '@id': site + href('ru') + '#organization' },
+    hasOfferCatalog: { '@type': 'OfferCatalog', name: pick(lang, d.nameFull), itemListElement: svcs.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: pick(lang, s.name), url: site + href(lang, `${route}${s.id}/`) } })) } }]}>
+  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} image={d.image} />
+
+  <Block theme="light" label={label} class="dir-intro">
+    <div class="container">
+      <BlockHead label={label} />
+      <div class="intro-cols">
+        <p class="lead reveal intro-cols__main">{intro}</p>
+        <div class="intro-cols__aside reveal" style="--rd:120ms">
+          {notes.map((n) => <p class="small muted intro-note">{n}</p>)}
+          <a class="link link--arrow" href={localHref(lang === 'en' ? '/en/about/#metrics' : '/about/#metrics')}><span>{t(lang, 'services.aboutLink')}</span><Icon name="arrow" size={14} /></a>
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={L('services')} class="dir-services">
+    <div class="container">
+      <BlockHead label={`${d.index} · ${String(svcs.length).padStart(2, '0')}`} />
+      <h2 class="section-title reveal" data-split>{L('services')}</h2>
+      <ol class="srows list-reset">
+        {svcs.map((s, i) => (
+          <li class="srows__row reveal" style={`--rd:${i * 50}ms`}>
+            <span class="label muted srows__idx">{s.index} / {String(svcs.length).padStart(2, '0')}</span>
+            <div class="srows__main">
+              <h3 class="srows__title"><a class="link-plain" href={href(lang, `${route}${s.id}/`)}>{pick(lang, s.name)}</a></h3>
+              <p class="muted srows__line">{pick(lang, s.line)}</p>
+            </div>
+            <ul class="tags list-reset srows__tags" role="list">{pick(lang, s.points).map((p) => <li class="tag">{p}</li>)}</ul>
+            <a class="link link--arrow srows__more" href={href(lang, `${route}${s.id}/`)}><span>{L('serviceMore')}</span><Icon name="arrow" size={14} /></a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <Block theme="light" label={L('cases')} class="dir-cases">
+    <div class="container">
+      <BlockHead label={`${d.index} · ${t(lang, 'common.codes').replace(/ · /g, ' → ')}`} link={{ href: href(lang, 'cases/'), text: t(lang, 'home.results.link') }} />
+      <h2 class="section-title reveal" data-split>{L('cases')}</h2>
+      <ul class="pgrid list-reset">{d.cases.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
+    </div>
+  </Block>
+
+  {d.insights.length > 0 && (
+    <Block theme="dark" label={L('insights')} class="dir-insights">
+      <div class="container">
+        <BlockHead label={`${d.index} · ${t(lang, 'nav.insights')}`} link={{ href: href(lang, `insights/${d.id}/`), text: t(lang, 'insights.allInsights') }} />
+        <h2 class="section-title reveal" data-split>{L('insights')}</h2>
+        <ArticleRows lang={lang} items={d.insights.map(insightById)} />
+      </div>
+    </Block>
+  )}
+
+  <Block theme="light" label={L('directions')} class="dir-others">
+    <div class="container">
+      <BlockHead label={L('directions')} />
+      <h2 class="section-title reveal" data-split>{L('directions')}</h2>
+      <ol class="numrows list-reset">
+        {others.map((o, i) => (
+          <li class="numrows__row reveal" style={`--rd:${i * 50}ms`}>
+            <span class="label muted num">{o.index}</span>
+            <a class="numrows__link" href={href(lang, `services/${o.id}/`)}>
+              <span class="numrows__text">{pick(lang, o.nameFull)}</span>
+              <span class="numrows__sub muted small">{pick(lang, o.lead)}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <SiteCta lang={lang} />
+</Base>

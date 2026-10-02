@@ -1,0 +1,358 @@
+[
+  {
+    "id": "audit",
+    "index": "01",
+    "stage": "CORE",
+    "name": {
+      "ru": "Аудит",
+      "en": "Audit"
+    },
+    "nameFull": {
+      "ru": "Аудит и финансы",
+      "en": "Audit & finance"
+    },
+    "kicker": {
+      "ru": "Аудит бизнеса",
+      "en": "Business audit"
+    },
+    "thesis": {
+      "ru": "Сначала диагноз. Потом бюджет.",
+      "en": "Diagnosis first. Budget second."
+    },
+    "lead": {
+      "ru": "Любую работу начинаем с аудита: находим, где бизнес теряет деньги и клиентов и что даст рост быстрее всего.",
+      "en": "Every engagement starts with an audit: we find where the business loses money and clients, and what will drive growth fastest."
+    },
+    "metrics": "CAC · LTV · ROMI · CASH FLOW · MARGIN · CR",
+    "codes": "CAC · LTV · ROMI · CASH FLOW · MARGIN · CR",
+    "intro": {
+      "ru": [
+        "Аудит — точка входа в любую работу с CYBERMOVE. Смотрим бизнес целиком: продукт и маркетинг, продажи, финансы и расходы на рост. Опираемся на выгрузки из CRM, рекламных кабинетов и учёта, а не на ощущения. На выходе — карта проблем и возможностей, приоритеты и план, который можно выполнить своими силами или вместе с нами. Каждую из четырёх услуг можно взять отдельно.",
+        "«Финансовый аудит» здесь — управленческая финансовая диагностика бизнеса, а не обязательный лицензируемый аудит отчётности. «Инвестиции» — вложения в собственный бизнес, а не рекомендации по ценным бумагам."
+      ],
+      "en": [
+        "An audit is where every CYBERMOVE engagement starts. We look at the whole business: product and marketing, sales, finances and the cost of growth. We work from CRM exports, ad accounts and bookkeeping data rather than impressions. The outcome is a map of problems and opportunities, priorities and a plan you can carry out in-house or with us. Each of the four services can be ordered on its own.",
+        "“Financial audit” here means management-level financial diagnostics of a business, not a statutory audit of financial statements. “Investment” means investing in your own business, not securities advice."
+      ]
+    },
+    "result": {
+      "ru": "Карта проблем и возможностей · приоритеты · roadmap · бюджет",
+      "en": "Map of problems and opportunities · priorities · roadmap · budget"
+    },
+    "services": [
+      "business-audit",
+      "financial-audit",
+      "investment",
+      "strategy"
+    ],
+    "cases": [
+      "barbershops-kyiv",
+      "tpk",
+      "brsm-nafta",
+      "toscana-wine",
+      "sii-concept",
+      "apicapsules"
+    ],
+    "insights": [
+      "business-audit-before-ads",
+      "unit-economics-cac-ltv-romi"
+    ],
+    "image": "dir-audit.webp",
+    "seo": {
+      "ru": {
+        "title": "Аудит бизнеса и финансов — CYBERMOVE",
+        "description": "Аудит бизнеса, маркетинга и финансов: находим, где компания теряет деньги и клиентов и что даст рост быстрее всего. Стратегия и план. Разбор бесплатно.",
+        "h1": "Аудит бизнеса Сначала диагноз. Потом бюджет."
+      },
+      "en": {
+        "title": "Business Audit Services — CYBERMOVE",
+        "description": "Business, marketing and financial audit: we find where the company loses money and customers and what will drive growth fastest. Strategy and plan. Free review.",
+        "h1": "Business audit Diagnosis first. Budget second."
+      }
+    }
+  },
+  {
+    "id": "systems",
+    "index": "02",
+    "stage": "SYSTEM",
+    "name": {
+      "ru": "Системы",
+      "en": "Systems"
+    },
+    "nameFull": {
+      "ru": "Сайты, CRM, телефония и AI",
+      "en": "Websites, CRM, telephony & AI"
+    },
+    "kicker": {
+      "ru": "Цифровизация бизнеса",
+      "en": "Business digitalization"
+    },
+    "thesis": {
+      "ru": "Фундамент, на котором не теряются заявки.",
+      "en": "A foundation where no lead gets lost."
+    },
+    "lead": {
+      "ru": "Сайт, CRM, телефония и AI собираем в одну связанную систему: каждая заявка видна, посчитана и доведена до продажи.",
+      "en": "We connect the website, CRM, telephony and AI into one linked system: every lead is visible, counted and taken through to the sale."
+    },
+    "metrics": "SITE · CRM · VOIP · AI · AUTO",
+    "codes": "SITE · CRM · VOIP · AI · AUTO",
+    "intro": {
+      "ru": [
+        "Цифровизация бизнеса у нас начинается не с выбора программы, а с пути заявки: откуда она приходит, кто и когда её обрабатывает, где она теряется. Сайт, CRM, телефония, AI-инструменты и интеграции собираем так, чтобы каждое обращение было видно и посчитано, а руководитель получал отчёт без ручных таблиц. Можно начать с одного звена и добавлять остальные по мере роста."
+      ],
+      "en": [
+        "For us, business digitalization starts not with choosing software but with the path of a lead: where it comes from, who handles it and when, and where it gets lost. We build the website, CRM, phone system, AI tools and integrations so that every enquiry is visible and counted, and management gets reports without manual spreadsheets. You can start with one link in the chain and add the rest as you grow."
+      ]
+    },
+    "result": {
+      "ru": "Сайт · CRM · телефония · AI · автоматизация — в одной связке",
+      "en": "Website · CRM · telephony · AI · automation — in one system"
+    },
+    "services": [
+      "websites",
+      "crm",
+      "telephony",
+      "ai",
+      "automation"
+    ],
+    "cases": [
+      "building-time",
+      "hydrosta-kazakhstan",
+      "hsta-group",
+      "hydrosta-service",
+      "fitness-room-menden",
+      "oleg-baryshevsky"
+    ],
+    "insights": [
+      "ai-agent-in-sales",
+      "choose-crm-kazakhstan",
+      "landing-page-for-ads"
+    ],
+    "image": "dir-systems.webp",
+    "seo": {
+      "ru": {
+        "title": "Цифровизация бизнеса: сайты, CRM и AI — CYBERMOVE",
+        "description": "Цифровизация бизнеса: сайты, CRM, IP-телефония, AI-агенты и автоматизация в одной связке — каждая заявка видна и доведена до продажи. Разбор бесплатно.",
+        "h1": "Цифровизация бизнеса Фундамент, на котором не теряются заявки."
+      },
+      "en": {
+        "title": "Business Digitalization Services — CYBERMOVE",
+        "description": "Business digitalization: websites, CRM, phone systems, AI agents and automation working as one — every lead tracked and followed through to a sale. Free review.",
+        "h1": "Business digitalization A foundation where no lead gets lost."
+      }
+    }
+  },
+  {
+    "id": "brand-content",
+    "index": "03",
+    "stage": "SYSTEM",
+    "name": {
+      "ru": "Бренд и контент",
+      "en": "Brand & content"
+    },
+    "nameFull": {
+      "ru": "Бренд, контент, PR",
+      "en": "Brand, content, PR"
+    },
+    "kicker": {
+      "ru": "Брендинг и контент",
+      "en": "Branding and content"
+    },
+    "thesis": {
+      "ru": "Упаковка, которой верят.",
+      "en": "Packaging people trust."
+    },
+    "lead": {
+      "ru": "Определяем ядро бренда и превращаем его в контент, который продаёт, а не просто выходит по графику.",
+      "en": "We define the brand core and turn it into content that sells, not content that merely goes out on schedule."
+    },
+    "metrics": "CORE · LENS · 9:16 · WAVE · BEAM",
+    "codes": "CORE · LENS · 9:16 · WAVE · BEAM",
+    "intro": {
+      "ru": [
+        "Брендинг и контент начинаем с ядра: что вы продаёте, кому и почему у вас стоит покупать. Из этого ядра вырастают съёмки, соцсети, публикации в медиа и личный бренд руководителя или эксперта. Задача контента — поддерживать продажи и доверие, поэтому каждый формат привязываем к воронке и считаем, что он даёт."
+      ],
+      "en": [
+        "Branding and content start with the core: what you sell, to whom, and why people should buy from you. Shoots, social media, press coverage and the personal brand of a founder or expert all grow out of that core. Content exists to support sales and trust, so every format is tied to the funnel and measured by what it delivers."
+      ]
+    },
+    "result": {
+      "ru": "Ядро бренда · продакшн · SMM · PR · личный бренд",
+      "en": "Brand core · production · SMM · PR · personal brand"
+    },
+    "services": [
+      "brand-core",
+      "production",
+      "smm",
+      "pr",
+      "personal-brand"
+    ],
+    "cases": [
+      "gaia",
+      "cybermove-games",
+      "furniture-factory",
+      "intertop",
+      "van-dog-agency",
+      "ukrainian-fashion-week"
+    ],
+    "insights": [
+      "personal-brand-entrepreneur",
+      "positioning-one-sentence"
+    ],
+    "image": "dir-brand-content.webp",
+    "seo": {
+      "ru": {
+        "title": "Брендинг и контент для бизнеса — CYBERMOVE",
+        "description": "Брендинг и контент для бизнеса: позиционирование, продакшн, SMM, PR и личный бренд. Упаковка, которой верят, и контент, который продаёт. Разбор бесплатно.",
+        "h1": "Брендинг и контент Упаковка, которой верят."
+      },
+      "en": {
+        "title": "Branding and Content Services — CYBERMOVE",
+        "description": "Branding and content services: positioning, production, social media, PR and personal branding. A brand people trust and content that sells. Free review.",
+        "h1": "Branding and content Packaging people trust."
+      }
+    }
+  },
+  {
+    "id": "traffic",
+    "index": "04",
+    "stage": "SYSTEM",
+    "name": {
+      "ru": "Трафик",
+      "en": "Traffic"
+    },
+    "nameFull": {
+      "ru": "Реклама и SEO",
+      "en": "Advertising & SEO"
+    },
+    "kicker": {
+      "ru": "Реклама и SEO",
+      "en": "PPC and SEO"
+    },
+    "thesis": {
+      "ru": "Клиенты из каждого канала. С понятной экономикой.",
+      "en": "Clients from every channel. With clear economics."
+    },
+    "lead": {
+      "ru": "Запускаем и ведём рекламу там, где есть ваша аудитория. Считаем CPL, CAC и ROMI, а не клики.",
+      "en": "We launch and run advertising wherever your audience is. We count CPL, CAC and ROMI, not clicks."
+    },
+    "metrics": "CPL · CAC · ROMI · CTR",
+    "codes": "CPL · CAC · ROMI · CTR",
+    "intro": {
+      "ru": [
+        "Рекламу и SEO ведём как один канал привлечения с общей экономикой: сколько стоит заявка, клиент и возврат на вложения в каждом источнике. До запуска проверяем сайт, аналитику и обработку заявок, потому что трафик без этого только увеличивает потери. Дальше — тесты, отключение того, что не окупается, и масштабирование того, что работает."
+      ],
+      "en": [
+        "We run paid media and SEO as one acquisition system with shared economics: the cost of a lead, of a customer and the return on spend for every source. Before launch we check the website, analytics and lead handling, because traffic without them only multiplies losses. After that: testing, switching off what does not pay back and scaling what works."
+      ]
+    },
+    "result": {
+      "ru": "CPL · CAC · ROMI — по каждому каналу",
+      "en": "CPL · CAC · ROMI — for every channel"
+    },
+    "services": [
+      "targeting",
+      "google-ads",
+      "tiktok-ads",
+      "seo"
+    ],
+    "cases": [
+      "good-market",
+      "brsm-nafta",
+      "ecommerce",
+      "building-time",
+      "hydrosta-kazakhstan",
+      "toscana-wine"
+    ],
+    "insights": [
+      "google-ads-kazakhstan-auction",
+      "seo-for-service-companies",
+      "tiktok-ads-for-business"
+    ],
+    "image": "dir-traffic.webp",
+    "seo": {
+      "ru": {
+        "title": "Реклама и SEO для бизнеса — CYBERMOVE",
+        "description": "Реклама и SEO для бизнеса: таргет, Google Ads, TikTok Ads и SEO-продвижение. Клиенты из каждого канала с понятной стоимостью заявки. Разбор бесплатно.",
+        "h1": "Реклама и SEO Клиенты из каждого канала. С понятной экономикой."
+      },
+      "en": {
+        "title": "PPC and SEO Services — CYBERMOVE",
+        "description": "PPC and SEO services: Meta ads, Google Ads, TikTok ads and search optimisation. Customers from every channel with a clear cost per lead. Free initial review.",
+        "h1": "PPC and SEO Clients from every channel. With clear economics."
+      }
+    }
+  },
+  {
+    "id": "tenders-legal",
+    "index": "05",
+    "stage": "SYSTEM",
+    "name": {
+      "ru": "Тендеры и право",
+      "en": "Tenders & legal"
+    },
+    "nameFull": {
+      "ru": "Тендеры и право",
+      "en": "Tenders & legal"
+    },
+    "kicker": {
+      "ru": "Тендерное и юридическое сопровождение",
+      "en": "Tender support and legal services"
+    },
+    "thesis": {
+      "ru": "Крупные контракты и защищённые сделки.",
+      "en": "Large contracts and protected deals."
+    },
+    "lead": {
+      "ru": "Находим тендеры, готовим заявки и ведём сделку юридически: от документации до подписанного договора.",
+      "en": "We find tenders, prepare bids and manage the deal legally: from documentation to a signed contract."
+    },
+    "metrics": "TENDER · BID · CONTRACT · CORP",
+    "codes": "TENDER · BID · CONTRACT · CORP",
+    "intro": {
+      "ru": [
+        "Тендерное и юридическое сопровождение закрывает участок, на котором бизнес чаще всего теряет время и деньги: поиск подходящих закупок, заявки и документы, договоры с заказчиками и партнёрами, корпоративные бумаги. Работаем с государственными закупками Казахстана и коммерческими тендерами, от мониторинга до подписанного договора и его исполнения."
+      ],
+      "en": [
+        "Tender support and legal services cover the area where businesses most often lose time and money: finding suitable procurements, bids and documentation, contracts with customers and partners, corporate paperwork. We work with public procurement in Kazakhstan and commercial tenders, from monitoring to a signed contract and its performance."
+      ]
+    },
+    "result": {
+      "ru": "Тендеры · заявки · договоры · корпоративное сопровождение",
+      "en": "Tenders · bids · contracts · corporate support"
+    },
+    "services": [
+      "tender-monitoring",
+      "tender-application",
+      "contracts",
+      "corporate"
+    ],
+    "cases": [
+      "medical-protective-equipment",
+      "hsta-group",
+      "building-time",
+      "hydrosta-kazakhstan",
+      "sii-concept",
+      "barbershops-kyiv"
+    ],
+    "insights": [
+      "marketing-agency-contract",
+      "public-procurement-kazakhstan"
+    ],
+    "image": "dir-tenders-legal.webp",
+    "seo": {
+      "ru": {
+        "title": "Тендерное и юридическое сопровождение — CYBERMOVE",
+        "description": "Тендерное и юридическое сопровождение: мониторинг госзакупок, подготовка заявок, договоры и корпоративные документы. От тендера до подписанного договора.",
+        "h1": "Тендерное и юридическое сопровождение Крупные контракты и защищённые сделки."
+      },
+      "en": {
+        "title": "Tender Support and Legal Services — CYBERMOVE",
+        "description": "Tender support and legal services in Kazakhstan: procurement monitoring, bid preparation, contracts and corporate documents — from tender to signed contract.",
+        "h1": "Tender support and legal services Large contracts and protected deals."
+      }
+    }
+  }
+]

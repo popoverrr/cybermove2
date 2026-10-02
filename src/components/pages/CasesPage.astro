@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import CaseCard from '../CaseCard.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, pick, type Lang } from '../../lib/i18n';
+import { cases, sectors, casesBySector } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = (k: string) => t(lang, `cases.${k}`);
+const path = t(lang, 'home.windows.cases.path');
+const site = Astro.site!.origin;
+---
+<Base lang={lang} page="cases" path={path} crumbs={[{ name: t(lang, 'nav.cases'), route: 'cases/' }]}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: c('hero.title'), inLanguage: lang,
+    hasPart: cases.map((x) => ({ '@type': 'CreativeWork', name: pick(lang, x.name), url: `${site}${Astro.url.pathname}${x.id}/` })) }]}>
+  <Block theme="dark" label={c('hero.label')} first hero class="page-hero projects-block">
+    <div class="container">
+      <p class="label hero__label reveal">{c('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{c('hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{c('hero.lead')}</p>
+
+      <div class="pfilter reveal" role="group" aria-label={c('hero.title')} data-filter>
+        <button type="button" class="chip is-on" aria-pressed="true" data-sector="all">
+          <span>{c('filterAll')}</span><span class="chip__count num">{String(cases.length).padStart(2, '0')}</span>
+        </button>
+        {sectors.map((s) => (
+          <button type="button" class="chip" aria-pressed="false" data-sector={s.id}>
+            <span>{pick(lang, s.title)}</span><span class="chip__count num">{String(casesBySector(s.id).length).padStart(2, '0')}</span>
+          </button>
+        ))}
+      </div>
+
+      <ul class="pgrid list-reset" id="cases-grid" aria-live="polite">
+        {cases.map((x, i) => <CaseCard item={x} lang={lang} index={i} />)}
+      </ul>
+    </div>
+  </Block>
+
+  <SiteCta lang={lang} theme="light" />
+</Base>
+
+<script>
+  import { flipSwap } from '../../scripts/core/flip';
+
+  /* ── Sector filter (interaction #3, FLIP) ── */
+  const filter = document.querySelector<HTMLElement>('[data-filter]');
+  const cards = [...document.querySelectorAll<HTMLElement>('.pcard')];
+  if (filter) {
+    const chips = [...filter.querySelectorAll<HTMLButtonElement>('.chip')];
+    const mark = (chip: HTMLButtonElement) =>
+      chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', String(on)); });
+    const match = (id: string) => (el: HTMLElement) => id === 'all' || el.dataset.sector === id;
+    filter.addEventListener('click', (e) => {
+      const chip = (e.target as Element).closest<HTMLButtonElement>('.chip');
+      if (!chip || chip.classList.contains('is-on')) return;
+      mark(chip);
+      const id = chip.dataset.sector!;
+      flipSwap(cards, match(id));
+      // keep the filter shareable: /cases/?sector=<id> (no param for "All")
+      const u = new URL(location.href);
+      if (id === 'all') u.searchParams.delete('sector'); else u.searchParams.set('sector', id);
+      history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+    });
+    // ?sector=<id> preselects a filter on load (instantly, no animation)
+    const initialSector = new URL(location.href).searchParams.get('sector');
+    const initialChip = chips.find((c) => c.dataset.sector === initialSector);
+    if (initialChip && initialSector !== 'all') {
+      mark(initialChip);
+      cards.forEach((el) => el.classList.toggle('is-off', !match(initialSector!)(el)));
+    }
+  }
+</script>

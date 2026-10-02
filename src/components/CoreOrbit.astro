@@ -1,0 +1,84 @@
+---
+// Signature element #7: the CORE schema (docs/09-core-orbit.md). Static SVG with final positions
+// computed at build time; src/scripts/core-orbit.ts adds rotation, pulses, parallax and hover.
+import { orbit, directionById } from '../lib/content';
+import { href, pick, t, type Lang } from '../lib/i18n';
+import { W, H, CX, CY, R_CORE, R_MID, R_SYS, layout, ellipsePath, point } from '../scripts/core-orbit-geo';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const FS = 13;
+const nodes = orbit.map((n) => ({ ...n, index: n.ring === 'system' ? String(orbit.filter((m) => m.ring === 'system').indexOf(n) + 1).padStart(2, '0') : undefined }));
+// six system labels stay visible on phones (every other node, starting with the first)
+const key = new Set(nodes.filter((n) => n.ring === 'system').filter((_, i) => i % 2 === 0).slice(0, 6).map((n) => n.id));
+const placed = layout(nodes, 0, 0, FS);
+const ticks: string[] = [];
+for (let a = 0; a < 360; a += 10) {
+  const long = a % 90 === 0;
+  const p1 = point(R_SYS + 4, a), p2 = point(R_SYS + (long ? 16 : 9), a);
+  ticks.push(`M${p1.x.toFixed(1)} ${p1.y.toFixed(1)}L${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`);
+}
+const grid: string[] = [];
+const STEP = W / 10;
+for (let x = 0; x <= W; x += STEP) grid.push(`M${x} 0V${H}`);
+for (let y = CY % STEP; y <= H; y += STEP) grid.push(`M0 ${y}H${W}`);
+const op = (d: number) => (0.45 + 0.55 * d).toFixed(3);
+const sc = (d: number) => (0.82 + 0.3 * d).toFixed(3);
+---
+<figure class="orbit" data-core-orbit data-fs={FS}>
+  <svg class="orbit__svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t(lang, 'home.orbit.aria')}>
+    <g class="orbit__stage">
+      <path class="orbit__grid" d={grid.join('')} />
+      <g class="orbit__rings">
+        <path class="orbit__ring orbit__ring--sys" d={ellipsePath(R_SYS)} pathLength="1" />
+        <path class="orbit__ring orbit__ring--mid" d={ellipsePath(R_MID)} />
+        <path class="orbit__ring orbit__ring--core" d={ellipsePath(R_CORE)} pathLength="1" />
+        <path class="orbit__ticks" d={ticks.join('')} />
+      </g>
+      <g class="orbit__links">
+        {nodes.map((n, i) => n.ring === 'system' && (
+          <line class="orbit__link" data-link={n.id} x1={CX} y1={CY} x2={placed[i].x.toFixed(1)} y2={placed[i].y.toFixed(1)} pathLength="1" style={`--i:${i}`} />
+        ))}
+        <circle class="orbit__pulse" r="3" cx={CX} cy={CY} />
+        <circle class="orbit__pulse" r="3" cx={CX} cy={CY} />
+      </g>
+      <g class="orbit__core">
+        <circle class="orbit__glow" cx={CX} cy={CY} r="92" />
+        <circle class="orbit__c1" cx={CX} cy={CY} r="44" />
+        <circle class="orbit__c2" cx={CX} cy={CY} r="30" />
+        <path class="orbit__cross" d={`M${CX - 62} ${CY}H${CX - 34}M${CX + 34} ${CY}H${CX + 62}M${CX} ${CY - 62}V${CY - 34}M${CX} ${CY + 34}V${CY + 62}M${CX - 62} ${CY - 4}V${CY + 4}M${CX + 62} ${CY - 4}V${CY + 4}M${CX - 4} ${CY - 62}H${CX + 4}M${CX - 4} ${CY + 62}H${CX + 4}`} />
+        <text class="orbit__core-text" x={CX} y={CY + 4.5} text-anchor="middle">CORE</text>
+      </g>
+      <g class="orbit__nodes">
+        {nodes.map((n, i) => {
+          const p = placed[i];
+          const body = (
+            <>
+              <line class="orbit__leader" x1={p.x.toFixed(1)} y1={p.y.toFixed(1)} x2={p.lx.toFixed(1)} y2={(p.ly + p.ty - p.ty0).toFixed(1)} />
+              <circle class="orbit__dot" cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r={n.ring === 'system' ? 3 : 2.4} />
+              <text class="orbit__label" x={p.tx.toFixed(1)} y={p.ty.toFixed(1)} text-anchor={p.anchor}>{n.index && <tspan class="orbit__idx">{n.index} </tspan>}{n.label}</text>
+            </>
+          );
+          const style = `--i:${i};--o:${op(p.depth)};--s:${sc(p.depth)}`;
+          if (n.ring === 'system') {
+            const d = directionById(n.direction!);
+            return (
+              <a class:list={['orbit__node orbit__node--sys', key.has(n.id) && 'is-key']} href={href(lang, `services/${d.id}/`)} data-node={n.id}
+                data-cursor={pick(lang, d.nameFull)} aria-label={`${n.label} — ${pick(lang, d.nameFull)}`} style={style}>
+                <circle class="orbit__hit" cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="42" />
+                {body}
+              </a>
+            );
+          }
+          return <g class="orbit__node orbit__node--core" data-node={n.id} style={style} aria-hidden="true">{body}</g>;
+        })}
+      </g>
+      <text class="orbit__fig" x={W - 8} y="18" text-anchor="end">FIG. 01</text>
+      <text class="orbit__fig" x="8" y={H - 10}>CHAOS → CORE → SYSTEM → GROWTH</text>
+    </g>
+  </svg>
+  <script type="application/json" data-orbit-nodes set:html={JSON.stringify(nodes.map((n) => ({ id: n.id, label: n.label, ring: n.ring, angle: n.angle, index: n.index })))} />
+</figure>
+
+<script>
+  import '../scripts/core-orbit';
+</script>

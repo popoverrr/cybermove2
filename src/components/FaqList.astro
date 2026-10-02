@@ -1,0 +1,17 @@
+---
+// FAQ in the skeleton's accordion (verbatim questions and answers).
+interface Props { items: { q: string; a: string }[] }
+const { items } = Astro.props;
+---
+<div class="acc" data-accordion>
+  {items.map((f, i) => (
+    <details class="acc__item reveal" style={`--rd:${i * 40}ms`}>
+      <summary class="acc__head">
+        <span class="acc__idx label">{String(i + 1).padStart(2, '0')}</span>
+        <span class="acc__title faq__q">{f.q}</span>
+        <span class="acc__plus" aria-hidden="true"></span>
+      </summary>
+      <div class="acc__body"><div><div class="acc__content">{f.a.split('\n').map((p) => <p class="measure">{p}</p>)}</div></div></div>
+    </details>
+  ))}
+</div>

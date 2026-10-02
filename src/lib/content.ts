@@ -1,20 +1,17 @@
+// Typed loaders for content/data/*.json. The data files are generated from the live-site export
+// (content/source/) by scripts/import-source.mjs — edit the source, not the JSON, when texts change.
 import companyJson from '../../content/data/company.json';
 import contactsJson from '../../content/data/contacts.json';
 import geographyJson from '../../content/data/geography.json';
-import projectsJson from '../../content/data/projects.json';
-import sectorsJson from '../../content/data/sectors.json';
+import directionsJson from '../../content/data/directions.json';
 import servicesJson from '../../content/data/services.json';
-import teamJson from '../../content/data/team.json';
+import casesJson from '../../content/data/cases.json';
+import sectorsJson from '../../content/data/sectors.json';
+import insightsJson from '../../content/data/insights.json';
+import orbitJson from '../../content/data/core-orbit.json';
 import type { Localized } from './i18n';
 
-export interface Company {
-  brand: string;
-  legalName: string;
-  domain: string | null;
-  tagline: Localized;
-  descriptor: Localized;
-  foundedYear: number | null;
-}
+export interface Company { brand: string; legalName: string; domain: string | null; tagline: Localized; foundedYear: number | null }
 
 interface Channel { number?: string; display?: string; url?: string; handle?: string }
 export interface Contacts {
@@ -29,65 +26,75 @@ export interface Contacts {
 }
 
 export interface Region { id: string; label: Localized }
-export interface City {
-  id: string; region: string; city: Localized; country: Localized; lat: number; lon: number;
+export interface City { id: string; region: string; name: string; lat: number; lon: number }
+
+interface Seo { title: string; description: string; h1: string }
+export interface Direction {
+  id: string; index: string; stage: string;
+  name: Localized; nameFull: Localized; kicker: Localized; thesis: Localized; lead: Localized;
+  metrics: string; codes: string; intro: Localized<string[]>; result: Localized;
+  services: string[]; cases: string[]; insights: string[]; image: string; seo: Localized<Seo>;
 }
-
-export type ProjectType = 'client' | 'experience' | 'own' | 'group';
-export interface ProjectResult { value: string; label: Localized }
-export interface Project {
-  id: string;
-  name: Localized;
-  monogram: string;
-  /** file name in src/assets/projects/ (downloaded by scripts/fetch-project-photos.mjs); null → generated cover */
-  photo?: string | null;
-  /** optional CSS object-position for the photo crop, e.g. "50% 30%" */
-  photoFocus?: string;
-  sector: string;
-  type: ProjectType;
-  url: string | null;
-  geo: Localized | null;
-  showInMarquee: boolean;
-  short: Localized;
-  details: Localized;
-  tags: Localized<string[]>;
-  /** Optional: real case numbers. Rendered only when present. */
-  results?: ProjectResult[];
-  /** Optional: set true to hide a project everywhere. */
-  hidden?: boolean;
-}
-
-export interface Sector { id: string; title: Localized; line: Localized }
-
+export interface Titled { t: string; d: string }
 export interface Service {
-  id: string; index: string; title: Localized; lead: Localized;
-  includes: Localized<string[]>; outcome: Localized;
+  id: string; direction: string; index: string;
+  name: Localized; line: Localized; points: Localized<string[]>; lead: Localized; intro: Localized<string[]>;
+  includes: Localized<Titled[]>;
+  steps: Localized<{ stage: string; t: string; d: string; time: string | null }[]>;
+  stepsNote: Localized<string | null>; timeLabel: Localized<string | null>;
+  result: Localized<string[]>; forWhom: Localized<Titled[]>;
+  cases: string[]; faq: Localized<{ q: string; a: string }[]>; insights: string[]; seo: Localized<Seo>;
 }
-
-export interface TeamMember {
-  id: string; name: string; photo: string | null; photoFocus: string;
-  role: Localized; focus: Localized; bio: Localized; tags: Localized<string[]>;
+export type CaseBlock =
+  | { kind: 'vessel'; title: string; rows: { k: string; v: string; note: string | null }[]; former: string | null; source: { text: string; href: string } | null }
+  | { kind: string; title: string; paras: string[]; items: string[]; numbered: boolean };
+export interface Case {
+  id: string; n: string; sector: string;
+  name: Localized; cardName: Localized; tags: Localized; summary: Localized; disciplinesLine: Localized; disciplines: Localized;
+  link: Localized<{ text: string; href: string }> | null;
+  blocks: Localized<CaseBlock[]>;
+  services: string[]; similar: string[];
+  photo: string | null; live: { '4x3': string; '16x9': string }; logo: string | null;
+  alt: Localized; seo: Localized<Seo>;
 }
+export interface Sector { id: string; title: Localized; line: Localized }
+export interface InsightMeta {
+  id: string; direction: string; date: Localized; read: Localized; title: Localized; excerpt: Localized; seo: Localized<Seo>;
+}
+export interface Rubric { id: string; h1: Localized; lead: Localized; seo: Localized<Seo> }
+export interface OrbitNode { id: string; label: string; ring: 'core' | 'system'; angle: number; direction?: string }
 
 export const company = companyJson as Company;
 export const contacts = contactsJson as unknown as Contacts;
 export const regions = geographyJson.regions as Region[];
 export const cities = geographyJson.cities as City[];
-export const sectors = sectorsJson as Sector[];
+export const directions = directionsJson as Direction[];
 export const services = servicesJson as Service[];
-export const team = (teamJson.members as TeamMember[]);
-
-/** Visible projects (the `hidden: true` flag removes a project from the whole site). */
-export const projects = (projectsJson.items as Project[]).filter((p) => !p.hidden);
+export const cases = casesJson as Case[];
+export const sectors = sectorsJson as Sector[];
+export const insights = insightsJson.items as InsightMeta[];
+export const rubrics = insightsJson.rubrics as Rubric[];
+export const orbit = orbitJson as OrbitNode[];
 
 if (!contacts.whatsapp?.url) throw new Error('[content] contacts.whatsapp is required');
 
-export const projectsBySector = (sectorId: string) => projects.filter((p) => p.sector === sectorId);
-export const serviceById = (id: string) => {
-  const s = services.find((x) => x.id === id);
-  if (!s) throw new Error(`[content] Unknown service "${id}"`);
-  return s;
+const find = <T extends { id: string }>(list: T[], kind: string) => (id: string): T => {
+  const x = list.find((v) => v.id === id);
+  if (!x) throw new Error(`[content] Unknown ${kind} "${id}"`);
+  return x;
 };
+export const directionById = find(directions, 'direction');
+export const serviceById = find(services, 'service');
+export const caseById = find(cases, 'case');
+export const insightById = find(insights, 'insight');
+export const casesBySector = (sectorId: string) => cases.filter((c) => c.sector === sectorId);
+export const servicesOf = (d: Direction) => d.services.map(serviceById);
+
+/** Data integrity: every reference must resolve (fails the build otherwise). */
+for (const d of directions) { d.services.forEach(serviceById); d.cases.forEach(caseById); d.insights.forEach(insightById); }
+for (const s of services) { directionById(s.direction); s.cases.forEach(caseById); s.insights.forEach(insightById); }
+for (const c of cases) { c.services.forEach(serviceById); c.similar.forEach(caseById); if (!sectors.some((s) => s.id === c.sector)) throw new Error(`[content] sector ${c.sector}`); }
+for (const n of orbit) if (n.direction) directionById(n.direction);
 
 /** Stable small hash (FNV-1a) for deterministic generated covers. */
 export function hash(str: string): number {
@@ -99,17 +106,10 @@ export function hash(str: string): number {
   return h >>> 0;
 }
 
-/** Eye-line normalisation for portraits: photoFocus "50% 27%" → zoom so eyes sit at EYE_LINE. */
-export const EYE_LINE = 0.35;
-export function portraitStyle(m: TeamMember): string {
-  const [x = '50%', y = '35%'] = m.photoFocus.split(/\s+/);
-  const eye = parseFloat(y) / 100;
-  const zoom = Math.max(1, EYE_LINE / eye);
-  return `--px:${x};--zoom:${zoom.toFixed(3)}`;
-}
-
-export function initials(name: string): string {
-  return name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+/** Short monogram for the corner chip when a case has no logo file. */
+export function monogram(name: string): string {
+  const w = name.replace(/[«»"()]/g, '').split(/[\s/]+/).filter(Boolean);
+  return (w.length === 1 ? w[0].slice(0, 4) : w.slice(0, 2).map((x) => x[0]).join('')).toUpperCase();
 }
 
 /** Resolves a social channel value (string URL/handle or object) to { href, label } or null. */

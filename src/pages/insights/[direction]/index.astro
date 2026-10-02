@@ -1,0 +1,7 @@
+---
+import Page from '../../../components/pages/InsightsPage.astro';
+import { rubrics } from '../../../lib/content';
+export const getStaticPaths = () => rubrics.map((r) => ({ params: { direction: r.id }, props: { rubric: r } }));
+const { rubric } = Astro.props;
+---
+<Page lang="ru" rubric={rubric} />

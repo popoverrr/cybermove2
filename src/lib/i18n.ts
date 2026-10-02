@@ -66,12 +66,12 @@ export function pick<T>(lang: Lang, field: Localized<T>): T {
   return typoDeep(lang, v) as T;
 }
 
-export type PageKey = 'home' | 'services' | 'projects' | 'team' | 'about' | 'contact' | 'privacy';
+export type PageKey = 'home' | 'services' | 'cases' | 'insights' | 'about' | 'contact' | 'privacy';
 export const pageSlugs: Record<PageKey, string> = {
   home: '',
   services: 'services/',
-  projects: 'projects/',
-  team: 'team/',
+  cases: 'cases/',
+  insights: 'insights/',
   about: 'about/',
   contact: 'contact/',
   privacy: 'privacy/',
@@ -85,10 +85,22 @@ export function asset(path: string): string {
   return base + path.replace(/^\//, '');
 }
 
+/** Root-relative URL of a route (path without language prefix, e.g. 'services/audit/') in a language. */
+export function href(lang: Lang, route = ''): string {
+  const prefix = lang === defaultLang ? base : `${base}${lang}/`;
+  return prefix + route.replace(/^\//, '');
+}
+
 /** Root-relative URL of a page in a language: url('en','services') → '/en/services/' (base path included). */
 export function url(lang: Lang, page: PageKey, suffix = ''): string {
-  const prefix = lang === defaultLang ? base : `${base}${lang}/`;
-  return prefix + pageSlugs[page] + suffix;
+  return href(lang, pageSlugs[page] + suffix);
+}
+
+/** Rewrites site-absolute links inside text/HTML from the source ("/cases/x/", "/en/…") to the current base. */
+export function localHref(path: string): string {
+  if (!path.startsWith('/') || path.startsWith('//')) return path;
+  const en = /^\/en(\/|$)/.test(path);
+  return href(en ? 'en' : 'ru', path.replace(/^\/(en\/?)?/, ''));
 }
 
 export function otherLang(lang: Lang): Lang {

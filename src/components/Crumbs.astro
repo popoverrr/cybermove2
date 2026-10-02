@@ -1,0 +1,15 @@
+---
+// Visible breadcrumbs (the BreadcrumbList JSON-LD is emitted by Base from the same list).
+import { t, href, type Lang } from '../lib/i18n';
+import type { Crumb } from '../layouts/Base.astro';
+interface Props { lang: Lang; items: Crumb[] }
+const { lang, items } = Astro.props;
+const all = [{ name: t(lang, 'nav.home'), route: '' }, ...items];
+---
+<nav class="crumbs label reveal" aria-label={t(lang, 'nav.crumbs')}>
+  <ol class="list-reset">
+    {all.map((c, i) => (
+      <li>{i < all.length - 1 ? <a class="link" href={href(lang, c.route)}>{c.name}</a> : <span aria-current="page">{c.name}</span>}</li>
+    ))}
+  </ol>
+</nav>

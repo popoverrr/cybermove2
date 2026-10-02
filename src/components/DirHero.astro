@@ -1,0 +1,26 @@
+---
+// Hero of a service-area / service page: breadcrumbs, H1 (key phrase as a kicker + thesis), lead, mono metrics,
+// the area's background image in the skeleton's photo treatment.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Block from './Block.astro';
+import Crumbs from './Crumbs.astro';
+import type { Crumb } from '../layouts/Base.astro';
+import type { Lang } from '../lib/i18n';
+interface Props { lang: Lang; label: string; crumbs: Crumb[]; kicker?: string; title: string; lead: string; metrics?: string; image?: string }
+const { lang, label, crumbs, kicker, title, lead, metrics, image } = Astro.props;
+const imgs = import.meta.glob<{ default: ImageMetadata }>('/src/assets/live/dir-*.webp', { eager: true });
+const img = image ? imgs[`/src/assets/live/${image}`]?.default : undefined;
+---
+<Block theme="dark" label={label} first hero class="page-hero dir-hero">
+  {img && <div class="dir-hero__bg" aria-hidden="true"><Image src={img} alt="" widths={[640, 1280, Math.min(img.width, 1920)]} sizes="100vw" loading="eager" class="dir-hero__img" /></div>}
+  <div class="container">
+    <Crumbs lang={lang} items={crumbs} />
+    <h1 class="hero__title reveal">
+      {kicker && <span class="label hero__label hero__kicker">{kicker}</span>}
+      <span class="hero__thesis" data-split>{title}</span>
+    </h1>
+    <p class="lead hero__lead reveal" style="--rd:120ms">{lead}</p>
+    {metrics && <p class="label hero__codes reveal" style="--rd:180ms">{metrics}</p>}
+  </div>
+</Block>

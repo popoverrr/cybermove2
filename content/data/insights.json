@@ -1,0 +1,505 @@
+{
+  "rubrics": [
+    {
+      "id": "audit",
+      "h1": {
+        "ru": "Разборы: Аудит и финансы",
+        "en": "Insights: Audit & finance"
+      },
+      "lead": {
+        "ru": "Аудит — точка входа в любую работу с CYBERMOVE. Смотрим бизнес целиком: продукт и маркетинг, продажи, финансы и расходы на рост. Опираемся на выгрузки из CRM, рекламных кабинетов и учёта, а не на ощущения. На выходе — карта проблем и возможностей, приоритеты и план, который можно выполнить своими силами или вместе с нами. Каждую из четырёх услуг можно взять отдельно.",
+        "en": "An audit is where every CYBERMOVE engagement starts. We look at the whole business: product and marketing, sales, finances and the cost of growth. We work from CRM exports, ad accounts and bookkeeping data rather than impressions. The outcome is a map of problems and opportunities, priorities and a plan you can carry out in-house or with us. Each of the four services can be ordered on its own."
+      },
+      "seo": {
+        "ru": {
+          "title": "Разборы: Аудит и финансы — CYBERMOVE",
+          "description": "Разборы: Аудит и финансы. Любую работу начинаем с аудита: находим, где бизнес теряет деньги и клиентов и что даст рост быстрее всего.",
+          "h1": "Разборы: Аудит и финансы"
+        },
+        "en": {
+          "title": "Insights: Audit & finance — CYBERMOVE",
+          "description": "Business audit insights: Every engagement starts with an audit: we find where the business loses money and clients, and what will drive growth fastest.",
+          "h1": "Insights: Audit & finance"
+        }
+      }
+    },
+    {
+      "id": "systems",
+      "h1": {
+        "ru": "Разборы: Сайты, CRM, телефония и AI",
+        "en": "Insights: Websites, CRM, telephony & AI"
+      },
+      "lead": {
+        "ru": "Цифровизация бизнеса у нас начинается не с выбора программы, а с пути заявки: откуда она приходит, кто и когда её обрабатывает, где она теряется. Сайт, CRM, телефония, AI-инструменты и интеграции собираем так, чтобы каждое обращение было видно и посчитано, а руководитель получал отчёт без ручных таблиц. Можно начать с одного звена и добавлять остальные по мере роста.",
+        "en": "For us, business digitalization starts not with choosing software but with the path of a lead: where it comes from, who handles it and when, and where it gets lost. We build the website, CRM, phone system, AI tools and integrations so that every enquiry is visible and counted, and management gets reports without manual spreadsheets. You can start with one link in the chain and add the rest as you grow."
+      },
+      "seo": {
+        "ru": {
+          "title": "Разборы: Сайты, CRM, телефония и AI — CYBERMOVE",
+          "description": "Разборы: Сайты, CRM, телефония и AI. Сайт, CRM, телефония и AI собираем в одну связанную систему: каждая заявка видна, посчитана и доведена до продажи.",
+          "h1": "Разборы: Сайты, CRM, телефония и AI"
+        },
+        "en": {
+          "title": "Insights: Websites, CRM, telephony & AI — CYBERMOVE",
+          "description": "Business digitalization insights: We connect the website, CRM, telephony and AI into one linked system: every lead is visible, counted and taken through to the sale.",
+          "h1": "Insights: Websites, CRM, telephony & AI"
+        }
+      }
+    },
+    {
+      "id": "brand-content",
+      "h1": {
+        "ru": "Разборы: Бренд, контент, PR",
+        "en": "Insights: Brand, content, PR"
+      },
+      "lead": {
+        "ru": "Брендинг и контент начинаем с ядра: что вы продаёте, кому и почему у вас стоит покупать. Из этого ядра вырастают съёмки, соцсети, публикации в медиа и личный бренд руководителя или эксперта. Задача контента — поддерживать продажи и доверие, поэтому каждый формат привязываем к воронке и считаем, что он даёт.",
+        "en": "Branding and content start with the core: what you sell, to whom, and why people should buy from you. Shoots, social media, press coverage and the personal brand of a founder or expert all grow out of that core. Content exists to support sales and trust, so every format is tied to the funnel and measured by what it delivers."
+      },
+      "seo": {
+        "ru": {
+          "title": "Разборы: Бренд, контент, PR — CYBERMOVE",
+          "description": "Разборы: Бренд, контент, PR. Определяем ядро бренда и превращаем его в контент, который продаёт, а не просто выходит по графику.",
+          "h1": "Разборы: Бренд, контент, PR"
+        },
+        "en": {
+          "title": "Insights: Brand, content, PR — CYBERMOVE",
+          "description": "Branding and content insights: We define the brand core and turn it into content that sells, not content that merely goes out on schedule.",
+          "h1": "Insights: Brand, content, PR"
+        }
+      }
+    },
+    {
+      "id": "traffic",
+      "h1": {
+        "ru": "Разборы: Реклама и SEO",
+        "en": "Insights: Advertising & SEO"
+      },
+      "lead": {
+        "ru": "Рекламу и SEO ведём как один канал привлечения с общей экономикой: сколько стоит заявка, клиент и возврат на вложения в каждом источнике. До запуска проверяем сайт, аналитику и обработку заявок, потому что трафик без этого только увеличивает потери. Дальше — тесты, отключение того, что не окупается, и масштабирование того, что работает.",
+        "en": "We run paid media and SEO as one acquisition system with shared economics: the cost of a lead, of a customer and the return on spend for every source. Before launch we check the website, analytics and lead handling, because traffic without them only multiplies losses. After that: testing, switching off what does not pay back and scaling what works."
+      },
+      "seo": {
+        "ru": {
+          "title": "Разборы: Реклама и SEO — CYBERMOVE",
+          "description": "Разборы: Реклама и SEO. Запускаем и ведём рекламу там, где есть ваша аудитория. Считаем CPL, CAC и ROMI, а не клики.",
+          "h1": "Разборы: Реклама и SEO"
+        },
+        "en": {
+          "title": "Insights: Advertising & SEO — CYBERMOVE",
+          "description": "PPC and SEO insights: We launch and run advertising wherever your audience is. We count CPL, CAC and ROMI, not clicks.",
+          "h1": "Insights: Advertising & SEO"
+        }
+      }
+    },
+    {
+      "id": "tenders-legal",
+      "h1": {
+        "ru": "Разборы: Тендеры и право",
+        "en": "Insights: Tenders & legal"
+      },
+      "lead": {
+        "ru": "Тендерное и юридическое сопровождение закрывает участок, на котором бизнес чаще всего теряет время и деньги: поиск подходящих закупок, заявки и документы, договоры с заказчиками и партнёрами, корпоративные бумаги. Работаем с государственными закупками Казахстана и коммерческими тендерами, от мониторинга до подписанного договора и его исполнения.",
+        "en": "Tender support and legal services cover the area where businesses most often lose time and money: finding suitable procurements, bids and documentation, contracts with customers and partners, corporate paperwork. We work with public procurement in Kazakhstan and commercial tenders, from monitoring to a signed contract and its performance."
+      },
+      "seo": {
+        "ru": {
+          "title": "Разборы: Тендеры и право — CYBERMOVE",
+          "description": "Разборы: Тендеры и право. Находим тендеры, готовим заявки и ведём сделку юридически: от документации до подписанного договора.",
+          "h1": "Разборы: Тендеры и право"
+        },
+        "en": {
+          "title": "Insights: Tenders & legal — CYBERMOVE",
+          "description": "Tender support and legal services insights: We find tenders, prepare bids and manage the deal legally: from documentation to a signed contract.",
+          "h1": "Insights: Tenders & legal"
+        }
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ai-agent-in-sales",
+      "direction": "systems",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "AI-агент в продажах: что он реально делает и где ломается",
+        "en": "AI agents in sales: what they really do and where they break"
+      },
+      "excerpt": {
+        "ru": "AI-агент для бизнеса в продажах: квалификация заявок, ответы на вопросы, напоминания и разбор звонков. Где он ломается, как защитить данные и оценить эффект.",
+        "en": "AI agents for business in sales: lead qualification, FAQs, reminders and call analysis. Where they break, how to protect data and how to measure the impact."
+      },
+      "seo": {
+        "ru": {
+          "title": "AI-агент для бизнеса: задачи в продажах и риски — CYBERMOVE",
+          "description": "AI-агент для бизнеса в продажах: квалификация заявок, ответы на вопросы, напоминания и разбор звонков. Где он ломается, как защитить данные и оценить эффект.",
+          "h1": "AI-агент в продажах: что он реально делает и где ломается"
+        },
+        "en": {
+          "title": "AI Agents for Business: Use Cases and Risks — CYBERMOVE",
+          "description": "AI agents for business in sales: lead qualification, FAQs, reminders and call analysis. Where they break, how to protect data and how to measure the impact.",
+          "h1": "AI agents in sales: what they really do and where they break"
+        }
+      }
+    },
+    {
+      "id": "business-audit-before-ads",
+      "direction": "audit",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Аудит бизнеса: что проверить, прежде чем тратить деньги на рекламу",
+        "en": "Business audit: what to check before you spend money on advertising"
+      },
+      "excerpt": {
+        "ru": "Аудит бизнеса перед запуском рекламы: шесть зон проверки — продукт, позиционирование, воронка, продажи, финансы и системы. Что получить на выходе и чек-лист.",
+        "en": "A business audit before running ads: six areas to check (product, positioning, funnel, sales, finance, systems), what you get out of it, and a checklist."
+      },
+      "seo": {
+        "ru": {
+          "title": "Аудит бизнеса перед рекламой: что проверить — CYBERMOVE",
+          "description": "Аудит бизнеса перед запуском рекламы: шесть зон проверки — продукт, позиционирование, воронка, продажи, финансы и системы. Что получить на выходе и чек-лист.",
+          "h1": "Аудит бизнеса: что проверить, прежде чем тратить деньги на рекламу"
+        },
+        "en": {
+          "title": "Business Audit Before Advertising: What to Check — CYBERMOVE",
+          "description": "A business audit before running ads: six areas to check (product, positioning, funnel, sales, finance, systems), what you get out of it, and a checklist.",
+          "h1": "Business audit: what to check before you spend money on advertising"
+        }
+      }
+    },
+    {
+      "id": "choose-crm-kazakhstan",
+      "direction": "systems",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Как выбрать CRM для отдела продаж в Казахстане",
+        "en": "How to choose a CRM for your sales team in Kazakhstan"
+      },
+      "excerpt": {
+        "ru": "Как выбрать CRM для отдела продаж в Казахстане: WhatsApp, телефония, оплаты через Kaspi, хранение данных, классы систем без рейтингов и когда CRM пока не нужна.",
+        "en": "How to choose a CRM for a sales team in Kazakhstan: WhatsApp, telephony, Kaspi payments, data residency, types of systems and when you don't need one yet."
+      },
+      "seo": {
+        "ru": {
+          "title": "Какую CRM выбрать для продаж в Казахстане — CYBERMOVE",
+          "description": "Как выбрать CRM для отдела продаж в Казахстане: WhatsApp, телефония, оплаты через Kaspi, хранение данных, классы систем без рейтингов и когда CRM пока не нужна.",
+          "h1": "Как выбрать CRM для отдела продаж в Казахстане"
+        },
+        "en": {
+          "title": "How to Choose a CRM for Sales in Kazakhstan — CYBERMOVE",
+          "description": "How to choose a CRM for a sales team in Kazakhstan: WhatsApp, telephony, Kaspi payments, data residency, types of systems and when you don't need one yet.",
+          "h1": "How to choose a CRM for your sales team in Kazakhstan"
+        }
+      }
+    },
+    {
+      "id": "google-ads-kazakhstan-auction",
+      "direction": "traffic",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Google Ads в Казахстане: как устроен аукцион и почему растёт цена клика",
+        "en": "Google Ads in Kazakhstan: how the auction works and why cost per click goes up"
+      },
+      "excerpt": {
+        "ru": "Google Ads в Казахстане: как устроен аукцион, из чего складывается рейтинг объявления, почему растёт цена клика и что смотреть в отчётах, чтобы не переплачивать",
+        "en": "Google Ads in Kazakhstan: how the auction works, what goes into Ad Rank, why cost per click rises and which reports to check so you stop overpaying for clicks."
+      },
+      "seo": {
+        "ru": {
+          "title": "Google Ads в Казахстане: аукцион и цена клика — CYBERMOVE",
+          "description": "Google Ads в Казахстане: как устроен аукцион, из чего складывается рейтинг объявления, почему растёт цена клика и что смотреть в отчётах, чтобы не переплачивать",
+          "h1": "Google Ads в Казахстане: как устроен аукцион и почему растёт цена клика"
+        },
+        "en": {
+          "title": "Google Ads in Kazakhstan: Auction and CPC — CYBERMOVE",
+          "description": "Google Ads in Kazakhstan: how the auction works, what goes into Ad Rank, why cost per click rises and which reports to check so you stop overpaying for clicks.",
+          "h1": "Google Ads in Kazakhstan: how the auction works and why cost per click goes up"
+        }
+      }
+    },
+    {
+      "id": "landing-page-for-ads",
+      "direction": "systems",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Сайт под рекламу: что должно быть на лендинге, чтобы трафик не терялся",
+        "en": "Landing pages for paid ads: what a page needs so traffic isn't wasted"
+      },
+      "excerpt": {
+        "ru": "Лендинг под рекламу: структура, скорость загрузки, формы и мессенджеры, аналитика и типичные ошибки, из-за которых платный трафик уходит без заявок.",
+        "en": "A landing page for paid ads: structure, load speed, forms and messengers, analytics, and the common mistakes that make paid traffic leave without enquiring."
+      },
+      "seo": {
+        "ru": {
+          "title": "Лендинг под рекламу: структура и ошибки — CYBERMOVE",
+          "description": "Лендинг под рекламу: структура, скорость загрузки, формы и мессенджеры, аналитика и типичные ошибки, из-за которых платный трафик уходит без заявок.",
+          "h1": "Сайт под рекламу: что должно быть на лендинге, чтобы трафик не терялся"
+        },
+        "en": {
+          "title": "Landing Page for Ads: Structure and Mistakes — CYBERMOVE",
+          "description": "A landing page for paid ads: structure, load speed, forms and messengers, analytics, and the common mistakes that make paid traffic leave without enquiring.",
+          "h1": "Landing pages for paid ads: what a page needs so traffic isn't wasted"
+        }
+      }
+    },
+    {
+      "id": "marketing-agency-contract",
+      "direction": "tenders-legal",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Договор с подрядчиком по маркетингу: что прописать, чтобы не спорить о результате",
+        "en": "A contract with your marketing agency: what to put in writing so you don't argue about results"
+      },
+      "excerpt": {
+        "ru": "Договор с маркетинговым агентством: предмет и результат, KPI и способ их измерения, доступы и данные, права на контент, оплата, приёмка и выход из договора.",
+        "en": "A contract with a marketing agency: scope and deliverables, KPIs and how they are measured, access and data, content rights, payment, acceptance and exit terms."
+      },
+      "seo": {
+        "ru": {
+          "title": "Договор с маркетинговым агентством — CYBERMOVE",
+          "description": "Договор с маркетинговым агентством: предмет и результат, KPI и способ их измерения, доступы и данные, права на контент, оплата, приёмка и выход из договора.",
+          "h1": "Договор с подрядчиком по маркетингу: что прописать, чтобы не спорить о результате"
+        },
+        "en": {
+          "title": "Marketing Agency Contract: What to Include — CYBERMOVE",
+          "description": "A contract with a marketing agency: scope and deliverables, KPIs and how they are measured, access and data, content rights, payment, acceptance and exit terms.",
+          "h1": "A contract with your marketing agency: what to put in writing so you don't argue about results"
+        }
+      }
+    },
+    {
+      "id": "personal-brand-entrepreneur",
+      "direction": "brand-content",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Личный бренд предпринимателя: с чего начать, если нет времени вести соцсети",
+        "en": "A personal brand for entrepreneurs: where to start if you have no time for social media"
+      },
+      "excerpt": {
+        "ru": "Личный бренд предпринимателя без ежедневных постов: позиционирование, продакшн-день, форматы контента и что можно делегировать команде. Практический план.",
+        "en": "A personal brand for entrepreneurs without daily posting: expert positioning, a monthly production day, content formats and what to delegate. A practical plan."
+      },
+      "seo": {
+        "ru": {
+          "title": "Личный бренд предпринимателя: с чего начать — CYBERMOVE",
+          "description": "Личный бренд предпринимателя без ежедневных постов: позиционирование, продакшн-день, форматы контента и что можно делегировать команде. Практический план.",
+          "h1": "Личный бренд предпринимателя: с чего начать, если нет времени вести соцсети"
+        },
+        "en": {
+          "title": "Personal Branding for Entrepreneurs — CYBERMOVE",
+          "description": "A personal brand for entrepreneurs without daily posting: expert positioning, a monthly production day, content formats and what to delegate. A practical plan.",
+          "h1": "A personal brand for entrepreneurs: where to start if you have no time for social media"
+        }
+      }
+    },
+    {
+      "id": "positioning-one-sentence",
+      "direction": "brand-content",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Позиционирование: как объяснить, чем вы отличаетесь, одним предложением",
+        "en": "Positioning: how to explain what makes you different in one sentence"
+      },
+      "excerpt": {
+        "ru": "Позиционирование компании за одно предложение: метод «сегмент → проблема → отличие → доказательство», примеры формулировок, проверка на клиентах.",
+        "en": "Company positioning in one sentence: the segment, problem, difference and proof method, before-and-after examples and how to test it on customers."
+      },
+      "seo": {
+        "ru": {
+          "title": "Позиционирование компании в одном предложении — CYBERMOVE",
+          "description": "Позиционирование компании за одно предложение: метод «сегмент → проблема → отличие → доказательство», примеры формулировок, проверка на клиентах.",
+          "h1": "Позиционирование: как объяснить, чем вы отличаетесь, одним предложением"
+        },
+        "en": {
+          "title": "Company Positioning in One Sentence — CYBERMOVE",
+          "description": "Company positioning in one sentence: the segment, problem, difference and proof method, before-and-after examples and how to test it on customers.",
+          "h1": "Positioning: how to explain what makes you different in one sentence"
+        }
+      }
+    },
+    {
+      "id": "public-procurement-kazakhstan",
+      "direction": "tenders-legal",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Госзакупки в Казахстане: как компании начать участвовать в тендерах",
+        "en": "Public procurement in Kazakhstan: how a company can start bidding for government tenders"
+      },
+      "excerpt": {
+        "ru": "Как участвовать в госзакупках Казахстана: закон 2025 года, портал goszakup.gov.kz и ЭЦП, способы закупок, причины отклонения заявок и что готовить заранее.",
+        "en": "How to take part in public procurement in Kazakhstan: the 2025 law, the goszakup.gov.kz portal and digital signature, procurement methods and why bids fail."
+      },
+      "seo": {
+        "ru": {
+          "title": "Как участвовать в госзакупках Казахстана — CYBERMOVE",
+          "description": "Как участвовать в госзакупках Казахстана: закон 2025 года, портал goszakup.gov.kz и ЭЦП, способы закупок, причины отклонения заявок и что готовить заранее.",
+          "h1": "Госзакупки в Казахстане: как компании начать участвовать в тендерах"
+        },
+        "en": {
+          "title": "Public Procurement in Kazakhstan: How to Bid — CYBERMOVE",
+          "description": "How to take part in public procurement in Kazakhstan: the 2025 law, the goszakup.gov.kz portal and digital signature, procurement methods and why bids fail.",
+          "h1": "Public procurement in Kazakhstan: how a company can start bidding for government tenders"
+        }
+      }
+    },
+    {
+      "id": "seo-for-service-companies",
+      "direction": "traffic",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "6 min read"
+      },
+      "title": {
+        "ru": "SEO для компании услуг: что даёт результат через полгода, а что — никогда",
+        "en": "SEO for service businesses: what pays off in six months and what never will"
+      },
+      "excerpt": {
+        "ru": "SEO для бизнеса услуг: страницы под каждую услугу, контент, техника сайта, локальный сигнал и ссылки. Что даёт результат, а на что не стоит тратить бюджет.",
+        "en": "SEO for service businesses: a page for every service, content, technical health, local signals and links. What produces results and what isn't worth the budget."
+      },
+      "seo": {
+        "ru": {
+          "title": "SEO для бизнеса услуг: что реально работает — CYBERMOVE",
+          "description": "SEO для бизнеса услуг: страницы под каждую услугу, контент, техника сайта, локальный сигнал и ссылки. Что даёт результат, а на что не стоит тратить бюджет.",
+          "h1": "SEO для компании услуг: что даёт результат через полгода, а что — никогда"
+        },
+        "en": {
+          "title": "SEO for Service Businesses: What Actually Works — CYBERMOVE",
+          "description": "SEO for service businesses: a page for every service, content, technical health, local signals and links. What produces results and what isn't worth the budget.",
+          "h1": "SEO for service businesses: what pays off in six months and what never will"
+        }
+      }
+    },
+    {
+      "id": "tiktok-ads-for-business",
+      "direction": "traffic",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "TikTok Ads для бизнеса: когда это работает, а когда лучше не начинать",
+        "en": "TikTok ads for business: when they work and when it is better not to start"
+      },
+      "excerpt": {
+        "ru": "Реклама в TikTok для бизнеса: каким продуктам подходит, минимальные бюджеты, креатив под формат, воронка, тесты и признаки того, что начинать пока рано.",
+        "en": "TikTok ads for business: which products they suit, minimum budgets, native creative, the funnel, testing and the signs that it is still too early to start."
+      },
+      "seo": {
+        "ru": {
+          "title": "Реклама в TikTok для бизнеса: когда она работает — CYBERMOVE",
+          "description": "Реклама в TikTok для бизнеса: каким продуктам подходит, минимальные бюджеты, креатив под формат, воронка, тесты и признаки того, что начинать пока рано.",
+          "h1": "TikTok Ads для бизнеса: когда это работает, а когда лучше не начинать"
+        },
+        "en": {
+          "title": "TikTok Ads for Business: When They Work — CYBERMOVE",
+          "description": "TikTok ads for business: which products they suit, minimum budgets, native creative, the funnel, testing and the signs that it is still too early to start.",
+          "h1": "TikTok ads for business: when they work and when it is better not to start"
+        }
+      }
+    },
+    {
+      "id": "unit-economics-cac-ltv-romi",
+      "direction": "audit",
+      "date": {
+        "ru": "25 сентября 2026 г.",
+        "en": "25 September 2026"
+      },
+      "read": {
+        "ru": "7 мин чтения",
+        "en": "7 min read"
+      },
+      "title": {
+        "ru": "Юнит-экономика для малого бизнеса: CAC, LTV и ROMI без сложных таблиц",
+        "en": "Unit economics for small businesses: CAC, LTV and ROMI without spreadsheet hell"
+      },
+      "excerpt": {
+        "ru": "Юнит-экономика для малого бизнеса: как посчитать CAC, LTV и ROMI, где взять данные в CRM и рекламе, три типичные ошибки и расчёт на примере.",
+        "en": "Unit economics for small businesses: how to calculate CAC, LTV and ROMI, where to find the data, three common mistakes and a worked example in tenge."
+      },
+      "seo": {
+        "ru": {
+          "title": "Юнит-экономика: CAC, LTV и ROMI простыми словами — CYBERMOVE",
+          "description": "Юнит-экономика для малого бизнеса: как посчитать CAC, LTV и ROMI, где взять данные в CRM и рекламе, три типичные ошибки и расчёт на примере.",
+          "h1": "Юнит-экономика для малого бизнеса: CAC, LTV и ROMI без сложных таблиц"
+        },
+        "en": {
+          "title": "Unit Economics: CAC, LTV and ROMI Explained — CYBERMOVE",
+          "description": "Unit economics for small businesses: how to calculate CAC, LTV and ROMI, where to find the data, three common mistakes and a worked example in tenge.",
+          "h1": "Unit economics for small businesses: CAC, LTV and ROMI without spreadsheet hell"
+        }
+      }
+    }
+  ]
+}

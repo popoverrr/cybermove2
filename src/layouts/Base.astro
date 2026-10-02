@@ -3,47 +3,61 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/components.css';
 import '../styles/pages.css';
+import '../styles/sections.css';
 import '../styles/transitions.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { t, url, asset, langs, defaultLang, ogLocale, otherLang, type Lang, type PageKey } from '../lib/i18n';
+import { t, href, asset, langs, defaultLang, ogLocale, otherLang, pageSlugs, type Lang, type PageKey } from '../lib/i18n';
 import { company, contacts, cities } from '../lib/content';
 import fontCyr from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-cyrillic-wght-normal.woff2?url';
 import fontLat from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
 import textCyr from '../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 import textLat from '../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
+export interface Crumb { name: string; route: string }
 interface Props {
   lang: Lang;
+  /** top-level section (highlights the nav item); 'notFound' for 404 */
   page: PageKey | 'notFound';
+  /** route without the language prefix, e.g. 'services/audit/'; defaults to the section's own route */
+  route?: string;
   /** mono path shown in the window bar during page transitions */
   path: string;
+  /** <title> / description; default: meta.<page> from i18n */
+  title?: string;
+  description?: string;
+  /** breadcrumbs (Home is added automatically) → BreadcrumbList JSON-LD */
+  crumbs?: Crumb[];
   jsonLd?: Record<string, unknown>[];
   noindex?: boolean;
 }
-const { lang, page, path, jsonLd = [], noindex = false } = Astro.props;
-// Origin only: page URLs from url()/asset() already carry the base path.
+const { lang, page, path, jsonLd = [], noindex = false, crumbs } = Astro.props;
+// Origin only: page URLs from href()/asset() already carry the base path.
 const site = Astro.site!.origin;
 const isNotFound = page === 'notFound';
-const hrefFor = (l: Lang) => (isNotFound ? url(l, 'home') : url(l, page as PageKey));
+const route = Astro.props.route ?? (isNotFound ? '' : pageSlugs[page as PageKey]);
+const hrefFor = (l: Lang) => href(l, route);
 const canonical = site + (isNotFound ? asset('404.html') : hrefFor(lang));
 const altHref = hrefFor(otherLang(lang));
-const title = t(lang, `meta.${page}.title`);
-const description = t(lang, `meta.${page}.description`);
+const title = Astro.props.title ?? t(lang, `meta.${page}.title`);
+const description = Astro.props.description ?? t(lang, `meta.${page}.description`);
 const ogImage = site + asset('og.png');
 
 const sameAs = [contacts.instagram, contacts.telegram, contacts.linkedin]
   .map((v) => (typeof v === 'string' ? v : v && typeof v === 'object' && 'url' in v ? v.url : null))
   .filter((v): v is string => !!v && /^https?:/.test(v));
-const areaServed = [...new Set(cities.map((c) => c.country.en))].map((name) => ({ '@type': 'Country', name }));
+const orgId = site + href(defaultLang) + '#organization';
 const org = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'ProfessionalService',
+  '@id': orgId,
   name: company.brand,
   legalName: company.legalName,
-  url: site + url(lang, 'home'),
+  url: site + href(lang),
   logo: site + asset('logo.svg'),
+  image: ogImage,
   slogan: company.tagline[lang],
+  telephone: contacts.phone?.number ?? `+${contacts.whatsapp.number}`,
   contactPoint: [{
     '@type': 'ContactPoint',
     telephone: contacts.phone?.number ?? `+${contacts.whatsapp.number}`,
@@ -51,11 +65,21 @@ const org = {
     availableLanguage: ['Russian', 'English'],
     url: contacts.whatsapp.url,
   }],
-  areaServed,
+  areaServed: cities.map((c) => ({ '@type': 'City', name: c.name })),
   ...(sameAs.length ? { sameAs } : {}),
   ...(contacts.email ? { email: contacts.email } : {}),
 };
-const ld = [org, ...jsonLd];
+const website = {
+  '@context': 'https://schema.org', '@type': 'WebSite', '@id': site + href(defaultLang) + '#website',
+  name: company.brand, url: site + href(lang), inLanguage: lang, publisher: { '@id': orgId },
+};
+const breadcrumbs = crumbs && crumbs.length ? {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [{ name: t(lang, 'nav.home'), route: '' }, ...crumbs].map((c, i) => ({
+    '@type': 'ListItem', position: i + 1, name: c.name, item: site + href(lang, c.route),
+  })),
+} : null;
+const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
 ---
 <!doctype html>
 <html lang={lang} dir="ltr" data-page={page}>

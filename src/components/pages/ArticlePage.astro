@@ -1,0 +1,113 @@
+---
+// /insights/<rubric>/<slug>/: crumbs, meta line, H1, excerpt, table of contents, the article verbatim
+// in the privacy-page typography, then «what CYBERMOVE does», related cases, FAQ, more on the topic, CTA.
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import Crumbs from '../Crumbs.astro';
+import CaseCard from '../CaseCard.astro';
+import ArticleRows from '../ArticleRows.astro';
+import FaqList from '../FaqList.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, href, url, pick, localHref, type Lang } from '../../lib/i18n';
+import { insights, insightById, directionById, serviceById, caseById } from '../../lib/content';
+
+interface Props { lang: Lang; entry: CollectionEntry<'insights'> }
+const { lang, entry } = Astro.props;
+const slug = entry.id.split('/').pop()!;
+const meta = insightById(slug);
+const d = directionById(meta.direction);
+const seo = pick(lang, meta.seo);
+const route = `insights/${d.id}/${slug}/`;
+const crumbs = [{ name: t(lang, 'nav.insights'), route: 'insights/' }, { name: pick(lang, d.name), route: `insights/${d.id}/` }, { name: pick(lang, meta.title), route }];
+const headings = (entry.rendered?.metadata?.headings ?? []).filter((h) => h.depth === 2);
+// site-absolute links of the source ("/cases/x/", "/en/…") → current base path
+const html = (entry.rendered?.html ?? '').replace(/href="(\/[^"]*)"/g, (_, p) => `href="${localHref(p)}"`);
+const svcs = entry.data.services.map(serviceById);
+const more = insights.filter((a) => a.direction === d.id && a.id !== slug);
+const site = Astro.site!.origin;
+const L = (k: string) => t(lang, `insights.${k}`);
+---
+<Base lang={lang} page="insights" route={route} path={`${t(lang, 'home.windows.insights.path')} / ${slug}`} title={seo.title} description={seo.description} crumbs={crumbs}
+  jsonLd={[
+    { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: pick(lang, meta.title), description: seo.description, inLanguage: lang,
+      datePublished: entry.data.date.toISOString().slice(0, 10), url: site + href(lang, route), mainEntityOfPage: site + href(lang, route),
+      author: { '@id': site + href('ru') + '#organization' }, publisher: { '@id': site + href('ru') + '#organization' }, image: site + href('ru') + 'og.png' },
+    ...(entry.data.faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: entry.data.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+  ]}>
+  <Block theme="light" label={pick(lang, d.nameFull)} first hero class="article">
+    <div class="container">
+      <Crumbs lang={lang} items={crumbs} />
+      <p class="label muted article__meta reveal">{d.index} · {pick(lang, d.nameFull)} · {pick(lang, meta.date)} · {pick(lang, meta.read)}</p>
+      <h1 class="h2 article__title reveal" data-split>{pick(lang, meta.title)}</h1>
+      <p class="lead muted article__lead reveal" style="--rd:120ms">{pick(lang, meta.excerpt)}</p>
+      <div class="article__grid">
+        <nav class="toc reveal" aria-labelledby="toc-title">
+          <p class="label muted" id="toc-title">{L('toc')}</p>
+          <ol class="list-reset">{headings.map((h, i) => <li><a class="link" href={`#${h.slug}`}><span class="label muted num">{String(i + 1).padStart(2, '0')}</span><span>{h.text}</span></a></li>)}</ol>
+        </nav>
+        <div class="prose article__body" set:html={html} />
+      </div>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={L('what')} class="article-what">
+    <div class="container">
+      <BlockHead label={`${d.index} · ${pick(lang, d.nameFull)}`} />
+      <div class="split">
+        <div class="split__a">
+          <h2 class="reveal" data-split>{L('what')}</h2>
+          <p class="lead muted split__lead reveal">{pick(lang, svcs[0].lead)}</p>
+        </div>
+        <div class="split__b">
+          <ol class="numrows list-reset">
+            {svcs.map((s) => (
+              <li class="numrows__row reveal">
+                <span class="label muted num">{s.index}</span>
+                <a class="numrows__link" href={href(lang, `services/${s.direction}/${s.id}/`)}><span class="numrows__text numrows__text--sm">{pick(lang, s.name)}</span></a>
+              </li>
+            ))}
+          </ol>
+          <div class="reveal split__cta"><Button href={url(lang, 'contact', `?service=${svcs[0].id}`)}>{t(lang, 'service.discuss')}</Button></div>
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  {entry.data.cases.length > 0 && (
+    <Block theme="light" label={L('relatedCases')} class="article-cases">
+      <div class="container">
+        <BlockHead label={L('relatedCases')} />
+        <h2 class="section-title reveal" data-split>{L('relatedCases')}</h2>
+        <ul class="pgrid list-reset">{entry.data.cases.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
+      </div>
+    </Block>
+  )}
+
+  {entry.data.faq.length > 0 && (
+    <Block theme="dark" label={L('faq')} class="svc-faq">
+      <div class="container">
+        <BlockHead label="FAQ" />
+        <div class="faq-layout">
+          <h2 class="reveal" data-split>{L('faq')}</h2>
+          <FaqList items={entry.data.faq} />
+        </div>
+      </div>
+    </Block>
+  )}
+
+  {more.length > 0 && (
+    <Block theme="light" label={L('moreTopic')} class="article-more">
+      <div class="container">
+        <BlockHead label={L('moreTopic')} link={{ href: href(lang, 'insights/'), text: L('allInsights') }} />
+        <h2 class="section-title reveal" data-split>{L('moreTopic')}</h2>
+        <ArticleRows lang={lang} items={more} />
+      </div>
+    </Block>
+  )}
+
+  <SiteCta lang={lang} query={`?service=${svcs[0].id}`} />
+</Base>

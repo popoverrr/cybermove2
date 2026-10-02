@@ -1,0 +1,7 @@
+---
+import Page from '../../components/pages/CasePage.astro';
+import { cases } from '../../lib/content';
+export const getStaticPaths = () => cases.map((c) => ({ params: { slug: c.id }, props: { c } }));
+const { c } = Astro.props;
+---
+<Page lang="ru" c={c} />

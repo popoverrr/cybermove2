@@ -1,0 +1,127 @@
+[
+  {
+    "id": "product",
+    "label": "PRODUCT",
+    "ring": "core",
+    "angle": 23
+  },
+  {
+    "id": "audience",
+    "label": "AUDIENCE",
+    "ring": "core",
+    "angle": 68
+  },
+  {
+    "id": "positioning",
+    "label": "POSITIONING",
+    "ring": "core",
+    "angle": 113
+  },
+  {
+    "id": "value",
+    "label": "VALUE",
+    "ring": "core",
+    "angle": 158
+  },
+  {
+    "id": "differentiation",
+    "label": "DIFFERENTIATION",
+    "ring": "core",
+    "angle": 203
+  },
+  {
+    "id": "offer",
+    "label": "OFFER",
+    "ring": "core",
+    "angle": 248
+  },
+  {
+    "id": "message",
+    "label": "MESSAGE",
+    "ring": "core",
+    "angle": 293
+  },
+  {
+    "id": "brand-dna",
+    "label": "BRAND DNA",
+    "ring": "core",
+    "angle": 338
+  },
+  {
+    "id": "marketing",
+    "label": "MARKETING",
+    "ring": "system",
+    "angle": 0,
+    "direction": "traffic"
+  },
+  {
+    "id": "digital",
+    "label": "DIGITAL",
+    "ring": "system",
+    "angle": 32.7,
+    "direction": "systems"
+  },
+  {
+    "id": "content",
+    "label": "CONTENT",
+    "ring": "system",
+    "angle": 65.5,
+    "direction": "brand-content"
+  },
+  {
+    "id": "brand",
+    "label": "BRAND",
+    "ring": "system",
+    "angle": 98.2,
+    "direction": "brand-content"
+  },
+  {
+    "id": "pr",
+    "label": "PR",
+    "ring": "system",
+    "angle": 130.9,
+    "direction": "brand-content"
+  },
+  {
+    "id": "performance",
+    "label": "PERFORMANCE",
+    "ring": "system",
+    "angle": 163.6,
+    "direction": "traffic"
+  },
+  {
+    "id": "sales",
+    "label": "SALES",
+    "ring": "system",
+    "angle": 196.4,
+    "direction": "systems"
+  },
+  {
+    "id": "crm",
+    "label": "CRM",
+    "ring": "system",
+    "angle": 229.1,
+    "direction": "systems"
+  },
+  {
+    "id": "analytics",
+    "label": "ANALYTICS",
+    "ring": "system",
+    "angle": 261.8,
+    "direction": "audit"
+  },
+  {
+    "id": "ai",
+    "label": "AI",
+    "ring": "system",
+    "angle": 294.5,
+    "direction": "systems"
+  },
+  {
+    "id": "retention",
+    "label": "RETENTION",
+    "ring": "system",
+    "angle": 327.3,
+    "direction": "traffic"
+  }
+]

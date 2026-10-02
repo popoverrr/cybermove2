@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import Crumbs from '../Crumbs.astro';
+import CasePhoto from '../CasePhoto.astro';
+import CaseCard from '../CaseCard.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, href, url, pick, type Lang } from '../../lib/i18n';
+import { cases, sectors, caseById, serviceById, directionById, type Case, type CaseBlock } from '../../lib/content';
+
+interface Props { lang: Lang; c: Case }
+const { lang, c } = Astro.props;
+const L = (k: string) => t(lang, `case.${k}`);
+const seo = pick(lang, c.seo);
+const route = `cases/${c.id}/`;
+const sector = sectors.find((s) => s.id === c.sector)!;
+const crumbs = [{ name: L('crumb'), route: 'cases/' }, { name: pick(lang, c.name), route }];
+const blocks = pick(lang, c.blocks);
+const link = c.link ? pick(lang, c.link) : null;
+const next = cases[(cases.indexOf(c) + 1) % cases.length];
+const site = Astro.site!.origin;
+const isVessel = (b: CaseBlock): b is Extract<CaseBlock, { kind: 'vessel' }> => b.kind === 'vessel';
+// themes alternate after the light hero
+let k = 0;
+const theme = () => (k++ % 2 === 0 ? 'dark' : 'light') as 'dark' | 'light';
+---
+<Base lang={lang} page="cases" route={route} path={`${t(lang, 'home.windows.cases.path')} / ${c.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: pick(lang, c.name), headline: seo.h1, description: seo.description,
+    url: site + href(lang, route), inLanguage: lang, genre: pick(lang, sector.title), keywords: pick(lang, c.disciplinesLine),
+    creator: { '@id': site + href('ru') + '#organization' }, ...(link ? { sameAs: link.href } : {}) }]}>
+  <Block theme="light" label={`${c.n} · ${pick(lang, sector.title)}`} first hero class="page-hero case-hero">
+    <div class="container">
+      <Crumbs lang={lang} items={crumbs} />
+      <p class="label muted hero__label reveal"><span class="num">{c.n}</span> · {pick(lang, sector.title)}</p>
+      <h1 class="hero__title case-hero__title reveal" data-split>{pick(lang, c.name)}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{pick(lang, c.summary)}</p>
+      <ul class="tags list-reset case-hero__tags reveal" role="list" style="--rd:160ms">
+        {pick(lang, c.disciplinesLine).split(' · ').map((x) => <li class="tag">{x}</li>)}
+      </ul>
+      {link && <p class="reveal case-hero__ext" style="--rd:200ms"><a class="link link--arrow" href={link.href} target="_blank" rel="noopener"><span>{link.text}</span><Icon name="arrow-ne" size={14} /></a></p>}
+      <div class="case-hero__photo reveal" style="--rd:160ms">
+        <CasePhoto item={c} lang={lang} ratio="16x9" sizes="(min-width: 1440px) 1360px, 100vw" eager priority />
+      </div>
+    </div>
+  </Block>
+
+  {blocks.map((b) => {
+    const th = theme();
+    if (isVessel(b)) return (
+      <Block theme={th} label={b.title} class="case-block case-vessel">
+        <div class="container">
+          <BlockHead label={b.title} />
+          <div class="split">
+            <div class="split__a"><h2 class="reveal" data-split>{b.title}</h2></div>
+            <div class="split__b">
+              <dl class="vessel reveal">
+                {b.rows.map((r) => (
+                  <div class="vessel__row"><dt class="label muted">{r.k}</dt><dd>{r.v}{r.note && <span class="small muted vessel__note">{r.note}</span>}</dd></div>
+                ))}
+              </dl>
+              {b.former && <p class="small muted vessel__former reveal">{b.former}</p>}
+              {b.source && <p class="reveal"><a class="link link--arrow" href={b.source.href} target="_blank" rel="noopener"><span>{b.source.text}</span><Icon name="arrow-ne" size={14} /></a></p>}
+            </div>
+          </div>
+        </div>
+      </Block>
+    );
+    return (
+      <Block theme={th} label={b.title} class={`case-block case-${b.kind}`}>
+        <div class="container">
+          <BlockHead label={b.title} />
+          <div class="split">
+            <div class="split__a"><h2 class="reveal case-block__title" data-split>{b.title}</h2></div>
+            <div class="split__b">
+              {b.paras.map((p) => <p class="lead reveal case-block__p">{p}</p>)}
+              {b.items.length > 0 && (b.numbered
+                ? <ol class="numrows list-reset">{b.items.map((x, i) => <li class="numrows__row reveal" style={`--rd:${Math.min(i, 6) * 40}ms`}><span class="label muted num">{String(i + 1).padStart(2, '0')}</span><span class="numrows__text numrows__text--sm">{x}</span></li>)}</ol>
+                : <ul class="dirs__list case-block__list list-reset reveal">{b.items.map((x) => <li>{x}</li>)}</ul>)}
+            </div>
+          </div>
+        </div>
+      </Block>
+    );
+  })}
+
+  <Block theme={theme()} label={L('disciplines')} class="case-meta">
+    <div class="container">
+      <div class="split">
+        <div class="split__a">
+          <BlockHead label={L('disciplines')} />
+          <ul class="tags list-reset reveal" role="list">{pick(lang, c.disciplines).split(' · ').map((x) => <li class="tag tag--lg">{x}</li>)}</ul>
+        </div>
+        <div class="split__b">
+          <BlockHead label={L('services')} />
+          <ol class="numrows list-reset">
+            {c.services.map((id) => { const s = serviceById(id); const d = directionById(s.direction); return (
+              <li class="numrows__row reveal">
+                <span class="label muted num">{d.index}</span>
+                <a class="numrows__link" href={href(lang, `services/${d.id}/${s.id}/`)}>
+                  <span class="numrows__sub muted small">{pick(lang, d.name)}</span>
+                  <span class="numrows__text numrows__text--sm">{pick(lang, s.name)}</span>
+                </a>
+              </li>
+            ); })}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <Block theme={theme()} label={L('similar')} class="case-similar">
+    <div class="container">
+      <BlockHead label={L('similar')} link={{ href: url(lang, 'cases', `?sector=${c.sector}`), text: pick(lang, sector.title) }} />
+      <h2 class="section-title reveal" data-split>{L('similar')}</h2>
+      <ul class="pgrid list-reset">{c.similar.map((id, i) => <CaseCard item={caseById(id)} lang={lang} index={i + 1} />)}</ul>
+      <div class="case-next reveal">
+        <Button href={url(lang, 'contact')}>{L('discuss')}</Button>
+        <a class="case-next__link" href={href(lang, `cases/${next.id}/`)} data-cursor>
+          <span class="label muted">{L('next')} · {next.n}</span>
+          <span class="case-next__name">{pick(lang, next.cardName)}</span>
+          <Icon name="arrow" size={20} />
+        </a>
+      </div>
+    </div>
+  </Block>
+
+  <SiteCta lang={lang} theme={theme()} />
+</Base>

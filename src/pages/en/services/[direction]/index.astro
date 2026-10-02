@@ -1,0 +1,7 @@
+---
+import Page from '../../../../components/pages/DirectionPage.astro';
+import { directions } from '../../../../lib/content';
+export const getStaticPaths = () => directions.map((d) => ({ params: { direction: d.id }, props: { d } }));
+const { d } = Astro.props;
+---
+<Page lang="en" d={d} />

@@ -6,7 +6,7 @@ import Icon from './Icon.astro';
 
 interface Props { lang: Lang; page: PageKey | 'notFound'; altHref: string }
 const { lang, page, altHref } = Astro.props;
-const navKeys = ['services', 'projects', 'team', 'about', 'contact'] as const;
+const navKeys = ['services', 'cases', 'insights', 'about', 'contact'] as const;
 const other = otherLang(lang);
 const firstLabel = '';
 ---
@@ -33,7 +33,7 @@ const firstLabel = '';
 
     <div class="hdr__tools">
       <a class="hdr__lang label" href={altHref} hreflang={other} lang={other} data-lang-switch aria-label={t(lang, 'nav.langLabel')}>{t(lang, 'nav.lang')}</a>
-      <a class="btn btn--primary btn--sm hdr__cta" href={url(lang, 'contact', '?need=audit')} data-magnetic>
+      <a class="btn btn--primary btn--sm hdr__cta" href={url(lang, 'contact')} data-magnetic>
         <span class="btn__in"><span class="btn__text">{t(lang, 'nav.cta')}</span><Icon name="arrow" class="btn__arrow" /></span>
       </a>
     </div>
@@ -63,8 +63,8 @@ const firstLabel = '';
         ))}
       </ol>
       <div class="menu__foot">
-        <a class="btn btn--primary" href={url(lang, 'contact', '?need=audit')}>
-          <span class="btn__in"><span class="btn__text">{t(lang, 'nav.cta')}</span><Icon name="arrow" class="btn__arrow" /></span>
+        <a class="btn btn--primary" href={url(lang, 'contact')}>
+          <span class="btn__in"><span class="btn__text">{t(lang, 'nav.ctaLong')}</span><Icon name="arrow" class="btn__arrow" /></span>
         </a>
         <a class="menu__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener">
           <Icon name="whatsapp" size={18} /><span>{contacts.whatsapp.display}</span>

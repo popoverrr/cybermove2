@@ -1,0 +1,42 @@
+---
+// /insights/ and /insights/<rubric>/: hero, rubric chips (real links), article rows.
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import Crumbs from '../Crumbs.astro';
+import ArticleRows from '../ArticleRows.astro';
+import SiteCta from '../SiteCta.astro';
+import { t, href, pick, type Lang } from '../../lib/i18n';
+import { insights, rubrics, directions, type Rubric } from '../../lib/content';
+
+interface Props { lang: Lang; rubric?: Rubric }
+const { lang, rubric } = Astro.props;
+const route = rubric ? `insights/${rubric.id}/` : 'insights/';
+const crumbs = [{ name: t(lang, 'nav.insights'), route: 'insights/' }, ...(rubric ? [{ name: pick(lang, directions.find((d) => d.id === rubric.id)!.name), route }] : [])];
+const items = rubric ? insights.filter((a) => a.direction === rubric.id) : insights;
+const seo = rubric ? pick(lang, rubric.seo) : null;
+const site = Astro.site!.origin;
+---
+<Base lang={lang} page="insights" route={route} path={`${t(lang, 'home.windows.insights.path')}${rubric ? ` / ${rubric.id}` : ''}`}
+  title={seo?.title} description={seo?.description} crumbs={crumbs}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: rubric ? pick(lang, rubric.h1) : t(lang, 'insights.hero.title'), inLanguage: lang,
+    hasPart: items.map((a) => ({ '@type': 'BlogPosting', headline: pick(lang, a.title), url: site + href(lang, `insights/${a.direction}/${a.id}/`) })) }]}>
+  <Block theme="dark" label={t(lang, 'nav.insights')} first hero class="page-hero insights-hero">
+    <div class="container">
+      <Crumbs lang={lang} items={crumbs} />
+      <h1 class="hero__title reveal" data-split>{rubric ? pick(lang, rubric.h1) : t(lang, 'insights.hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{rubric ? pick(lang, rubric.lead) : t(lang, 'insights.hero.lead')}</p>
+      <nav class="pfilter pfilter--links reveal" aria-label={t(lang, 'nav.insights')}>
+        <a class:list={['chip', !rubric && 'is-on']} href={href(lang, 'insights/')} aria-current={!rubric ? 'page' : undefined}>
+          <span>{t(lang, 'insights.all')}</span><span class="chip__count num">{String(insights.length).padStart(2, '0')}</span>
+        </a>
+        {rubrics.map((r) => { const n = insights.filter((a) => a.direction === r.id).length; return (
+          <a class:list={['chip', rubric?.id === r.id && 'is-on']} href={href(lang, `insights/${r.id}/`)} aria-current={rubric?.id === r.id ? 'page' : undefined}>
+            <span>{pick(lang, directions.find((d) => d.id === r.id)!.name)}</span><span class="chip__count num">{String(n).padStart(2, '0')}</span>
+          </a>
+        ); })}
+      </nav>
+      <ArticleRows lang={lang} items={items} headingLevel="h2" />
+    </div>
+  </Block>
+  <SiteCta lang={lang} theme="light" />
+</Base>

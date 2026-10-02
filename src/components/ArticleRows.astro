@@ -1,0 +1,20 @@
+---
+// List of insight articles as hairline rows: date · rubric · reading time, title, excerpt.
+import Icon from './Icon.astro';
+import { t, href, pick, type Lang } from '../lib/i18n';
+import { directionById, type InsightMeta } from '../lib/content';
+interface Props { lang: Lang; items: InsightMeta[]; headingLevel?: 'h2' | 'h3' }
+const { lang, items, headingLevel: H = 'h3' } = Astro.props;
+---
+<ol class="arows list-reset">
+  {items.map((a, i) => (
+    <li class="arows__row reveal" style={`--rd:${Math.min(i, 6) * 40}ms`} data-rubric={a.direction}>
+      <a class="arows__link" href={href(lang, `insights/${a.direction}/${a.id}/`)}>
+        <span class="arows__meta label muted">{pick(lang, a.date)} · {pick(lang, directionById(a.direction).name)} · {pick(lang, a.read)}</span>
+        <H class="arows__title">{pick(lang, a.title)}</H>
+        <span class="arows__excerpt muted">{pick(lang, a.excerpt)}</span>
+        <span class="arows__more label">{t(lang, 'insights.more')} <Icon name="arrow" size={12} /></span>
+      </a>
+    </li>
+  ))}
+</ol>

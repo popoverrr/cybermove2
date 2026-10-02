@@ -1,41 +1,49 @@
 ---
-import { t, ta, url, asset, type Lang } from '../lib/i18n';
-import { contacts } from '../lib/content';
+import { t, ta, url, asset, pick, type Lang } from '../lib/i18n';
+import { contacts, services } from '../lib/content';
 import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const f = (k: string) => t(lang, `contact.form.${k}`);
-const needs = ta<{ id: string; label: string }[]>(lang, 'contact.form.needs');
+const formats = ta<{ id: string; label: string }[]>(lang, 'contact.form.formats');
 const emailMode = !!contacts.formEmail;
+// WhatsApp message: intro line + "Label: value" lines (labels are the form's own labels)
+const template = [f('waTemplate'), `${f('name')}: {name}`, `${f('contact')}: {contact}`, `${f('company')}: {company}`,
+  `${f('service')}: {service}`, `${f('format')}: {format}`, `${f('message')}: {message}`].join('\n');
 ---
 <form class="cform" action={contacts.whatsapp.url} method="get" target="_blank" novalidate data-contact-form
   data-wa={contacts.whatsapp.url} data-endpoint={asset('api/send.php')} data-email={emailMode ? '1' : undefined}
-  data-template={f('waTemplate')} data-prefill={f('estimatePrefill')}
+  data-template={template}
   data-msg-required={f('required')} data-msg-contact={f('invalidContact')}
-  data-msg-success={emailMode ? f('successEmail') : f('success')} data-msg-error={f('error')}>
-  <h2 class="cform__title h3">{f('title')}</h2>
-
+  data-msg-success={f('success')} data-msg-error={f('error')}>
   <div class="field">
     <input class="field__input" id="cf-name" name="name" type="text" autocomplete="name" placeholder=" " required maxlength="120" aria-describedby="cf-name-err" />
     <label class="field__label" for="cf-name">{f('name')}</label>
     <p class="field__err small" id="cf-name-err" aria-live="polite"></p>
   </div>
   <div class="field">
-    <input class="field__input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="160" />
-    <label class="field__label" for="cf-company">{f('company')}</label>
-  </div>
-  <div class="field">
-    <input class="field__input" id="cf-contact" name="contact" type="text" autocomplete="email" inputmode="email" placeholder=" " required maxlength="160" aria-describedby="cf-contact-err" />
+    <input class="field__input" id="cf-contact" name="contact" type="text" autocomplete="tel" inputmode="tel" placeholder=" " required maxlength="160" aria-describedby="cf-contact-err" />
     <label class="field__label" for="cf-contact">{f('contact')}</label>
     <p class="field__err small" id="cf-contact-err" aria-live="polite"></p>
   </div>
+  <div class="field">
+    <input class="field__input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="160" />
+    <label class="field__label" for="cf-company">{f('company')}</label>
+  </div>
+  <div class="field field--select">
+    <select class="field__input" id="cf-service" name="service">
+      <option value="" data-label="">{f('serviceNone')}</option>
+      {services.map((s) => <option value={s.id} data-label={pick(lang, s.name)}>{pick(lang, s.name)}</option>)}
+    </select>
+    <label class="field__label is-up" for="cf-service">{f('service')}</label>
+  </div>
 
   <fieldset class="chips">
-    <legend class="label muted">{f('needsTitle')}</legend>
+    <legend class="label muted">{f('format')}</legend>
     <div class="chips__list">
-      {needs.map((n) => (
+      {formats.map((n) => (
         <label class="chip chip--check">
-          <input type="checkbox" name="needs" value={n.id} data-label={n.label} />
+          <input type="radio" name="format" value={n.id} data-label={n.label} />
           <span>{n.label}</span>
         </label>
       ))}
@@ -52,17 +60,20 @@ const emailMode = !!contacts.formEmail;
   </div>
 
   <div class="cform__foot">
-    <button class="btn btn--primary cform__submit" type="submit" data-magnetic>
-      <span class="btn__in">
-        {!emailMode && <Icon name="whatsapp" size={18} />}
-        <span class="btn__text">{emailMode ? f('submitEmail') : f('submit')}</span>
-        <Icon name="arrow" class="btn__arrow" />
-      </span>
-      <span class="cform__spinner" aria-hidden="true"></span>
-    </button>
-    {!emailMode && <p class="small muted cform__note">{f('note')}</p>}
-    <p class="small muted cform__consent">{f('consent')} <a class="link" href={url(lang, 'privacy')}>{f('consentLink')}</a>.</p>
-    <p class="cform__status" role="status" aria-live="polite" hidden></p>
+    <div class="btn-row">
+      <button class="btn btn--primary cform__submit" type="submit" data-magnetic>
+        <span class="btn__in">
+          <span class="btn__text">{f('submit')}</span>
+          <Icon name="arrow" class="btn__arrow" />
+        </span>
+        <span class="cform__spinner" aria-hidden="true"></span>
+      </button>
+      <a class="btn btn--secondary" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+        <span class="btn__in"><Icon name="whatsapp" size={18} class="btn__lead-icon" /><span class="btn__text">{f('whatsapp')}</span></span>
+      </a>
+    </div>
+    <p class="small muted cform__consent"><a class="link" href={url(lang, 'privacy')}>{f('consent')}</a>.</p>
+    <p class="cform__status" role="status" aria-live="polite" hidden data-sending={f('sending')}></p>
   </div>
 </form>
 
@@ -74,19 +85,10 @@ const emailMode = !!contacts.formEmail;
     const status = $<HTMLElement>('.cform__status');
     const submit = $<HTMLButtonElement>('.cform__submit');
 
-    // Prefill from the query: ?need=<id> selects a chip, ?est=<hours>h prefills the message.
-    const qs = new URLSearchParams(location.search);
-    const need = qs.get('need');
-    if (need) {
-      const box = form.querySelector<HTMLInputElement>(`input[name="needs"][value="${CSS.escape(need)}"]`);
-      if (box) box.checked = true;
-    }
-    const est = qs.get('est');
-    const hours = est && /^\d{1,6}h?$/.test(est) ? parseInt(est, 10) : 0;
-    if (hours > 0) {
-      const msg = $<HTMLTextAreaElement>('textarea[name="message"]');
-      if (!msg.value) msg.value = (d.prefill || '').replace('{hours}', new Intl.NumberFormat(document.documentElement.lang).format(hours));
-    }
+    // Prefill from the query: ?service=<slug> selects the service.
+    const svc = new URLSearchParams(location.search).get('service');
+    const select = $<HTMLSelectElement>('select[name="service"]');
+    if (svc && [...select.options].some((o) => o.value === svc)) select.value = svc;
 
     // chip press micro-interaction
     form.querySelectorAll<HTMLElement>('.chip--check').forEach((c) => {
@@ -122,8 +124,9 @@ const emailMode = !!contacts.formEmail;
     }));
 
     function message() {
-      const needs = [...form.querySelectorAll<HTMLInputElement>('input[name="needs"]:checked')].map((b) => b.dataset.label).join(', ');
-      const values: Record<string, string> = { name: val('name'), company: val('company'), contact: val('contact'), needs, message: val('message') };
+      const format = form.querySelector<HTMLInputElement>('input[name="format"]:checked')?.dataset.label ?? '';
+      const service = select.selectedOptions[0]?.dataset.label ?? '';
+      const values: Record<string, string> = { name: val('name'), company: val('company'), contact: val('contact'), service, format, message: val('message') };
       // Lines whose value is empty are dropped, so the message stays clean.
       return (d.template || '')
         .split('\n')
@@ -155,12 +158,13 @@ const emailMode = !!contacts.formEmail;
       const text = message();
       submit.classList.add('is-busy');
       submit.disabled = true;
+      status.hidden = false; status.classList.remove('is-error'); status.textContent = status.dataset.sending || '';
       if (d.email) {
         try {
           const res = await fetch(d.endpoint!, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: val('name'), company: val('company'), contact: val('contact'), needs: [...form.querySelectorAll<HTMLInputElement>('input[name="needs"]:checked')].map((b) => b.value), message: val('message'), website: val('website'), ts: loaded, lang: document.documentElement.lang }),
+            body: JSON.stringify({ name: val('name'), company: val('company'), contact: val('contact'), service: select.value, format: form.querySelector<HTMLInputElement>('input[name="format"]:checked')?.value ?? '', message: val('message'), website: val('website'), ts: loaded, lang: document.documentElement.lang }),
           });
           const json = await res.json().catch(() => ({ ok: false }));
           if (res.ok && json.ok) { done(d.msgSuccess!); form.reset(); return; }

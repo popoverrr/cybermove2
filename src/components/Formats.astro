@@ -1,0 +1,27 @@
+---
+// «Форматы работы» — three cards (services and about pages).
+import Block from './Block.astro';
+import BlockHead from './BlockHead.astro';
+import { t, ta, type Lang } from '../lib/i18n';
+interface Props { lang: Lang; theme: 'dark' | 'light' }
+const { lang, theme } = Astro.props;
+const title = t(lang, 'services.formats.title');
+const items = ta<{ title: string; text: string }[]>(lang, 'services.formats.items');
+---
+<Block theme={theme} label={title} class="svc-formats">
+  <div class="container">
+    <BlockHead label={title} />
+    <h2 class="section-title reveal" data-split>{title}</h2>
+  </div>
+  <div class="formats-scroller">
+    <ol class="formats formats--3 list-reset">
+      {items.map((f, i) => (
+        <li class="formats__card reveal" style={`--rd:${i * 60}ms`}>
+          <span class="label muted num">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="formats__title">{f.title}</h3>
+          <p class="muted">{f.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Block>

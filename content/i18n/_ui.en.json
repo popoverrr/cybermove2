@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "notFound": {
+      "title": "Page not found — CYBERMOVE",
+      "description": "This page doesn't exist."
+    }
+  },
+  "nav": {
+    "menu": "Menu",
+    "close": "Close",
+    "lang": "RU",
+    "langLabel": "Русская версия",
+    "skip": "Skip to content",
+    "tabsLabel": "Recently opened pages",
+    "crumbs": "Breadcrumbs"
+  },
+  "common": {
+    "open": "Open",
+    "close": "Close",
+    "backToTop": "Back to top"
+  },
+  "footer": {
+    "bend": "We move business forward →"
+  },
+  "home": {
+    "windows": {
+      "cases": {
+        "path": "cybermove / cases"
+      },
+      "services": {
+        "path": "cybermove / services"
+      },
+      "insights": {
+        "path": "cybermove / insights"
+      },
+      "about": {
+        "path": "cybermove / about"
+      },
+      "contact": {
+        "path": "cybermove / contact"
+      }
+    },
+    "orbit": {
+      "aria": "Diagram: the business core and the system around it"
+    }
+  },
+  "contact": {
+    "form": {
+      "waTemplate": "Hello! A request from the CYBERMOVE website."
+    }
+  },
+  "notFound": {
+    "title": "This page doesn't exist.",
+    "lead": "It may have moved when the website was updated.",
+    "home": "Back to home"
+  }
+}

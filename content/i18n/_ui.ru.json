@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "notFound": {
+      "title": "Страница не найдена — CYBERMOVE",
+      "description": "Такой страницы нет."
+    }
+  },
+  "nav": {
+    "menu": "Меню",
+    "close": "Закрыть",
+    "lang": "EN",
+    "langLabel": "English version",
+    "skip": "Перейти к содержанию",
+    "tabsLabel": "Недавно открытые страницы",
+    "crumbs": "Навигационная цепочка"
+  },
+  "common": {
+    "open": "Открыть",
+    "close": "Закрыть",
+    "backToTop": "Наверх"
+  },
+  "footer": {
+    "bend": "Двигаем бизнес вперёд →"
+  },
+  "home": {
+    "windows": {
+      "cases": {
+        "path": "cybermove / кейсы"
+      },
+      "services": {
+        "path": "cybermove / услуги"
+      },
+      "insights": {
+        "path": "cybermove / разборы"
+      },
+      "about": {
+        "path": "cybermove / о-компании"
+      },
+      "contact": {
+        "path": "cybermove / контакты"
+      }
+    },
+    "orbit": {
+      "aria": "Схема: ядро бизнеса и система вокруг него"
+    }
+  },
+  "contact": {
+    "form": {
+      "waTemplate": "Здравствуйте! Заявка с сайта CYBERMOVE."
+    }
+  },
+  "notFound": {
+    "title": "Такой страницы нет.",
+    "lead": "Возможно, она переехала после обновления сайта.",
+    "home": "На главную"
+  }
+}

@@ -1,13 +1,13 @@
 ---
 // Interaction #3 (home): sectors list → the brand names of the active sector morph in.
-// Sector names are real links to /projects/?sector=<id> (desktop: hover previews, click navigates;
-// touch: first tap previews). Every brand name links to its project window /projects/?p=<id>.
-import { t, pick, url, type Lang } from '../lib/i18n';
-import { sectors, projects, projectsBySector } from '../lib/content';
-interface Props { lang: Lang; label: string }
-const { lang, label } = Astro.props;
+// Sector names are real links to /cases/?sector=<id> (desktop: hover previews, click navigates;
+// touch: first tap previews). Every brand name links to its case page /cases/<slug>/.
+import { pick, url, href, type Lang } from '../lib/i18n';
+import { sectors, cases, casesBySector } from '../lib/content';
+interface Props { lang: Lang; label: string; allLabel: string }
+const { lang, label, allLabel } = Astro.props;
 const first = sectors[0].id;
-const sectorHref = (id: string) => url(lang, 'projects', `?sector=${id}`);
+const sectorHref = (id: string) => url(lang, 'cases', `?sector=${id}`);
 ---
 <div class="sm" data-sector-morph data-autoplay>
   <nav class="sm__list" aria-label={label}>
@@ -16,7 +16,7 @@ const sectorHref = (id: string) => url(lang, 'projects', `?sector=${id}`);
       <a class:list={['sm__tab', i === 0 && 'is-active']} href={sectorHref(s.id)} data-sector={s.id}
         aria-current={i === 0 ? 'true' : undefined} aria-controls="sm-panel">
         <span class="sm__title">{pick(lang, s.title)}</span>
-        <span class="sm__count label num" data-count={projectsBySector(s.id).length} data-pad="2">{String(projectsBySector(s.id).length).padStart(2, '0')}</span>
+        <span class="sm__count label num" data-count={casesBySector(s.id).length} data-pad="2">{String(casesBySector(s.id).length).padStart(2, '0')}</span>
       </a>
     ))}
   </nav>
@@ -25,13 +25,13 @@ const sectorHref = (id: string) => url(lang, 'projects', `?sector=${id}`);
       {sectors.map((s, i) => <p class:list={['sm__line muted', i === 0 && 'is-on']} data-sector={s.id}>{pick(lang, s.line)}</p>)}
     </div>
     <ul class="sm__names list-reset">
-      {projects.map((p) => (
-        <li class:list={['sm__name', p.sector !== first && 'is-off']} data-sector={p.sector}>
-          <a class="sm__name-link" href={url(lang, 'projects', `?p=${p.id}`)}>{pick(lang, p.name)}</a><span class="sm__sep" aria-hidden="true"> · </span>
+      {cases.map((c) => (
+        <li class:list={['sm__name', c.sector !== first && 'is-off']} data-sector={c.sector}>
+          <a class="sm__name-link" href={href(lang, `cases/${c.id}/`)}>{pick(lang, c.cardName)}</a><span class="sm__sep" aria-hidden="true"> · </span>
         </li>
       ))}
     </ul>
-    <a class="link link--arrow sm__all" href={sectorHref(first)} data-sector-all>{t(lang, 'home.sectors.allLink')}</a>
+    <a class="link link--arrow sm__all" href={sectorHref(first)} data-sector-all>{allLabel} →</a>
   </div>
 </div>
 
@@ -82,7 +82,7 @@ const sectorHref = (id: string) => url(lang, 'projects', `?sector=${id}`);
         stop();
         // touch: the first tap only previews the sector; the "All projects" link navigates
         if (!finePointer()) { e.preventDefault(); select(t.dataset.sector!); }
-        // desktop: the link navigates to /projects/?sector=<id>
+        // desktop: the link navigates to /cases/?sector=<id>
       });
       t.addEventListener('focus', () => { if (t.matches(':focus-visible')) { stop(); select(t.dataset.sector!); } });
       if (finePointer()) {
