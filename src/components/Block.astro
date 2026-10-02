@@ -1,0 +1,26 @@
+---
+// A full-width themed section. Adjacent blocks alternate theme; `data-label` feeds the nav capsule.
+interface Props {
+  theme: 'dark' | 'light';
+  label: string;
+  id?: string;
+  first?: boolean;
+  hero?: boolean;
+  flow?: 'continue';
+  tight?: boolean;
+  class?: string;
+  as?: 'section' | 'div';
+  [key: string]: unknown;
+}
+const { theme, label, id, first = false, hero = false, flow, tight = false, class: cls = '', as: Tag = 'section', ...rest } = Astro.props;
+---
+<Tag
+  id={id}
+  class:list={['block', first && 'block--first', hero && 'block--hero', tight && 'block--tight', cls]}
+  data-theme={theme}
+  data-label={label}
+  data-flow={flow}
+  {...rest}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,19 @@
+---
+import Block from './Block.astro';
+import BlockHead from './BlockHead.astro';
+import Button from './Button.astro';
+interface Link { href: string; text: string; icon?: 'arrow' | 'whatsapp'; external?: boolean }
+interface Props { theme: 'dark' | 'light'; label: string; title: string; lead?: string; primary: Link; secondary?: Link; id?: string; big?: boolean }
+const { theme, label, title, lead, primary, secondary, id, big = true } = Astro.props;
+---
+<Block theme={theme} label={label} id={id} class="cta">
+  <div class="container">
+    <BlockHead label={label} />
+    <h2 class:list={['cta__title reveal', big && 'h1']} data-split>{title}</h2>
+    {lead && <p class="lead muted cta__lead reveal">{lead}</p>}
+    <div class="btn-row btn-row--stack cta__actions reveal">
+      <Button href={primary.href} icon={primary.icon ?? 'arrow'} external={primary.external}>{primary.text}</Button>
+      {secondary && <Button href={secondary.href} variant="secondary" icon={secondary.icon ?? 'arrow'} external={secondary.external}>{secondary.text}</Button>}
+    </div>
+  </div>
+</Block>

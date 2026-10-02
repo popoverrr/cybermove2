@@ -1,0 +1,72 @@
+[
+  {
+    "id": "audit", "index": "00",
+    "title": { "ru": "Аудит бизнеса и маркетинга", "en": "Business & Marketing Audit" },
+    "lead": { "ru": "Точка входа. Находим, где бизнес теряет деньги, время и клиентов, и решаем, что менять в первую очередь.", "en": "The starting point. We find where the business loses money, time and customers — and decide what to fix first." },
+    "includes": {
+      "ru": ["Бренд", "Позиционирование", "Продукт", "Путь клиента", "Маркетинг", "Digital-присутствие", "Реклама", "Процесс продаж"],
+      "en": ["Brand", "Positioning", "Product", "Customer journey", "Marketing", "Digital presence", "Advertising", "Sales process"]
+    },
+    "outcome": { "ru": "Диагностика, карта проблем и возможностей, приоритеты и дорожная карта изменений.", "en": "A diagnosis, a map of problems and opportunities, priorities and a roadmap." }
+  },
+  {
+    "id": "marketing", "index": "01",
+    "title": { "ru": "Маркетинг и рост", "en": "Marketing & Growth" },
+    "lead": { "ru": "Стратегия, performance, PR и аналитика как одна управляемая система, а не набор разрозненных подрядчиков.", "en": "Strategy, performance, PR and analytics as one managed system — not a set of disconnected vendors." },
+    "includes": {
+      "ru": ["Маркетинговая стратегия", "Performance-маркетинг", "Социальные сети", "PR", "SEO", "GEO — оптимизация под AI-поиск", "Контент-продакшн", "Реклама"],
+      "en": ["Marketing strategy", "Performance marketing", "Social media", "PR", "SEO", "GEO — AI search optimisation", "Content production", "Advertising"]
+    },
+    "outcome": { "ru": "Маркетинг, в котором каждый канал связан с бизнес-целью и измеряется в заявках и выручке.", "en": "Marketing where every channel serves a business goal and is measured in leads and revenue." }
+  },
+  {
+    "id": "brand", "index": "02",
+    "title": { "ru": "Развитие бренда", "en": "Brand Development" },
+    "lead": { "ru": "От позиционирования и нейминга до запуска продукта на рынок.", "en": "From positioning and naming to taking a product to market." },
+    "includes": {
+      "ru": ["Стратегия бренда", "Позиционирование", "Архитектура бренда", "Нейминг", "Визуальная идентичность", "Коммуникационная стратегия", "Личный бренд", "Запуск продукта"],
+      "en": ["Brand strategy", "Positioning", "Brand architecture", "Naming", "Visual identity", "Communication strategy", "Personal branding", "Product launch"]
+    },
+    "outcome": { "ru": "Бренд, который понятно объясняет, почему выбирать именно вас, — и готов к выходу на рынок.", "en": "A brand that clearly explains why customers should choose you — and is ready for market." }
+  },
+  {
+    "id": "ai", "index": "03",
+    "title": { "ru": "AI и автоматизация", "en": "AI & Automation" },
+    "lead": { "ru": "Автоматизируем процессы, которые уже работают, — чтобы они работали быстрее и дешевле.", "en": "We automate processes that already work — so they run faster and cost less." },
+    "includes": {
+      "ru": ["AI-агенты", "Автоматизация бизнес-процессов", "Автоматизация CRM", "AI-анализ звонков и переписок", "Автоматизация продаж", "Обработка и квалификация заявок", "Автоматизация контента", "AI-видео и аватары"],
+      "en": ["AI agents", "Business process automation", "CRM automation", "AI analysis of calls and chats", "Sales automation", "Lead processing & qualification", "Content automation", "AI video & avatars"]
+    },
+    "outcome": { "ru": "Меньше ручной работы, быстрее ответ клиенту, прозрачные отчёты для руководителя. Инструменты: Make, n8n, API.", "en": "Less manual work, faster response to customers, transparent reports for management. Tools: Make, n8n, APIs." }
+  },
+  {
+    "id": "bizdev", "index": "04",
+    "title": { "ru": "Развитие бизнеса", "en": "Business Development" },
+    "lead": { "ru": "Стратегия роста, операционный консалтинг и отлаженные продажи.", "en": "Growth strategy, operations consulting and a sales process that works." },
+    "includes": {
+      "ru": ["Бизнес-аудит", "Стратегия роста", "Операционный консалтинг", "Процессы продаж", "CRM", "Выход на новые рынки", "Бизнес-модели", "Путь клиента"],
+      "en": ["Business audit", "Growth strategy", "Operations consulting", "Sales processes", "CRM", "Market expansion", "Business models", "Customer journey"]
+    },
+    "outcome": { "ru": "Управляемый бизнес: понятные процессы, метрики и план роста, который выполняется.", "en": "A business you can steer: clear processes, metrics and a growth plan that gets executed." }
+  },
+  {
+    "id": "tender", "index": "05",
+    "title": { "ru": "Тендерное сопровождение", "en": "Tender Support" },
+    "lead": { "ru": "Находим подходящие тендеры, готовим документы и ведём участие от заявки до итогов.", "en": "We find the right tenders, prepare the documents and manage participation from bid to outcome." },
+    "includes": {
+      "ru": ["Мониторинг тендеров", "Анализ возможностей", "Подготовка документации", "Подготовка заявок", "Стратегия участия", "Координация партнёров", "Управление процессом", "Сопровождение участия"],
+      "en": ["Tender monitoring", "Opportunity analysis", "Documentation", "Bid preparation", "Bidding strategy", "Partner coordination", "Process management", "Participation support"]
+    },
+    "outcome": { "ru": "Системное участие в тендерах вместо разовых попыток: отбор, документы и контроль сроков.", "en": "Systematic tender participation instead of one-off attempts: selection, documents and deadline control." }
+  },
+  {
+    "id": "legal", "index": "06",
+    "title": { "ru": "Юридическое сопровождение", "en": "Legal Support" },
+    "lead": { "ru": "Договоры, корпоративные и тендерные документы — юридическая сторона проекта под контролем.", "en": "Contracts, corporate and tender documents — the legal side of your project under control." },
+    "includes": {
+      "ru": ["Договорная работа", "Юридическая координация бизнеса", "Тендерная документация", "Корпоративные документы", "Коммерческие соглашения", "Координация юридических процессов"],
+      "en": ["Contract work", "Business legal coordination", "Tender documentation", "Corporate documents", "Commercial agreements", "Legal process coordination"]
+    },
+    "outcome": { "ru": "Сделки и проекты, защищённые документами с самого начала.", "en": "Deals and projects protected by proper documents from day one." }
+  }
+]

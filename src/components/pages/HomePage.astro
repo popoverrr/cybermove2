@@ -1,0 +1,183 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import HomeWindows from '../HomeWindows.astro';
+import Marquee from '../Marquee.astro';
+import SectorMorph from '../SectorMorph.astro';
+import Portrait from '../Portrait.astro';
+import CtaBlock from '../CtaBlock.astro';
+import WindowFrame from '../WindowFrame.astro';
+import { t, ta, url, pick, type Lang } from '../../lib/i18n';
+import { projects, services, team, contacts, company } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const marqueeNames = projects.filter((p) => p.showInMarquee).map((p) => pick(lang, p.name));
+const half = Math.ceil(marqueeNames.length / 2);
+const pains = ta<{ quote: string; answer: string; service: string }[]>(lang, 'home.pains.items');
+const steps = ta<{ title: string; text: string }[]>(lang, 'home.method.steps');
+const svcPath = t(lang, 'home.windows.services.path');
+const label = (k: string) => t(lang, `home.${k}.label`);
+---
+<Base lang={lang} page="home" path="cybermove">
+  <!-- 1 · Hero -->
+  <Block theme="dark" label={company.brand} first hero class="home-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{t(lang, 'home.hero.label')}</p>
+      <h1 class="hero__title home-hero__title reveal" data-split>{t(lang, 'home.hero.title')}</h1>
+      <div class="home-hero__row">
+        <p class="lead hero__lead reveal" style="--rd:120ms">{t(lang, 'home.hero.lead')}</p>
+        <div class="btn-row btn-row--stack hero__actions reveal" style="--rd:200ms">
+          <Button href={url(lang, 'contact', '?need=audit')}>{t(lang, 'home.hero.ctaPrimary')}</Button>
+          <Button href={url(lang, 'projects')} variant="secondary">{t(lang, 'home.hero.ctaSecondary')}</Button>
+        </div>
+      </div>
+      <HomeWindows lang={lang} />
+    </div>
+  </Block>
+
+  <!-- 2 · Clients marquee (continues the hero) -->
+  <Block theme="dark" label={label('clients')} flow="continue" class="home-clients">
+    <div class="container">
+      <BlockHead label={label('clients')} link={{ href: url(lang, 'projects'), text: t(lang, 'home.clients.link') }} />
+    </div>
+    <Marquee rows={[marqueeNames.slice(0, half), marqueeNames.slice(half)]} label={label('clients')} />
+  </Block>
+
+  <!-- 3 · Pains → answers -->
+  <Block theme="light" label={label('pains')} class="home-pains">
+    <div class="container">
+      <BlockHead label={label('pains')} />
+      <h2 class="section-title reveal" data-split>{t(lang, 'home.pains.title')}</h2>
+      <div class="acc pains" data-accordion="single">
+        {pains.map((p, i) => (
+          <details class="acc__item pains__item reveal" style={`--rd:${i * 50}ms`}>
+            <summary class="acc__head">
+              <span class="acc__idx label">{String(i + 1).padStart(2, '0')}</span>
+              <span class="acc__title pains__quote">{p.quote}</span>
+              <span class="acc__plus" aria-hidden="true"></span>
+            </summary>
+            <div class="acc__body"><div><div class="acc__content pains__answer">
+              <p class="lead">{p.answer}</p>
+              <a class="tag pains__tag" href={url(lang, 'services', `#${p.service}`)}>{pick(lang, services.find((s) => s.id === p.service)!.title)} <Icon name="arrow" size={12} /></a>
+            </div></div></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </Block>
+
+  <!-- 4 · Services index -->
+  <Block theme="dark" label={label('services')} class="home-services">
+    <div class="container">
+      <BlockHead label={label('services')} link={{ href: url(lang, 'services'), text: t(lang, 'home.services.link') }} />
+      <h2 class="section-title reveal" data-split>{t(lang, 'home.services.title')}</h2>
+      <ol class="svc list-reset">
+        {services.map((s, i) => (
+          <li class="svc__row reveal" style={`--rd:${i * 40}ms`}>
+            <a class="svc__link" href={url(lang, 'services', `#${s.id}`)}>
+              <span class="svc__idx label muted">{s.index}</span>
+              <span class="svc__main">
+                <span class="svc__title h3">{pick(lang, s.title)}</span>
+                <span class="svc__lead muted">{pick(lang, s.lead)}</span>
+              </span>
+              <Icon name="arrow" size={20} class="svc__arrow" />
+            </a>
+            <WindowFrame path={`${svcPath} / ${s.id}`} class="svc__preview" aria-hidden="true">
+              <ul class="list-reset label">{pick(lang, s.includes).map((x) => <li>{x}</li>)}</ul>
+            </WindowFrame>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <!-- 5 · Method -->
+  <Block theme="light" label={label('method')} class="home-method">
+    <div class="container">
+      <BlockHead label={label('method')} />
+      <div class="method" data-method>
+        <div class="method__aside">
+          <h2 class="reveal" data-split>{t(lang, 'home.method.title')}</h2>
+          <div class="method__counter label" aria-hidden="true">
+            <span class="method__now num">01</span><span class="muted"> / {String(steps.length).padStart(2, '0')}</span>
+            <span class="method__track"><i class="method__fill"></i></span>
+          </div>
+        </div>
+        <ol class="method__steps list-reset">
+          {steps.map((s, i) => (
+            <li class:list={['method__step reveal', i === 0 && 'is-active']} data-step={i}>
+              <span class="label muted">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="method__title">{s.title}</h3>
+              <p class="lead method__text">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </Block>
+
+  <!-- 6 · Sectors (interaction #3) -->
+  <Block theme="dark" label={label('sectors')} class="home-sectors">
+    <div class="container">
+      <BlockHead label={label('sectors')} />
+      <h2 class="reveal" data-split>{t(lang, 'home.sectors.title')}</h2>
+      <p class="lead muted section-lead-after reveal">{t(lang, 'home.sectors.lead')}</p>
+      <div class="reveal"><SectorMorph lang={lang} label={t(lang, 'home.sectors.title')} /></div>
+    </div>
+  </Block>
+
+  <!-- 7 · Team teaser -->
+  <Block theme="light" label={label('team')} class="home-team">
+    <div class="container">
+      <BlockHead label={label('team')} link={{ href: url(lang, 'team'), text: t(lang, 'home.team.link') }} />
+      <div class="home-team__head">
+        <h2 class="reveal" data-split>{t(lang, 'home.team.title')}</h2>
+        <p class="lead muted reveal">{t(lang, 'home.team.lead')}</p>
+      </div>
+      <ul class="tteaser list-reset">
+        {team.map((m, i) => (
+          <li class="tteaser__item reveal" style={`--rd:${i * 60}ms`}>
+            <a href={url(lang, 'team', `#${m.id}`)} class="tteaser__link">
+              <Portrait member={m} sizes="(min-width: 1024px) 220px, 45vw" />
+              <span class="tteaser__name">{m.name}</span>
+              <span class="tteaser__role small muted">{pick(lang, m.role)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Block>
+
+  <!-- 8 · Final CTA -->
+  <CtaBlock
+    theme="dark"
+    label={label('cta')}
+    title={t(lang, 'home.cta.title')}
+    lead={t(lang, 'home.cta.lead')}
+    primary={{ href: url(lang, 'contact', '?need=audit'), text: t(lang, 'home.cta.primary') }}
+    secondary={{ href: contacts.whatsapp.url, text: t(lang, 'home.cta.secondary'), icon: 'whatsapp', external: true }}
+  />
+</Base>
+
+<script>
+  // Method: sticky counter + progress; the step crossing the viewport centre is active.
+  document.querySelectorAll<HTMLElement>('[data-method]').forEach((root) => {
+    const steps = [...root.querySelectorAll<HTMLElement>('.method__step')];
+    const now = root.querySelector<HTMLElement>('.method__now')!;
+    const fill = root.querySelector<HTMLElement>('.method__fill')!;
+    const set = (i: number) => {
+      steps.forEach((s, k) => s.classList.toggle('is-active', k === i));
+      now.textContent = String(i + 1).padStart(2, '0');
+      fill.style.transform = `scaleY(${(i + 1) / steps.length})`;
+    };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) set(steps.indexOf(e.target as HTMLElement));
+    }, { rootMargin: '-45% 0px -54% 0px' });
+    steps.forEach((s) => io.observe(s));
+    set(0);
+  });
+</script>

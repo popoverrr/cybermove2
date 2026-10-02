@@ -1,0 +1,29 @@
+# CYBERMOVE — nginx directives (use ONLY if the Plesk site runs without Apache, i.e. .htaccess is ignored).
+# Plesk → Websites & Domains → Apache & nginx Settings → "Additional nginx directives". Paste everything below.
+
+error_page 404 /404.html;
+
+location ~* ^/(approach)/?$ { return 301 /about/; }
+location ~* ^/(partners)/?$ { return 301 /projects/; }
+location ~* ^/(marketing|brand-development)/?$ { return 301 /services/; }
+location ~* ^/services/.+ { return 301 /services/; }
+location ~* ^/en/services/.+ { return 301 /en/services/; }
+location ~ ^/(en/)?(services|projects|team|about|contact|privacy)$ { return 301 /$1$2/; }
+
+location ^~ /_astro/ {
+  add_header Cache-Control "public, max-age=31536000, immutable";
+  try_files $uri =404;
+}
+location ~* \.(woff2|avif|webp|jpg|jpeg|png|svg|ico)$ {
+  add_header Cache-Control "public, max-age=604800";
+  try_files $uri =404;
+}
+
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-WYAzadEUx4x/aqL7GL/K70V57Z6YpxtrEAABPBaMcvo='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me https://api.whatsapp.com; frame-ancestors 'self'; base-uri 'self'; object-src 'none'" always;
+
+gzip on;
+gzip_types text/css application/javascript text/javascript application/json image/svg+xml application/manifest+json;

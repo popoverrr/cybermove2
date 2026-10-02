@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import Portrait from '../Portrait.astro';
+import CtaBlock from '../CtaBlock.astro';
+import { t, url, pick, type Lang } from '../../lib/i18n';
+import { team, contacts, company } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tt = (k: string) => t(lang, `team.${k}`);
+const site = Astro.site!.href.replace(/\/$/, '');
+const people = team.map((m) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: m.name,
+  jobTitle: pick(lang, m.role),
+  description: pick(lang, m.bio),
+  worksFor: { '@type': 'Organization', name: company.brand },
+  url: `${site}${url(lang, 'team')}#${m.id}`,
+}));
+---
+<Base lang={lang} page="team" path={t(lang, 'home.windows.team.path')} jsonLd={people}>
+  <Block theme="dark" label={tt('hero.label')} first hero class="page-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{tt('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{tt('hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{tt('hero.lead')}</p>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={tt('hero.label')} flow="continue" class="members-block">
+    <div class="container">
+      <ol class="members list-reset">
+        {team.map((m, i) => (
+          <li class:list={['member', i % 2 === 1 && 'member--flip']} id={m.id}>
+            <div class="member__photo reveal">
+              <Portrait member={m} sizes="(min-width: 1024px) 40vw, (min-width: 600px) 60vw, 100vw" eager={i === 0} />
+            </div>
+            <div class="member__body">
+              <p class="label member__focus reveal">{pick(lang, m.focus)}</p>
+              <h2 class="member__name reveal">{m.name}</h2>
+              <p class="member__role muted reveal">{pick(lang, m.role)}</p>
+              <p class="lead member__bio reveal">{pick(lang, m.bio)}</p>
+              <ul class="tags list-reset reveal" role="list">{pick(lang, m.tags).map((x) => <li class="tag">{x}</li>)}</ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <CtaBlock theme="light" label={tt('cta.label')} title={tt('cta.title')} lead={tt('cta.lead')}
+    primary={{ href: contacts.whatsapp.url, text: tt('cta.whatsapp'), icon: 'whatsapp', external: true }}
+    secondary={{ href: url(lang, 'contact'), text: tt('cta.form') }} />
+</Base>

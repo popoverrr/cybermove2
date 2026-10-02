@@ -1,0 +1,26 @@
+---
+// Bilingual 404 (RU text + EN underneath). Served by Apache via `ErrorDocument 404 /404.html`.
+import Base from '../layouts/Base.astro';
+import Block from '../components/Block.astro';
+import Button from '../components/Button.astro';
+import { t, url } from '../lib/i18n';
+---
+<Base lang="ru" page="notFound" path="cybermove / 404" noindex>
+  <Block theme="dark" label="404" first hero class="nf">
+    <div class="container">
+      <h1 class="mega nf__code reveal" data-split>404</h1>
+      <div class="nf__cols">
+        <div class="nf__col reveal">
+          <p class="h3">{t('ru', 'notFound.title')}</p>
+          <p class="muted">{t('ru', 'notFound.lead')}</p>
+          <Button href={url('ru', 'home')}>{t('ru', 'notFound.home')}</Button>
+        </div>
+        <div class="nf__col reveal" lang="en" style="--rd:100ms">
+          <p class="h3">{t('en', 'notFound.title')}</p>
+          <p class="muted">{t('en', 'notFound.lead')}</p>
+          <Button href={url('en', 'home')} variant="secondary">{t('en', 'notFound.home')}</Button>
+        </div>
+      </div>
+    </div>
+  </Block>
+</Base>

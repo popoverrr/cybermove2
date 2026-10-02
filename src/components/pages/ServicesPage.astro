@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import WindowFrame from '../WindowFrame.astro';
+import Estimator from '../Estimator.astro';
+import CtaBlock from '../CtaBlock.astro';
+import { t, ta, url, pick, type Lang } from '../../lib/i18n';
+import { services, serviceById } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = (k: string) => t(lang, `services.${k}`);
+const audit = serviceById('audit');
+const directions = services.filter((x) => x.id !== 'audit');
+const deliverables = ta<string[]>(lang, 'services.audit.deliverables');
+const flow = ta<{ title: string; text: string }[]>(lang, 'services.aiFlow.steps');
+const formats = ta<{ title: string; text: string }[]>(lang, 'services.formats.items');
+const faq = ta<{ q: string; a: string }[]>(lang, 'services.faq.items');
+const path = t(lang, 'home.windows.services.path');
+---
+<Base lang={lang} page="services" path={path}>
+  <Block theme="dark" label={s('hero.label')} first hero class="page-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{s('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{s('hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{s('hero.lead')}</p>
+    </div>
+  </Block>
+
+  <!-- Audit: the entry point -->
+  <Block theme="light" label={s('audit.label')} id="audit" class="svc-audit">
+    <div class="container">
+      <BlockHead label={s('audit.label')} />
+      <div class="split">
+        <div class="split__a">
+          <h2 class="reveal" data-split>{s('audit.title')}</h2>
+          <p class="lead muted split__lead reveal">{s('audit.lead')}</p>
+          <h3 class="label muted split__sub reveal">{s('audit.includesTitle')}</h3>
+          <ul class="tags reveal list-reset" role="list">{pick(lang, audit.includes).map((x) => <li class="tag">{x}</li>)}</ul>
+        </div>
+        <div class="split__b">
+          <h3 class="label muted split__sub reveal">{s('audit.deliverablesTitle')}</h3>
+          <ol class="numrows list-reset">
+            {deliverables.map((d, i) => (
+              <li class="numrows__row reveal" style={`--rd:${i * 60}ms`}><span class="label muted num">{String(i + 1).padStart(2, '0')}</span><span class="numrows__text">{d}</span></li>
+            ))}
+          </ol>
+          <div class="reveal split__cta"><Button href={url(lang, 'contact', '?need=audit')}>{s('audit.cta')}</Button></div>
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <!-- Directions accordion -->
+  <Block theme="dark" label={s('directions.label')} class="svc-directions">
+    <div class="container">
+      <BlockHead label={s('directions.label')} />
+      <h2 class="section-title reveal" data-split>{s('directions.title')}</h2>
+      <div class="acc dirs" data-accordion>
+        {directions.map((d) => (
+          <details class="acc__item dirs__item" id={d.id}>
+            <summary class="acc__head">
+              <span class="acc__idx label">{d.index}</span>
+              <span class="dirs__head">
+                <span class="acc__title h3">{pick(lang, d.title)}</span>
+                <span class="dirs__lead muted">{pick(lang, d.lead)}</span>
+              </span>
+              <span class="acc__plus" aria-hidden="true"></span>
+            </summary>
+            <div class="acc__body"><div><div class="acc__content">
+              <div class="dirs__grid">
+                <div>
+                  <h3 class="label muted dirs__sub">{s('directions.includesTitle')}</h3>
+                  <ul class="dirs__list list-reset">{pick(lang, d.includes).map((x) => <li>{x}</li>)}</ul>
+                </div>
+                <div>
+                  <h3 class="label muted dirs__sub">{s('directions.outcomeTitle')}</h3>
+                  <p class="lead">{pick(lang, d.outcome)}</p>
+                  <a class="link link--arrow dirs__discuss" href={url(lang, 'contact', `?need=${d.id}`)}><span>{s('directions.discuss')}</span><Icon name="arrow" size={14} /></a>
+                </div>
+              </div>
+              {d.id === 'ai' && (
+                <div class="aiflow">
+                  <h3 class="label muted dirs__sub">{s('aiFlow.title')}</h3>
+                  <ol class="aiflow__chain list-reset">
+                    {flow.map((f, i) => (
+                      <li class="aiflow__step">
+                        <WindowFrame path={`0${i + 1}`} class="aiflow__win">
+                          <div class="aiflow__body"><p class="aiflow__title">{f.title}</p><p class="small muted">{f.text}</p></div>
+                        </WindowFrame>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div></div></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </Block>
+
+  <!-- Estimator -->
+  <Block theme="light" label={s('estimator.label')} class="svc-estimator">
+    <div class="container">
+      <BlockHead label={s('estimator.label')} />
+      <h2 class="reveal" data-split>{s('estimator.title')}</h2>
+      <p class="lead muted section-lead-after reveal">{s('estimator.lead')}</p>
+      <div class="reveal"><Estimator lang={lang} /></div>
+    </div>
+  </Block>
+
+  <!-- Formats -->
+  <Block theme="dark" label={s('formats.label')} class="svc-formats">
+    <div class="container">
+      <BlockHead label={s('formats.label')} />
+      <h2 class="section-title reveal" data-split>{s('formats.title')}</h2>
+    </div>
+    <div class="formats-scroller">
+      <ol class="formats list-reset">
+        {formats.map((f, i) => (
+          <li class="formats__card reveal" style={`--rd:${i * 60}ms`}>
+            <span class="label muted num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="formats__title">{f.title}</h3>
+            <p class="muted">{f.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <!-- FAQ -->
+  <Block theme="light" label={s('faq.label')} class="svc-faq">
+    <div class="container">
+      <BlockHead label={s('faq.label')} />
+      <div class="faq-layout">
+        <h2 class="reveal" data-split>{s('faq.title')}</h2>
+        <div class="acc" data-accordion>
+          {faq.map((f, i) => (
+            <details class="acc__item reveal" style={`--rd:${i * 40}ms`}>
+              <summary class="acc__head">
+                <span class="acc__idx label">{String(i + 1).padStart(2, '0')}</span>
+                <span class="acc__title faq__q">{f.q}</span>
+                <span class="acc__plus" aria-hidden="true"></span>
+              </summary>
+              <div class="acc__body"><div><div class="acc__content"><p class="measure">{f.a}</p></div></div></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <CtaBlock theme="dark" label={t(lang, 'nav.contact')} title={s('cta.title')} lead={s('cta.lead')}
+    primary={{ href: url(lang, 'contact'), text: s('cta.primary') }} />
+</Base>

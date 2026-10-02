@@ -1,0 +1,21 @@
+---
+// Project photo with the team-portrait treatment (grayscale → colour on hover/focus).
+// Falls back to the generated cover (monogram + line pattern) when a project has no downloaded photo.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Cover from './Cover.astro';
+import type { Project } from '../lib/content';
+interface Props { project: Project; sizes: string; alt?: string; class?: string; eager?: boolean; priority?: boolean; thumb?: boolean }
+const { project, sizes, alt = '', class: cls = '', eager = false, priority = false, thumb = false } = Astro.props;
+const photos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const img = project.photo ? photos[`/src/assets/projects/${project.photo}`]?.default : undefined;
+// never upscale: only widths up to the original, plus the original width itself
+const widths = !img ? [] : thumb
+  ? [Math.min(img.width, 480)] // miniatures: only the smallest variant
+  : [...new Set([400, 560, 720, 960].filter((w) => w < img.width).concat(Math.min(img.width, 960)))];
+---
+{img
+  ? <Picture src={img} formats={['avif', 'webp']} fallbackFormat="jpg" quality={66} widths={widths} sizes={sizes} alt={alt}
+      loading={eager ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} decoding="async" class:list={['pphoto', cls]}
+      style={`object-position:${project.photoFocus ?? '50% 45%'}`} />
+  : <Cover id={project.id} monogram={project.monogram} class={cls} />}

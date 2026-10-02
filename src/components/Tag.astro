@@ -1,0 +1,7 @@
+---
+interface Props { href?: string; class?: string; large?: boolean }
+const { href, class: cls = '', large = false } = Astro.props;
+---
+{href
+  ? <a href={href} class:list={['tag', large && 'tag--lg', cls]}><slot /></a>
+  : <span class:list={['tag', large && 'tag--lg', cls]}><slot /></span>}

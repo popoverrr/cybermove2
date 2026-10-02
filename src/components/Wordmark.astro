@@ -1,0 +1,7 @@
+---
+interface Props { compact?: boolean; class?: string }
+const { compact = false, class: cls = '' } = Astro.props;
+---
+{compact
+  ? <span class:list={['wm wm--compact', cls]} aria-hidden="true">C<i class="wm__px"></i></span>
+  : <span class:list={['wm', cls]}>CYBERMOVE<i class="wm__px" aria-hidden="true"></i></span>}

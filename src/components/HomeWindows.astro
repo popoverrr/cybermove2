@@ -1,0 +1,97 @@
+---
+// Interaction #1: five windows with live-looking miniatures of each page (real HTML/CSS, no screenshots).
+import { t, ta, url, pick, type Lang } from '../lib/i18n';
+import { services, projects, team, contacts, sectors, channelLink } from '../lib/content';
+import ProjectPhoto from './ProjectPhoto.astro';
+import Portrait from './Portrait.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+// 12 different projects, picked round-robin across sectors so the miniature shows the range
+const bySector = sectors.map((s) => projects.filter((p) => p.sector === s.id && p.showInMarquee));
+const featured: typeof projects = [];
+for (let i = 0; featured.length < 12 && i < 12; i++) for (const list of bySector) if (list[i] && featured.length < 12) featured.push(list[i]);
+// contact channels shown in the Contact window (only non-empty ones, like on the contact page)
+const tg = channelLink(contacts.telegram, 'https://t.me/');
+const channels = [
+  { label: 'WhatsApp', value: contacts.whatsapp.display },
+  ...(tg ? [{ label: t(lang, 'contact.channels.telegram'), value: tg.label }] : []),
+  ...(contacts.email ? [{ label: t(lang, 'contact.channels.email'), value: contacts.email }] : []),
+];
+const steps = ta<{ title: string }[]>(lang, 'home.method.steps');
+const win = (k: string) => ({ title: t(lang, `home.windows.${k}.title`), path: t(lang, `home.windows.${k}.path`), caption: t(lang, `home.windows.${k}.caption`) });
+const W = {
+  projects: win('projects'), services: win('services'), team: win('team'), about: win('about'), contact: win('contact'),
+};
+---
+<ul class="hwins list-reset" role="list">
+  <li class="hwins__cell hwins__cell--projects reveal" style="--rd:0ms">
+    <a class="win hwin" href={url(lang, 'projects')} data-win="projects" data-cursor data-magnetic>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{W.projects.path}</span><span></span></div>
+      <div class="hwin__mini hwin__mini--projects" aria-hidden="true">
+        <div class="hwin__covers">
+          {[0, 1, 2].map((set) => (
+            <div class="hwin__covers-set" aria-hidden={set > 0 ? 'true' : undefined}>
+              {featured.map((p, i) => (
+                <div class="hwin__cover">
+                  <ProjectPhoto project={p} sizes="240px" thumb />
+                  <span class="hwin__mono">{p.monogram}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="hwin__foot"><span class="hwin__title h3">{W.projects.title}</span><span class="hwin__cap muted small">{W.projects.caption}</span><Icon name="arrow" class="hwin__arrow" /></div>
+    </a>
+  </li>
+
+  <li class="hwins__cell hwins__cell--services reveal" style="--rd:80ms">
+    <a class="win hwin" href={url(lang, 'services')} data-win="services" data-cursor data-magnetic>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{W.services.path}</span><span></span></div>
+      <div class="hwin__mini hwin__mini--services" aria-hidden="true">
+        <ol class="list-reset">{services.map((s) => <li><span class="muted">{s.index}</span> {pick(lang, s.title)}</li>)}</ol>
+      </div>
+      <div class="hwin__foot"><span class="hwin__title h3">{W.services.title}</span><span class="hwin__cap muted small">{W.services.caption}</span><Icon name="arrow" class="hwin__arrow" /></div>
+    </a>
+  </li>
+
+  <li class="hwins__cell hwins__cell--team reveal" style="--rd:160ms">
+    <a class="win hwin" href={url(lang, 'team')} data-win="team" data-cursor data-magnetic>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{W.team.path}</span><span></span></div>
+      <div class="hwin__mini hwin__mini--team" aria-hidden="true">
+        {team.slice(0, 6).map((m) => <Portrait member={m} sizes="120px" alt="" />)}
+      </div>
+      <div class="hwin__foot"><span class="hwin__title h3">{W.team.title}</span><span class="hwin__cap muted small">{W.team.caption}</span><Icon name="arrow" class="hwin__arrow" /></div>
+    </a>
+  </li>
+
+  <li class="hwins__cell hwins__cell--about reveal" style="--rd:240ms">
+    <a class="win hwin" href={url(lang, 'about')} data-win="about" data-cursor data-magnetic>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{W.about.path}</span><span></span></div>
+      <div class="hwin__mini hwin__mini--about" aria-hidden="true">
+        <ol class="list-reset">
+          {steps.map((s, i) => <li style={`--i:${i}`}><span class="label muted">0{i + 1}</span><span class="hwin__step">{s.title}</span></li>)}
+        </ol>
+      </div>
+      <div class="hwin__foot"><span class="hwin__title h3">{W.about.title}</span><span class="hwin__cap muted small">{W.about.caption}</span><Icon name="arrow" class="hwin__arrow" /></div>
+    </a>
+  </li>
+
+  <li class="hwins__cell hwins__cell--contact reveal" style="--rd:320ms">
+    <a class="win hwin" href={url(lang, 'contact')} data-win="contact" data-cursor data-magnetic>
+      <div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win__path label">{W.contact.path}</span><span></span></div>
+      <div class="hwin__mini hwin__mini--contact" aria-hidden="true">
+        <dl class="hwin__channels">
+          {channels.map((c, i) => (
+            <div class="hwin__channel">
+              <dt class="label muted">{c.label}</dt>
+              <dd class="hwin__num">{c.value}{i === channels.length - 1 && <i class="hwin__caret"></i>}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="hwin__foot"><span class="hwin__title h3">{W.contact.title}</span><span class="hwin__cap muted small">{W.contact.caption}</span><Icon name="arrow" class="hwin__arrow" /></div>
+    </a>
+  </li>
+</ul>

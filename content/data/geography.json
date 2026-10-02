@@ -1,0 +1,22 @@
+{
+  "regions": [
+    { "id": "eu", "label": { "ru": "Европа", "en": "Europe" } },
+    { "id": "ca", "label": { "ru": "Украина и Центральная Азия", "en": "Ukraine & Central Asia" } },
+    { "id": "apac", "label": { "ru": "Азиатско-Тихоокеанский регион", "en": "Asia-Pacific" } }
+  ],
+  "cities": [
+    { "id": "bielefeld", "region": "eu",   "city": { "ru": "Билефельд", "en": "Bielefeld" }, "country": { "ru": "Германия", "en": "Germany" },   "lat": 52.02, "lon": 8.53 },
+    { "id": "paris",     "region": "eu",   "city": { "ru": "Париж", "en": "Paris" },         "country": { "ru": "Франция", "en": "France" },    "lat": 48.86, "lon": 2.35 },
+    { "id": "barcelona", "region": "eu",   "city": { "ru": "Барселона", "en": "Barcelona" }, "country": { "ru": "Испания", "en": "Spain" },     "lat": 41.39, "lon": 2.17 },
+    { "id": "prague",    "region": "eu",   "city": { "ru": "Прага", "en": "Prague" },         "country": { "ru": "Чехия", "en": "Czechia" },     "lat": 50.08, "lon": 14.44 },
+    { "id": "milan",     "region": "eu",   "city": { "ru": "Милан", "en": "Milan" },          "country": { "ru": "Италия", "en": "Italy" },      "lat": 45.46, "lon": 9.19 },
+    { "id": "kyiv",      "region": "ca",   "city": { "ru": "Киев", "en": "Kyiv" },            "country": { "ru": "Украина", "en": "Ukraine" },   "lat": 50.45, "lon": 30.52 },
+    { "id": "odesa",     "region": "ca",   "city": { "ru": "Одесса", "en": "Odesa" },         "country": { "ru": "Украина", "en": "Ukraine" },   "lat": 46.48, "lon": 30.72 },
+    { "id": "astana",    "region": "ca",   "city": { "ru": "Астана", "en": "Astana" },        "country": { "ru": "Казахстан", "en": "Kazakhstan" }, "lat": 51.17, "lon": 71.45 },
+    { "id": "almaty",    "region": "ca",   "city": { "ru": "Алматы", "en": "Almaty" },        "country": { "ru": "Казахстан", "en": "Kazakhstan" }, "lat": 43.24, "lon": 76.89 },
+    { "id": "shymkent",  "region": "ca",   "city": { "ru": "Шымкент", "en": "Shymkent" },     "country": { "ru": "Казахстан", "en": "Kazakhstan" }, "lat": 42.34, "lon": 69.59 },
+    { "id": "shanghai",  "region": "apac", "city": { "ru": "Шанхай", "en": "Shanghai" },      "country": { "ru": "Китай", "en": "China" },       "lat": 31.23, "lon": 121.47 },
+    { "id": "tokyo",     "region": "apac", "city": { "ru": "Токио", "en": "Tokyo" },          "country": { "ru": "Япония", "en": "Japan" },      "lat": 35.68, "lon": 139.69 },
+    { "id": "bali",      "region": "apac", "city": { "ru": "Бали", "en": "Bali" },            "country": { "ru": "Индонезия", "en": "Indonesia" }, "lat": -8.34, "lon": 115.09 }
+  ]
+}

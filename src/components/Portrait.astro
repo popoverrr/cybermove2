@@ -1,0 +1,17 @@
+---
+// Team photo treatment: uniform 4:5 crop, eye lines normalised via photoFocus (see content.ts → portraitStyle),
+// grayscale → colour on hover/focus. Missing photo → monogram tile (never a generic avatar).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { portraitStyle, initials, type TeamMember } from '../lib/content';
+interface Props { member: TeamMember; sizes: string; eager?: boolean; class?: string; alt?: string }
+const { member, sizes, eager = false, class: cls = '', alt } = Astro.props;
+const photos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
+const img = member.photo ? photos[`/src/assets/team/${member.photo}`]?.default : undefined;
+---
+<div class:list={['portrait', !img && 'portrait--mono', cls]} style={portraitStyle(member)}>
+  {img
+    ? <Picture src={img} formats={['avif', 'webp']} widths={[320, 480, 800]} sizes={sizes} alt={alt ?? member.name}
+        loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" class="portrait__img" />
+    : <span class="portrait__mono" role="img" aria-label={alt ?? member.name}>{initials(member.name)}</span>}
+</div>

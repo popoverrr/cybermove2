@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import { t, ta, intlLocale, type Lang } from '../../lib/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const sections = ta<{ h: string; p: string }[]>(lang, 'privacy.sections');
+// {date} = build date (the policy must be reviewed by a lawyer — see REPORT.md).
+const date = new Intl.DateTimeFormat(intlLocale[lang], { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+---
+<Base lang={lang} page="privacy" path={`cybermove / ${t(lang, 'footer.privacy').toLowerCase()}`}>
+  <Block theme="light" label={t(lang, 'privacy.title')} first hero class="privacy">
+    <div class="container">
+      <div class="prose">
+        <h1 class="h2 reveal" data-split>{t(lang, 'privacy.title')}</h1>
+        <p class="label muted privacy__date reveal">{t(lang, 'privacy.updated', { date })}</p>
+        {sections.map((s, i) => (
+          <section class="prose__section reveal">
+            <h2 class="h3"><span class="label muted num">{String(i + 1).padStart(2, '0')}</span> {s.h}</h2>
+            <p>{s.p}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  </Block>
+</Base>

@@ -1,0 +1,27 @@
+---
+import ProjectPhoto from './ProjectPhoto.astro';
+import { t, pick, type Lang } from '../lib/i18n';
+import { sectors, type Project } from '../lib/content';
+interface Props { project: Project; lang: Lang; headingLevel?: 'h2' | 'h3'; index?: number }
+const { project: p, lang, headingLevel: H = 'h3', index = 99 } = Astro.props;
+const sector = sectors.find((s) => s.id === p.sector);
+const badge = p.type === 'experience' || p.type === 'own' ? t(lang, `projects.typeLabels.${p.type}`) : null;
+---
+<li class="pcard" data-sector={p.sector} data-id={p.id}>
+  <a class="pcard__link" href={`#p-${p.id}`} data-project={p.id} data-cursor>
+    <div class="pcard__cover">
+      <ProjectPhoto project={p} sizes="(min-width: 1024px) 440px, (min-width: 600px) 48vw, 100vw" eager={index === 0} priority={index === 0} />
+      <span class="pcard__chip" aria-hidden="true">
+        <span class="pcard__mono">{p.monogram}</span>
+        <span class="pcard__sector label">{sector ? pick(lang, sector.title) : ''}</span>
+      </span>
+    </div>
+    <div class="pcard__body">
+      <p class="sr-only">{sector ? pick(lang, sector.title) : ''}</p>
+      {badge && <p class="pcard__meta label"><span class="pcard__badge">{badge}</span></p>}
+      <H class="pcard__name h3">{pick(lang, p.name)}</H>
+      <p class="pcard__short muted small">{pick(lang, p.short)}</p>
+      <div class="tags pcard__tags">{pick(lang, p.tags).map((tg) => <span class="tag">{tg}</span>)}</div>
+    </div>
+  </a>
+</li>

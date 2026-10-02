@@ -1,0 +1,129 @@
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+  ul[role='list'], ol[role='list'], .list-reset { list-style: none; padding: 0; margin: 0; }
+  img, picture, svg, video { display: block; max-width: 100%; }
+  input, button, textarea, select { font: inherit; color: inherit; }
+  button { background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  [hidden] { display: none !important; }
+}
+
+@layer base {
+  html {
+    background: var(--c-space);
+    scroll-padding-top: calc(var(--header-h) + var(--s-4));
+    overflow-x: clip;
+  }
+  body {
+    min-height: 100svh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-text);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  h1, h2, h3, .h1, .h2, .h3, .mega {
+    font-family: var(--font-display);
+    font-weight: 560;
+    text-wrap: balance;
+    hyphens: manual;
+    overflow-wrap: break-word;
+  }
+  /* sizes are capped by viewport width so the longest Russian words («Синхронизируем»,
+     «конфиденциальности») fit whole even at 320 px; no effect from ~390 px up */
+  h1, .h1 { font-size: min(var(--fs-h1), 11.5vw); line-height: 0.96; letter-spacing: -0.035em; max-width: 11em; }
+  h2, .h2 { font-size: min(var(--fs-h2), 8.8vw); line-height: 1.0; letter-spacing: -0.035em; max-width: 10.1em; }
+  h3, .h3 { font-size: var(--fs-h3); line-height: 1.12; letter-spacing: -0.02em; font-weight: 520; }
+  .mega { font-size: var(--fs-mega); line-height: 0.9; letter-spacing: -0.045em; font-weight: 600; }
+  @media (max-width: 599px) {
+    h2, .h2 { letter-spacing: -0.028em; }
+  }
+  p { text-wrap: pretty; hyphens: manual; }
+  .lead { font-size: var(--fs-lead); line-height: 1.4; max-width: 21.3em; color: var(--fg); letter-spacing: -0.005em; }
+  .muted { color: var(--fg-muted); }
+  .small { font-size: var(--fs-small); }
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+  h2.label, h3.label { max-width: none; text-wrap: wrap; font-weight: 400; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter-x);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .skip {
+    position: fixed; left: var(--s-4); top: var(--s-4); z-index: 100;
+    padding: var(--s-3) var(--s-5); border-radius: var(--radius-pill);
+    background: var(--accent); color: var(--accent-ink);
+    transform: translateY(-200%);
+  }
+  .skip:focus { transform: none; }
+
+  .sr-only {
+    position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  main { display: block; background: var(--bg); }
+
+  /* ── Blocks: the dark/light rhythm ── */
+  .block {
+    position: relative;
+    isolation: isolate;
+    background: var(--bg-other);
+    color: var(--fg);
+    padding-block: var(--block-pad);
+  }
+  .block::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background-color: var(--bg);
+    background-image: var(--texture);
+  }
+  .block[data-flow='continue'],
+  .block--first { background: var(--bg); }
+  .block--hero { padding-top: calc(var(--header-h) + clamp(48px, 9vw, 120px)); }
+  .block--tight { padding-block: clamp(48px, 7vw, 96px); }
+  .block[data-flow='continue'] { padding-top: 0; }
+
+  .block-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4);
+    padding-bottom: var(--s-4);
+    margin-bottom: clamp(var(--s-6), 5vw, var(--s-8));
+    border-bottom: var(--hairline) solid var(--line);
+    color: var(--fg-muted);
+  }
+  .block-head__label { color: var(--fg); }
+
+  .stack > * + * { margin-top: var(--flow, var(--s-5)); }
+  .measure { max-width: 33.6em; }
+}
+
+@layer utilities {
+  .mt-0 { margin-top: 0 !important; }
+  .nowrap { white-space: nowrap; }
+}

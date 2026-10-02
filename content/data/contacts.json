@@ -1,0 +1,11 @@
+{
+  "_comment": "Only non-null channels are rendered. whatsapp is required. formEmail enables the PHP mail endpoint.",
+  "whatsapp": { "number": "77018251028", "display": "+7 701 825 10 28", "url": "https://wa.me/77018251028" },
+  "phone": { "number": "+77018251028", "display": "+7 701 825 10 28" },
+  "email": "cybermove@gmail.com",
+  "formEmail": null,
+  "telegram": { "handle": "77018251028", "url": "https://t.me/77018251028" },
+  "instagram": null,
+  "linkedin": null,
+  "address": null
+}

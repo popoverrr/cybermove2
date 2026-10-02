@@ -1,0 +1,15 @@
+---
+// Signature element: a window with a title bar (three dots, mono path, optional ×).
+interface Props { path: string; class?: string; closable?: boolean; closeLabel?: string; as?: string; [key: string]: unknown }
+const { path, class: cls = '', closable = false, closeLabel = '', as: Tag = 'div', ...rest } = Astro.props;
+---
+<Tag class:list={['win', cls]} {...rest}>
+  <div class="win__bar">
+    <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="win__path label">{path}</span>
+    {closable
+      ? <button type="button" class="win__close" data-close aria-label={closeLabel}><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.5"/></svg></button>
+      : <span class="win__spacer" aria-hidden="true"></span>}
+  </div>
+  <div class="win__body"><slot /></div>
+</Tag>

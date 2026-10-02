@@ -1,0 +1,123 @@
+---
+// Interaction #3 (home): sectors list → the brand names of the active sector morph in.
+// Sector names are real links to /projects/?sector=<id> (desktop: hover previews, click navigates;
+// touch: first tap previews). Every brand name links to its project window /projects/?p=<id>.
+import { t, pick, url, type Lang } from '../lib/i18n';
+import { sectors, projects, projectsBySector } from '../lib/content';
+interface Props { lang: Lang; label: string }
+const { lang, label } = Astro.props;
+const first = sectors[0].id;
+const sectorHref = (id: string) => url(lang, 'projects', `?sector=${id}`);
+---
+<div class="sm" data-sector-morph data-autoplay>
+  <nav class="sm__list" aria-label={label}>
+    <i class="sm__bar" aria-hidden="true"></i>
+    {sectors.map((s, i) => (
+      <a class:list={['sm__tab', i === 0 && 'is-active']} href={sectorHref(s.id)} data-sector={s.id}
+        aria-current={i === 0 ? 'true' : undefined} aria-controls="sm-panel">
+        <span class="sm__title">{pick(lang, s.title)}</span>
+        <span class="sm__count label num" data-count={projectsBySector(s.id).length} data-pad="2">{String(projectsBySector(s.id).length).padStart(2, '0')}</span>
+      </a>
+    ))}
+  </nav>
+  <div class="sm__panel" id="sm-panel" aria-live="polite">
+    <div class="sm__lines">
+      {sectors.map((s, i) => <p class:list={['sm__line muted', i === 0 && 'is-on']} data-sector={s.id}>{pick(lang, s.line)}</p>)}
+    </div>
+    <ul class="sm__names list-reset">
+      {projects.map((p) => (
+        <li class:list={['sm__name', p.sector !== first && 'is-off']} data-sector={p.sector}>
+          <a class="sm__name-link" href={url(lang, 'projects', `?p=${p.id}`)}>{pick(lang, p.name)}</a><span class="sm__sep" aria-hidden="true"> · </span>
+        </li>
+      ))}
+    </ul>
+    <a class="link link--arrow sm__all" href={sectorHref(first)} data-sector-all>{t(lang, 'home.sectors.allLink')}</a>
+  </div>
+</div>
+
+<script>
+  import { flipSwap } from '../scripts/core/flip';
+  import { finePointer } from '../scripts/core/motion';
+
+  document.querySelectorAll<HTMLElement>('[data-sector-morph]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('.sm__tab')];
+    const names = [...root.querySelectorAll<HTMLElement>('.sm__name')];
+    const lines = [...root.querySelectorAll<HTMLElement>('.sm__line')];
+    const all = root.querySelector<HTMLAnchorElement>('[data-sector-all]')!;
+    const bar = root.querySelector<HTMLElement>('.sm__bar')!;
+    let active = tabs[0].dataset.sector!;
+    let interacted = false;
+
+    const markLast = () => {
+      const vis = names.filter((n) => !n.classList.contains('is-off'));
+      names.forEach((n) => n.classList.toggle('is-last', n === vis[vis.length - 1]));
+    };
+    const moveBar = (tab: HTMLElement) => {
+      bar.style.transform = `translateY(${tab.offsetTop}px)`;
+      bar.style.height = `${tab.offsetHeight}px`;
+    };
+
+    function select(id: string) {
+      if (id === active) return;
+      active = id;
+      tabs.forEach((t) => {
+        const on = t.dataset.sector === id;
+        t.classList.toggle('is-active', on);
+        if (on) { t.setAttribute('aria-current', 'true'); moveBar(t); } else t.removeAttribute('aria-current');
+      });
+      all.setAttribute('href', tabs.find((t) => t.dataset.sector === id)!.getAttribute('href')!);
+      lines.forEach((l) => l.classList.toggle('is-on', l.dataset.sector === id));
+      flipSwap(names, (el) => el.dataset.sector === id).then(markLast);
+      markLast();
+      // keep the active chip visible in the horizontal chip row (mobile) without scrolling the page
+      const t = tabs.find((x) => x.dataset.sector === id);
+      const list = t?.parentElement;
+      if (t && list && list.scrollWidth > list.clientWidth) list.scrollTo({ left: t.offsetLeft - 16, behavior: 'smooth' });
+    }
+
+    const stop = () => { interacted = true; };
+    let intent = 0;
+    tabs.forEach((t) => {
+      t.addEventListener('click', (e) => {
+        stop();
+        // touch: the first tap only previews the sector; the "All projects" link navigates
+        if (!finePointer()) { e.preventDefault(); select(t.dataset.sector!); }
+        // desktop: the link navigates to /projects/?sector=<id>
+      });
+      t.addEventListener('focus', () => { if (t.matches(':focus-visible')) { stop(); select(t.dataset.sector!); } });
+      if (finePointer()) {
+        t.addEventListener('pointerenter', () => {
+          clearTimeout(intent);
+          intent = window.setTimeout(() => { stop(); select(t.dataset.sector!); }, 120);
+        });
+        t.addEventListener('pointerleave', () => clearTimeout(intent));
+      }
+    });
+    root.querySelectorAll('.sm__name-link, [data-sector-all]').forEach((a) => a.addEventListener('click', stop));
+
+    // Autoplay while in view until the first interaction.
+    let hover = false, inView = false, timer = 0;
+    root.addEventListener('pointerenter', () => (hover = true));
+    root.addEventListener('pointerleave', () => (hover = false));
+    root.addEventListener('pointerdown', stop);
+    const tick = () => {
+      if (interacted) return;
+      if (inView && !hover && !root.contains(document.activeElement) && !document.hidden) {
+        const i = tabs.findIndex((t) => t.dataset.sector === active);
+        select(tabs[(i + 1) % tabs.length].dataset.sector!);
+      }
+      timer = window.setTimeout(tick, 3500);
+    };
+    if (root.hasAttribute('data-autoplay')) {
+      new IntersectionObserver(([e]) => {
+        inView = e.isIntersecting;
+        clearTimeout(timer);
+        if (inView && !interacted) timer = window.setTimeout(tick, 3500);
+      }, { threshold: 0.35 }).observe(root);
+    }
+
+    markLast();
+    requestAnimationFrame(() => moveBar(tabs[0]));
+    window.addEventListener('resize', () => moveBar(tabs.find((t) => t.dataset.sector === active)!));
+  });
+</script>

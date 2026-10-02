@@ -1,0 +1,14 @@
+---
+// Minimal line icons (1.5px stroke, currentColor). No icon font.
+interface Props { name: 'arrow' | 'arrow-up' | 'arrow-ne' | 'plus' | 'close' | 'whatsapp' | 'minus'; size?: number; class?: string }
+const { name, size = 16, class: cls = '' } = Astro.props;
+---
+<svg class:list={['icon', `icon--${name}`, cls]} width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+  {name === 'arrow' && <path d="M1.5 8h12M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>}
+  {name === 'arrow-up' && <path d="M8 14.5v-12M3.5 7 8 2.5 12.5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>}
+  {name === 'arrow-ne' && <path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>}
+  {name === 'plus' && <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5"/>}
+  {name === 'minus' && <path d="M2 8h12" stroke="currentColor" stroke-width="1.5"/>}
+  {name === 'close' && <path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.5"/>}
+  {name === 'whatsapp' && <path d="M8 1.25a6.7 6.7 0 0 0-5.8 10.1L1.25 14.75l3.5-.92A6.7 6.7 0 1 0 8 1.25Zm0 12.2c-1.03 0-2.03-.28-2.9-.8l-.2-.12-2.08.55.56-2.03-.14-.21A5.5 5.5 0 1 1 8 13.45Zm3.02-4.12c-.17-.08-.98-.48-1.13-.54-.15-.05-.26-.08-.37.09-.11.16-.43.53-.52.64-.1.11-.2.12-.36.04a4.5 4.5 0 0 1-2.25-1.97c-.17-.29.17-.27.48-.9.05-.1.03-.2-.01-.28-.04-.08-.37-.9-.51-1.23-.13-.32-.27-.28-.37-.28h-.32a.6.6 0 0 0-.44.2c-.15.17-.58.57-.58 1.38 0 .81.6 1.6.68 1.7.08.12 1.17 1.79 2.84 2.5 1.06.46 1.47.5 2 .42.32-.05.98-.4 1.12-.79.14-.39.14-.72.1-.79-.04-.07-.15-.11-.32-.19Z" fill="currentColor"/>}
+</svg>

@@ -1,0 +1,9 @@
+[
+  { "id": "personal", "title": { "ru": "Личные бренды и публичные проекты", "en": "Personal brands & public figures" }, "line": { "ru": "Спортсмены, медиа-персоны и политические кампании.", "en": "Athletes, media personalities and political campaigns." } },
+  { "id": "experts",  "title": { "ru": "Эксперты и образование", "en": "Experts & education" }, "line": { "ru": "Курсы, запуски и чат-боты для экспертов и блогеров.", "en": "Courses, launches and chatbots for experts and creators." } },
+  { "id": "retail",   "title": { "ru": "Fashion, ритейл и e-commerce", "en": "Fashion, retail & e-commerce" }, "line": { "ru": "Одежда, оптика, сети магазинов и онлайн-продажи.", "en": "Apparel, eyewear, store chains and online sales." } },
+  { "id": "horeca",   "title": { "ru": "HoReCa и wellness", "en": "Hospitality & wellness" }, "line": { "ru": "Рестораны, винные бары, SPA, фитнес и барбершопы.", "en": "Restaurants, wine bars, spas, fitness and barbershops." } },
+  { "id": "media",    "title": { "ru": "Медиа, реклама и события", "en": "Media, advertising & events" }, "line": { "ru": "Радио, рекламные агентства, выставки и fashion-события.", "en": "Radio, ad agencies, exhibitions and fashion events." } },
+  { "id": "b2b",      "title": { "ru": "B2B, промышленность и энергетика", "en": "B2B, industry & energy" }, "line": { "ru": "Инженерные системы, производство, спецтехника и сети АЗК.", "en": "Engineering systems, manufacturing, equipment and fuel retail." } },
+  { "id": "tech",     "title": { "ru": "Технологии и стартапы", "en": "Technology & startups" }, "line": { "ru": "VR-платформа и продуктовые стартапы — от идеи до концепции.", "en": "A VR platform and product startups — from idea to concept." } }
+]

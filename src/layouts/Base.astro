@@ -1,0 +1,149 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import '../styles/pages.css';
+import '../styles/transitions.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { t, url, asset, langs, defaultLang, ogLocale, otherLang, type Lang, type PageKey } from '../lib/i18n';
+import { company, contacts, cities } from '../lib/content';
+import fontCyr from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-cyrillic-wght-normal.woff2?url';
+import fontLat from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+import textCyr from '../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
+import textLat from '../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+
+interface Props {
+  lang: Lang;
+  page: PageKey | 'notFound';
+  /** mono path shown in the window bar during page transitions */
+  path: string;
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { lang, page, path, jsonLd = [], noindex = false } = Astro.props;
+// Origin only: page URLs from url()/asset() already carry the base path.
+const site = Astro.site!.origin;
+const isNotFound = page === 'notFound';
+const hrefFor = (l: Lang) => (isNotFound ? url(l, 'home') : url(l, page as PageKey));
+const canonical = site + (isNotFound ? asset('404.html') : hrefFor(lang));
+const altHref = hrefFor(otherLang(lang));
+const title = t(lang, `meta.${page}.title`);
+const description = t(lang, `meta.${page}.description`);
+const ogImage = site + asset('og.png');
+
+const sameAs = [contacts.instagram, contacts.telegram, contacts.linkedin]
+  .map((v) => (typeof v === 'string' ? v : v && typeof v === 'object' && 'url' in v ? v.url : null))
+  .filter((v): v is string => !!v && /^https?:/.test(v));
+const areaServed = [...new Set(cities.map((c) => c.country.en))].map((name) => ({ '@type': 'Country', name }));
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: company.brand,
+  legalName: company.legalName,
+  url: site + url(lang, 'home'),
+  logo: site + asset('logo.svg'),
+  slogan: company.tagline[lang],
+  contactPoint: [{
+    '@type': 'ContactPoint',
+    telephone: contacts.phone?.number ?? `+${contacts.whatsapp.number}`,
+    contactType: 'sales',
+    availableLanguage: ['Russian', 'English'],
+    url: contacts.whatsapp.url,
+  }],
+  areaServed,
+  ...(sameAs.length ? { sameAs } : {}),
+  ...(contacts.email ? { email: contacts.email } : {}),
+};
+const ld = [org, ...jsonLd];
+---
+<!doctype html>
+<html lang={lang} dir="ltr" data-page={page}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <link rel="canonical" href={canonical} />
+  {langs.map((l) => <link rel="alternate" hreflang={l} href={site + hrefFor(l)} />)}
+  <link rel="alternate" hreflang="x-default" href={site + hrefFor(defaultLang)} />
+  <meta name="theme-color" content="#08090B" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="view-transition" content="same-origin" />
+
+  {lang === 'ru' && <link rel="preload" href={fontCyr} as="font" type="font/woff2" crossorigin fetchpriority="high" />}
+  <link rel="preload" href={fontLat} as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  {lang === 'ru' && <link rel="preload" href={textCyr} as="font" type="font/woff2" crossorigin />}
+  <link rel="preload" href={textLat} as="font" type="font/woff2" crossorigin />
+
+  <link rel="icon" href={asset('favicon.ico')} sizes="32x32" />
+  <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
+  <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+  <link rel="manifest" href={asset('site.webmanifest')} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={company.brand} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content={ogLocale[lang]} />
+  {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <script is:inline>
+    /* Boot: js flag, view-transition support, and the incoming side of the window transition
+       (pagereveal must be registered before first render, so it lives here, not in a module). */
+    (function (d, w) {
+      var h = d.documentElement, ss;
+      h.classList.add('js');
+      try { ss = w.sessionStorage; } catch (e) {}
+      if (!('onpagereveal' in w && w.CSS && CSS.supports('view-transition-name: a'))) { h.classList.add('no-vt'); return; }
+      w.addEventListener('pagereveal', function (e) {
+        var dir = ss && ss.getItem('cm-dir'), win = ss && ss.getItem('cm-win');
+        if (ss) { ss.removeItem('cm-dir'); ss.removeItem('cm-win'); }
+        var vt = e.viewTransition;
+        if (!vt) return;
+        vt.types.add(dir === 'back' ? 'back' : 'forward');
+        if (win) {
+          try {
+            var r = JSON.parse(win);
+            ['t', 'r', 'b', 'l'].forEach(function (k) { h.style.setProperty('--w' + k, r[k] + 'px'); });
+            vt.types.add('win');
+          } catch (err) {}
+        }
+        if (!w.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          h.classList.add('vt-arrive');
+          setTimeout(function () { h.classList.remove('vt-arrive'); }, 1100);
+        }
+      });
+    })(document, window);
+  </script>
+  {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+
+  <!--
+    Analytics slot (none by default). If Yandex Metrica / Google Analytics is added here,
+    a cookie-consent banner becomes legally required, and the CSP in public/.htaccess must allow its domains.
+  -->
+</head>
+<body>
+  <a class="skip" href="#main">{t(lang, 'nav.skip')}</a>
+  <span id="top"></span>
+  <Header lang={lang} page={page} altHref={altHref} />
+  <main id="main" data-path={path} tabindex="-1">
+    <div class="page-bar" aria-hidden="true"><span class="win__dots"><i></i><i></i><i></i></span><span class="label">{path}</span></div>
+    <slot />
+  </main>
+  <Footer lang={lang} altHref={altHref} />
+  <div class="cursor-label label" aria-hidden="true"><span>{t(lang, 'common.open')} →</span></div>
+  <script>
+    import '../scripts/main';
+  </script>
+</body>
+</html>

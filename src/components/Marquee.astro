@@ -1,0 +1,12 @@
+---
+interface Props { rows: string[][]; label?: string }
+const { rows, label } = Astro.props;
+---
+<div class="marquee" data-marquee aria-label={label} role={label ? 'group' : undefined}>
+  {rows.map((items, i) => (
+    <div class:list={['marquee__row', i % 2 === 1 && 'marquee__row--rev']}>
+      <ul class="marquee__track list-reset">{items.map((n) => <li class="marquee__item">{n}</li>)}</ul>
+      <ul class="marquee__track list-reset" aria-hidden="true">{items.map((n) => <li class="marquee__item">{n}</li>)}</ul>
+    </div>
+  ))}
+</div>

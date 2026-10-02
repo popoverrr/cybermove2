@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.astro/
+test-results/
+playwright-report/
+cybermove-dist.zip
+.env
+.env.*
+!.env.example
+
+# Internal, not for the public repository
+reference/
+REPORT.md
+README_ДЛЯ_АРТЕМА.md
+
+# kit docs (private)
+docs/
+PROMPT.md
+CLAUDE.md
+qa/

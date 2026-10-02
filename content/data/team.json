@@ -1,0 +1,47 @@
+{
+  "_comment": "photo = file name in src/assets/team/ (downloaded by scripts/fetch-assets.mjs). photoFocus = CSS object-position, tune after looking at the photos. Names are kept in Latin in both languages as on the old site until the owner confirms Cyrillic spelling.",
+  "members": [
+    {
+      "id": "yana-petechuk", "name": "Yana Petechuk", "photo": "member-1.jpg", "photoFocus": "50% 27%",
+      "role": { "ru": "Основатель · Стратегия и рост", "en": "Founder · Strategy & Growth" },
+      "focus": { "ru": "Стратегия роста · Запуск брендов", "en": "Growth strategy · Brand launches" },
+      "bio": { "ru": "Более 12 лет в маркетинге, брендинге и операционном управлении — от рекламных агентств и fashion-проектов до международных запусков и e-commerce.", "en": "12+ years in marketing, branding and operations — from ad agencies and fashion projects to international launches and e-commerce." },
+      "tags": { "ru": ["Стратегия роста", "Запуск бренда", "Маркетинг", "Операции"], "en": ["Growth strategy", "Brand launch", "Marketing", "Operations"] }
+    },
+    {
+      "id": "andrii-kravets", "name": "Andrii Kravets", "photo": "member-2.jpg", "photoFocus": "50% 34%",
+      "role": { "ru": "Партнёр · Операции и консалтинг", "en": "Partner · Operations & Consulting" },
+      "focus": { "ru": "Операционный консалтинг · Процессы", "en": "Operations consulting · Processes" },
+      "bio": { "ru": "Выстраивает операционную систему бизнеса: процессы, метрики, управление командами и подрядчиками, контроль исполнения.", "en": "Builds the operating system of a business: processes, metrics, team and vendor management, delivery control." },
+      "tags": { "ru": ["Бизнес-аудит", "Проектирование процессов", "Управление проектами", "Консалтинг"], "en": ["Business audit", "Process design", "Project management", "Consulting"] }
+    },
+    {
+      "id": "daniel-rakhimov", "name": "Daniel Rakhimov", "photo": "member-3.jpg", "photoFocus": "50% 31%",
+      "role": { "ru": "Руководитель направления AI и автоматизации", "en": "Head of AI & Automation" },
+      "focus": { "ru": "AI-агенты · Автоматизация · CRM", "en": "AI agents · Automation · CRM" },
+      "bio": { "ru": "Проектирует AI-агентов и автоматизированные контуры продаж, поддержки и отчётности. Интегрирует CRM, аналитику и внутренние системы.", "en": "Designs AI agents and automated sales, support and reporting flows. Integrates CRM, analytics and internal systems." },
+      "tags": { "ru": ["AI-агенты", "Автоматизация", "CRM", "Интеграции"], "en": ["AI agents", "Automation", "CRM", "Integrations"] }
+    },
+    {
+      "id": "alina-moroz", "name": "Alina Moroz", "photo": "member-4.jpg", "photoFocus": "50% 26%",
+      "role": { "ru": "Директор по digital и performance", "en": "Digital & Performance Director" },
+      "focus": { "ru": "Digital-стратегия · E-commerce", "en": "Digital strategy · E-commerce" },
+      "bio": { "ru": "Отвечает за digital-присутствие и performance: трафик, воронки, e-commerce, аналитику и рост онлайн-продаж.", "en": "Owns digital presence and performance: traffic, funnels, e-commerce, analytics and online sales growth." },
+      "tags": { "ru": ["Digital-стратегия", "Performance", "E-commerce", "Аналитика"], "en": ["Digital strategy", "Performance", "E-commerce", "Analytics"] }
+    },
+    {
+      "id": "marat-suleimenov", "name": "Marat Suleimenov", "photo": "member-5.jpg", "photoFocus": "50% 27%",
+      "role": { "ru": "Развитие бизнеса · Тендеры", "en": "Business Development · Tenders" },
+      "focus": { "ru": "Развитие бизнеса · Тендеры", "en": "Business development · Tenders" },
+      "bio": { "ru": "Развивает партнёрства и B2B-направления. Ведёт тендеры: документация, стратегия участия, коммуникация с заказчиками.", "en": "Develops partnerships and B2B lines. Runs tenders: documentation, bidding strategy, communication with buyers." },
+      "tags": { "ru": ["Развитие бизнеса", "Тендеры", "B2B", "Партнёрства"], "en": ["Business development", "Tenders", "B2B", "Partnerships"] }
+    },
+    {
+      "id": "olena-bondar", "name": "Olena Bondar", "photo": "member-6.jpg", "photoFocus": "50% 27%",
+      "role": { "ru": "Юрист", "en": "Legal Counsel" },
+      "focus": { "ru": "Юридическое сопровождение · Договоры", "en": "Legal support · Contracts" },
+      "bio": { "ru": "Сопровождает сделки, ведёт договорную базу и корпоративные вопросы, защищает интересы клиента в проектах.", "en": "Supports deals, maintains the contract base and corporate matters, and protects the client's interests in every project." },
+      "tags": { "ru": ["Юридическое сопровождение", "Договоры", "Корпоративное право", "Комплаенс"], "en": ["Legal support", "Contracts", "Corporate", "Compliance"] }
+    }
+  ]
+}

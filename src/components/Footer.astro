@@ -1,0 +1,52 @@
+---
+import { t, url, pick, otherLang, type Lang } from '../lib/i18n';
+import { services, contacts, company, channelLink } from '../lib/content';
+import BendText from './BendText.astro';
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; altHref: string }
+const { lang, altHref } = Astro.props;
+const other = otherLang(lang);
+const year = new Date().getFullYear();
+const tg = channelLink(contacts.telegram, 'https://t.me/');
+const ig = channelLink(contacts.instagram, 'https://instagram.com/');
+const li = channelLink(contacts.linkedin, 'https://www.linkedin.com/');
+const companyLinks = (['projects', 'team', 'about', 'contact'] as const).map((k) => ({ href: url(lang, k), text: t(lang, `nav.${k}`) }));
+---
+<footer class="ftr" data-theme="dark" data-label="CYBERMOVE">
+  <BendText lang={lang} />
+  <div class="container ftr__grid">
+    <div class="ftr__brand">
+      <a href={url(lang, 'home')} class="ftr__wm" aria-label="CYBERMOVE"><Wordmark /></a>
+      <p class="muted ftr__tagline">{t(lang, 'footer.tagline')}</p>
+    </div>
+    <nav class="ftr__col" aria-labelledby="ftr-services">
+      <h2 class="label muted" id="ftr-services">{t(lang, 'footer.servicesTitle')}</h2>
+      <ul class="list-reset">
+        {services.map((s) => <li><a class="link" href={url(lang, 'services', `#${s.id}`)}>{pick(lang, s.title)}</a></li>)}
+      </ul>
+    </nav>
+    <nav class="ftr__col" aria-labelledby="ftr-company">
+      <h2 class="label muted" id="ftr-company">{t(lang, 'footer.companyTitle')}</h2>
+      <ul class="list-reset">
+        {companyLinks.map((l) => <li><a class="link" href={l.href}>{l.text}</a></li>)}
+      </ul>
+    </nav>
+    <div class="ftr__col">
+      <h2 class="label muted">{t(lang, 'footer.contactTitle')}</h2>
+      <ul class="list-reset">
+        <li><a class="link ftr__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" size={16} /><span>WhatsApp · {contacts.whatsapp.display}</span></a></li>
+        {contacts.email && <li><a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a></li>}
+        {tg && <li><a class="link" href={tg.href} target="_blank" rel="noopener">Telegram · {tg.label}</a></li>}
+        {ig && <li><a class="link" href={ig.href} target="_blank" rel="noopener">Instagram · {ig.label}</a></li>}
+        {li && <li><a class="link" href={li.href} target="_blank" rel="noopener">LinkedIn</a></li>}
+        <li><a class="link label" href={altHref} hreflang={other} lang={other} data-lang-switch>{t(lang, 'nav.lang')} · {t(lang, 'nav.langLabel')}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container ftr__bottom label muted">
+    <span>© {year} {company.legalName}</span>
+    <a class="link" href={url(lang, 'privacy')}>{t(lang, 'footer.privacy')}</a>
+    <a class="link ftr__top" href="#top"><span>{t(lang, 'common.backToTop')}</span><Icon name="arrow-up" size={12} /></a>
+  </div>
+</footer>

@@ -1,0 +1,41 @@
+---
+// Generated project cover: huge monogram cropped by the edge + a deterministic line pattern (hash(id) % 3).
+import { hash } from '../lib/content';
+interface Props { id: string; monogram: string; class?: string }
+const { id, monogram, class: cls = '' } = Astro.props;
+const W = 400, H = 300;
+const h = hash(id);
+const kind = h % 3;
+const r = (n: number) => ((h >>> n) & 0xff) / 255; // deterministic 0..1 values from the hash
+const els: string[] = [];
+if (kind === 0) {
+  // parallel lines at a seeded angle
+  const step = 10 + Math.round(r(3) * 8);
+  const ang = [-30, 0, 30, 60, 90, -60][Math.floor(r(11) * 6)];
+  const rad = (ang * Math.PI) / 180;
+  const cos = Math.cos(rad), sin = Math.sin(rad);
+  const L = 700;
+  for (let k = -L / 2; k <= L / 2; k += step) {
+    const cx = W / 2 + k * -sin, cy = H / 2 + k * cos;
+    els.push(`<line x1="${(cx - cos * L).toFixed(0)}" y1="${(cy - sin * L).toFixed(0)}" x2="${(cx + cos * L).toFixed(0)}" y2="${(cy + sin * L).toFixed(0)}"/>`);
+  }
+} else if (kind === 1) {
+  // concentric arcs from a seeded corner
+  const corners = [[0, 0], [W, 0], [W, H], [0, H]];
+  const [ox, oy] = corners[Math.floor(r(5) * 4)];
+  const step = 16 + Math.round(r(13) * 10);
+  for (let rr = step; rr < 560; rr += step) els.push(`<circle cx="${ox}" cy="${oy}" r="${rr}"/>`);
+} else {
+  // dot grid
+  const step = 16 + Math.round(r(7) * 8);
+  for (let y = step / 2; y < H; y += step) for (let x = step / 2; x < W; x += step) els.push(`<circle cx="${x}" cy="${y}" r="1.4" class="dot"/>`);
+}
+const len = [...monogram].length;
+const fs = len <= 2 ? 250 : len === 3 ? 200 : len === 4 ? 165 : 140;
+const tx = -8 - Math.round(r(17) * 20);
+const ty = H - 18 + Math.round(r(21) * 40);
+---
+<svg class:list={['cover', `cover--${kind}`, cls]} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <g class="cover__pattern" set:html={els.join('')} />
+  <text class="cover__mono" x={tx} y={ty} font-size={fs}>{monogram}</text>
+</svg>

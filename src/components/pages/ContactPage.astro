@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import Icon from '../Icon.astro';
+import Marquee from '../Marquee.astro';
+import ContactForm from '../ContactForm.astro';
+import { t, pick, type Lang } from '../../lib/i18n';
+import { contacts, cities, channelLink } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = (k: string) => t(lang, `contact.${k}`);
+const tg = channelLink(contacts.telegram, 'https://t.me/');
+const ig = channelLink(contacts.instagram, 'https://instagram.com/');
+const li = channelLink(contacts.linkedin, 'https://www.linkedin.com/');
+const address = contacts.address ? (typeof contacts.address === 'string' ? contacts.address : pick(lang, contacts.address)) : null;
+const cityNames = cities.map((x) => `${pick(lang, x.city)} · ${pick(lang, x.country)}`);
+---
+<Base lang={lang} page="contact" path={t(lang, 'home.windows.contact.path')}>
+  <Block theme="light" label={c('hero.label')} first hero class="contact-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{c('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{c('hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{c('hero.lead')}</p>
+
+      <div class="contact">
+        <div class="contact__channels reveal">
+          <h2 class="label muted">{c('channels.title')}</h2>
+          <a class="contact__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener" data-magnetic>
+            <span class="contact__wa-icon"><Icon name="whatsapp" size={22} /></span>
+            <span class="contact__wa-num">{contacts.whatsapp.display}</span>
+            <Icon name="arrow-ne" size={20} class="contact__wa-arrow" />
+          </a>
+          <p class="muted small">{c('channels.whatsappNote')}</p>
+          {(contacts.email || tg || ig || li || address) && (
+            <dl class="contact__list">
+              {contacts.email && <div><dt class="label muted">{c('channels.email')}</dt><dd><a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a></dd></div>}
+              {tg && <div><dt class="label muted">{c('channels.telegram')}</dt><dd><a class="link" href={tg.href} target="_blank" rel="noopener">{tg.label}</a></dd></div>}
+              {ig && <div><dt class="label muted">{c('channels.instagram')}</dt><dd><a class="link" href={ig.href} target="_blank" rel="noopener">{ig.label}</a></dd></div>}
+              {li && <div><dt class="label muted">{c('channels.linkedin')}</dt><dd><a class="link" href={li.href} target="_blank" rel="noopener">{li.label}</a></dd></div>}
+              {address && <div><dt class="label muted">{c('channels.address')}</dt><dd>{address}</dd></div>}
+            </dl>
+          )}
+        </div>
+        <div class="contact__form reveal" style="--rd:120ms">
+          <ContactForm lang={lang} />
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={c('geo.label')} tight class="contact-geo">
+    <div class="container"><p class="label muted contact-geo__label">{c('geo.label')}</p></div>
+    <Marquee rows={[cityNames]} label={c('geo.label')} />
+  </Block>
+</Base>

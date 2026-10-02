@@ -1,0 +1,68 @@
+# CYBERMOVE — Apache config for Plesk (static build). Generated from public/.htaccess by `npm run build`.
+# The CSP line contains the hash of the inline boot script; it is filled in automatically during the build.
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+DirectorySlash On
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # ── Force HTTPS (works behind Plesk's nginx proxy too) ──
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ── Single host. Default: keep whatever host is used (no www rule).
+  # To force non-www, uncomment:
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  # To force www instead, uncomment:
+  # RewriteCond %{HTTP_HOST} !^www\. [NC]
+  # RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ── Old-site URLs → new pages (301) ──
+  RewriteRule ^approach/?$ /about/ [L,R=301,NC]
+  RewriteRule ^partners/?$ /projects/ [L,R=301,NC]
+  RewriteRule ^(marketing|brand-development)/?$ /services/ [L,R=301,NC]
+  RewriteRule ^services/.+$ /services/ [L,R=301,NC]
+  RewriteRule ^en/services/.+$ /en/services/ [L,R=301,NC]
+
+  # ── Trailing slash for known pages ──
+  RewriteRule ^(en/)?(services|projects|team|about|contact|privacy)$ /$1$2/ [L,R=301]
+  RewriteRule ^en$ /en/ [L,R=301]
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
+  AddDefaultCharset utf-8
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript text/javascript application/json application/xml image/svg+xml application/manifest+json
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Caching: hashed build assets and fonts forever, HTML always revalidated
+  <FilesMatch "\.(js|css|woff2|avif|webp|jpg|jpeg|png|svg|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <If "%{REQUEST_URI} =~ m#^/_astro/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <FilesMatch "\.(html|xml|txt|webmanifest)$">
+    Header set Cache-Control "max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # Security headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' __CSP_SCRIPT_HASHES__; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me https://api.whatsapp.com; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+</IfModule>

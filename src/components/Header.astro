@@ -1,0 +1,76 @@
+---
+import { t, url, otherLang, type Lang, type PageKey } from '../lib/i18n';
+import { contacts } from '../lib/content';
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang; page: PageKey | 'notFound'; altHref: string }
+const { lang, page, altHref } = Astro.props;
+const navKeys = ['services', 'projects', 'team', 'about', 'contact'] as const;
+const other = otherLang(lang);
+const firstLabel = '';
+---
+<header class="hdr" id="hdr" data-state="top" data-theme="dark">
+  <div class="hdr__cap" aria-hidden="true"><i class="hdr__progress"></i></div>
+
+  <div class="hdr__bar">
+    <a class="hdr__brand" href={url(lang, 'home')} aria-label="CYBERMOVE">
+      <Wordmark class="hdr__wm" />
+      <Wordmark compact class="hdr__wm-c" />
+    </a>
+
+    <nav class="hdr__nav" aria-label={t(lang, 'nav.menu')}>
+      <ul class="list-reset">
+        {navKeys.map((k, i) => (
+          <li style={`--i:${i}`}>
+            <a href={url(lang, k)} aria-current={page === k ? 'page' : undefined}>{t(lang, `nav.${k}`)}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hdr__label label" aria-hidden="true"><span class="hdr__label-in">{firstLabel}</span></div>
+
+    <div class="hdr__tools">
+      <a class="hdr__lang label" href={altHref} hreflang={other} lang={other} data-lang-switch aria-label={t(lang, 'nav.langLabel')}>{t(lang, 'nav.lang')}</a>
+      <a class="btn btn--primary btn--sm hdr__cta" href={url(lang, 'contact', '?need=audit')} data-magnetic>
+        <span class="btn__in"><span class="btn__text">{t(lang, 'nav.cta')}</span><Icon name="arrow" class="btn__arrow" /></span>
+      </a>
+    </div>
+
+    <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu-panel" data-open-label={t(lang, 'nav.menu')} data-close-label={t(lang, 'nav.close')}>
+      <span class="hdr__burger" aria-hidden="true"><i></i><i></i></span>
+      <span class="sr-only hdr__menu-text">{t(lang, 'nav.menu')}</span>
+    </button>
+  </div>
+
+  <nav class="hdr__tabs label" aria-label={t(lang, 'nav.tabsLabel')} hidden></nav>
+
+  <div class="menu-backdrop" data-menu-close hidden></div>
+  <div class="menu" id="menu-panel" role="dialog" aria-modal="true" aria-label={t(lang, 'nav.menu')} hidden data-theme="dark">
+    <div class="menu__inner">
+      <div class="menu__top label">
+        <span class="muted">cybermove / {t(lang, 'nav.menu').toLowerCase()}</span>
+        <button type="button" class="menu__close" data-menu-close aria-label={t(lang, 'nav.close')}><Icon name="close" size={14} /></button>
+      </div>
+      <ol class="menu__links list-reset">
+        {navKeys.map((k, i) => (
+          <li style={`--i:${i}`}>
+            <a href={url(lang, k)} aria-current={page === k ? 'page' : undefined}>
+              <span class="label muted">0{i + 1}</span><span class="menu__link-text">{t(lang, `nav.${k}`)}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <div class="menu__foot">
+        <a class="btn btn--primary" href={url(lang, 'contact', '?need=audit')}>
+          <span class="btn__in"><span class="btn__text">{t(lang, 'nav.cta')}</span><Icon name="arrow" class="btn__arrow" /></span>
+        </a>
+        <a class="menu__wa" href={contacts.whatsapp.url} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={18} /><span>{contacts.whatsapp.display}</span>
+        </a>
+        <a class="menu__lang label" href={altHref} hreflang={other} lang={other} data-lang-switch>{t(lang, 'nav.lang')} · {t(lang, 'nav.langLabel')}</a>
+      </div>
+    </div>
+  </div>
+</header>

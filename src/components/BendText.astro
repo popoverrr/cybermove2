@@ -1,0 +1,19 @@
+---
+// Interaction #4: elastic line of huge type on an SVG textPath. Geometry is set by src/scripts/bend.ts.
+import { t, url, type Lang } from '../lib/i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const phrase = t(lang, 'footer.bend');
+const href = url(lang, 'contact');
+// Repeated so the slow loop along the path never shows a gap.
+const repeats = 4;
+---
+<div class="bend" data-bend>
+  <a class="bend__svg-link" href={href} tabindex="-1" aria-hidden="true">
+    <svg class="bend__svg" aria-hidden="true" focusable="false" height="260">
+      <path id={`bend-path-${lang}`} class="bend__path" d="M0 150 Q 720 150 1440 150 L 9000 150" fill="none" />
+      <text class="bend__text"><textPath href={`#bend-path-${lang}`} startOffset="0">{Array.from({ length: repeats }, () => phrase).join('   ')}</textPath></text>
+    </svg>
+  </a>
+  <a class="bend__link" href={href}>{phrase}</a>
+</div>

@@ -1,0 +1,180 @@
+---
+// Automation estimator: hours freed = people × hours/week × 4.33 × SHARE; value = hours × hourly cost; FTE = hours / 160.
+// SHARE is a fixed 25 % (the team's practice) — it is not an input on screen; the formula line says so.
+import { t, url, intlLocale, type Lang } from '../lib/i18n';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const e = (k: string) => t(lang, `services.estimator.${k}`);
+const currencies = {
+  KZT: { sign: '₸', min: 1000, max: 20000, step: 500, def: 3000 },
+  EUR: { sign: '€', min: 8, max: 80, step: 1, def: 20 },
+  USD: { sign: '$', min: 8, max: 90, step: 1, def: 22 },
+} as const;
+const defCur = lang === 'ru' ? 'KZT' : 'EUR';
+const cur = currencies[defCur];
+const SHARE = 0.25;
+const people = 10, hours = 8;
+const hrs = people * hours * 4.33 * SHARE;
+const nf = new Intl.NumberFormat(intlLocale[lang], { maximumFractionDigits: 0 });
+const nf1 = new Intl.NumberFormat(intlLocale[lang], { maximumFractionDigits: 1 });
+const sliders = [
+  { id: 'people', label: e('people'), min: 1, max: 200, step: 1, value: people, unit: '' },
+  { id: 'hours', label: e('hours'), min: 1, max: 30, step: 1, value: hours, unit: '' },
+];
+---
+<form class="est" data-estimator data-share={SHARE} data-locale={intlLocale[lang]} data-currencies={JSON.stringify(currencies)}
+  data-contact={url(lang, 'contact', '?need=ai')} onsubmit="return false">
+  <div class="est__inputs">
+    {sliders.map((s) => (
+      <div class="est__field">
+        <div class="est__row">
+          <label class="est__label" for={`est-${s.id}`}>{s.label}</label>
+          <output class="est__val num" for={`est-${s.id}`} data-out={s.id}>{s.value}{s.unit}</output>
+        </div>
+        <div class="est__ctrl">
+          <button type="button" class="est__step" data-step={s.id} data-dir="-1" aria-label={`${s.label} −`}><Icon name="minus" size={14} /></button>
+          <input type="range" id={`est-${s.id}`} name={s.id} min={s.min} max={s.max} step={s.step} value={s.value}
+            aria-valuetext={`${s.value}${s.unit}`} data-unit={s.unit} style={`--p:${((s.value - s.min) / (s.max - s.min)) * 100}%`} />
+          <button type="button" class="est__step" data-step={s.id} data-dir="1" aria-label={`${s.label} +`}><Icon name="plus" size={14} /></button>
+        </div>
+      </div>
+    ))}
+    <div class="est__field">
+      <div class="est__row">
+        <label class="est__label" for="est-rate">{e('rate')}</label>
+        <output class="est__val num" for="est-rate" data-out="rate">{nf.format(cur.def)} {cur.sign}</output>
+      </div>
+      <div class="est__ctrl">
+        <button type="button" class="est__step" data-step="rate" data-dir="-1" aria-label={`${e('rate')} −`}><Icon name="minus" size={14} /></button>
+        <input type="range" id="est-rate" name="rate" min={cur.min} max={cur.max} step={cur.step} value={cur.def}
+          aria-valuetext={`${cur.def} ${cur.sign}`} style={`--p:${((cur.def - cur.min) / (cur.max - cur.min)) * 100}%`} />
+        <button type="button" class="est__step" data-step="rate" data-dir="1" aria-label={`${e('rate')} +`}><Icon name="plus" size={14} /></button>
+      </div>
+      <fieldset class="est__cur">
+        <legend class="label muted">{e('currency')}</legend>
+        {Object.entries(currencies).map(([code, c]) => (
+          <label class="est__cur-opt">
+            <input type="radio" name="currency" value={code} checked={code === defCur} />
+            <span class="label">{c.sign} {code}</span>
+          </label>
+        ))}
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="est__out" aria-live="polite">
+    <dl class="est__results">
+      <div class="est__result est__result--main">
+        <dt class="label muted">{e('resultHours')}</dt>
+        <dd class="est__num num" data-res="hours">{nf.format(hrs)}</dd>
+      </div>
+      <div class="est__result">
+        <dt class="label muted">{e('resultMoney')}</dt>
+        <dd class="est__num est__num--sm num" data-res="money">{nf.format(hrs * cur.def)} {cur.sign}</dd>
+      </div>
+      <div class="est__result">
+        <dt class="label muted">{e('resultFte')}</dt>
+        <dd class="est__num est__num--sm num" data-res="fte">{nf1.format(hrs / 160)}</dd>
+      </div>
+    </dl>
+    <p class="est__formula label muted">{e('formula')}</p>
+    <p class="est__disclaimer small muted">{e('disclaimer')}</p>
+    <a class="btn btn--primary est__cta" href={url(lang, 'contact', `?need=ai&est=${Math.round(hrs)}h`)} data-est-cta data-magnetic>
+      <span class="btn__in"><span class="btn__text">{e('cta')}</span><Icon name="arrow" class="btn__arrow" /></span>
+    </a>
+  </div>
+</form>
+
+<script>
+  import { addTask } from '../scripts/core/raf';
+  import { reduced } from '../scripts/core/motion';
+
+  type Cur = { sign: string; min: number; max: number; step: number; def: number };
+  document.querySelectorAll<HTMLFormElement>('[data-estimator]').forEach((form) => {
+    const locale = form.dataset.locale!;
+    const curs = JSON.parse(form.dataset.currencies!) as Record<string, Cur>;
+    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 });
+    const nf1 = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 });
+    const share = parseFloat(form.dataset.share || '0.25'); // fixed, not user-editable
+    const input = (n: string) => form.querySelector<HTMLInputElement>(`input[name="${n}"]`)!;
+    const out = (n: string) => form.querySelector<HTMLElement>(`[data-out="${n}"]`)!;
+    const res = (n: string) => form.querySelector<HTMLElement>(`[data-res="${n}"]`)!;
+    const cta = form.querySelector<HTMLAnchorElement>('[data-est-cta]')!;
+    const shown = { hours: 0, money: 0, fte: 0 };
+    let target = { ...shown };
+    let anim = false;
+
+    const cur = () => curs[(form.querySelector<HTMLInputElement>('input[name="currency"]:checked')?.value) || 'KZT'];
+
+    function paint(v: typeof shown) {
+      const c = cur();
+      res('hours').textContent = nf.format(v.hours);
+      res('money').textContent = `${nf.format(v.money)} ${c.sign}`;
+      res('fte').textContent = nf1.format(v.fte);
+    }
+
+    function compute() {
+      const people = +input('people').value, hours = +input('hours').value, rate = +input('rate').value;
+      const c = cur();
+      const h = people * hours * 4.33 * share;
+      target = { hours: h, money: h * rate, fte: h / 160 };
+      out('people').textContent = String(people);
+      out('hours').textContent = String(hours);
+      out('rate').textContent = `${nf.format(rate)} ${c.sign}`;
+      form.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach((r) => {
+        const p = ((+r.value - +r.min) / (+r.max - +r.min)) * 100;
+        r.style.setProperty('--p', `${p}%`);
+        const unit = r.name === 'rate' ? ` ${c.sign}` : r.dataset.unit || '';
+        r.setAttribute('aria-valuetext', `${r.name === 'rate' ? nf.format(+r.value) : r.value}${unit}`);
+      });
+      const u = new URL(cta.href, location.href);
+      u.searchParams.set('est', `${Math.round(h)}h`);
+      cta.href = u.pathname + u.search;
+      if (reduced()) { Object.assign(shown, target); paint(shown); return; }
+      // count-up towards the new values over ~900 ms
+      const from = { ...shown };
+      const start = performance.now();
+      if (anim) return void (animFrom = from, animStart = start);
+      animFrom = from; animStart = start; anim = true;
+      addTask({
+        write: (now) => {
+          const p = Math.min(1, (now - animStart) / 900);
+          const e = 1 - Math.pow(1 - p, 3);
+          shown.hours = animFrom.hours + (target.hours - animFrom.hours) * e;
+          shown.money = animFrom.money + (target.money - animFrom.money) * e;
+          shown.fte = animFrom.fte + (target.fte - animFrom.fte) * e;
+          paint(shown);
+          if (p >= 1) anim = false;
+          return p < 1;
+        },
+      });
+    }
+    let animFrom = { ...shown }, animStart = 0;
+
+    form.addEventListener('input', (e) => {
+      const el = e.target as HTMLInputElement;
+      if (el.name === 'currency') {
+        const c = cur();
+        const r = input('rate');
+        r.min = String(c.min); r.max = String(c.max); r.step = String(c.step); r.value = String(c.def);
+      }
+      compute();
+    });
+    form.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const r = input(b.dataset.step!);
+        const v = Math.min(+r.max, Math.max(+r.min, +r.value + +b.dataset.dir! * +r.step));
+        r.value = String(v);
+        compute();
+      });
+    });
+
+    // initial count-up when the block is revealed
+    new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      compute();
+    }, { threshold: 0.3 }).observe(form);
+  });
+</script>

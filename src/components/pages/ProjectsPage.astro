@@ -1,0 +1,191 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import ProjectCard from '../ProjectCard.astro';
+import ProjectPhoto from '../ProjectPhoto.astro';
+import Icon from '../Icon.astro';
+import CtaBlock from '../CtaBlock.astro';
+import { t, url, pick, type Lang } from '../../lib/i18n';
+import { projects, sectors, projectsBySector } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const p = (k: string) => t(lang, `projects.${k}`);
+const path = t(lang, 'home.windows.projects.path');
+const sectorTitle = (id: string) => pick(lang, sectors.find((s) => s.id === id)!.title);
+---
+<Base lang={lang} page="projects" path={path}>
+  <Block theme="dark" label={p('hero.label')} first hero class="page-hero projects-block">
+    <div class="container">
+      <p class="label hero__label reveal">{p('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{p('hero.title')}</h1>
+      <p class="lead hero__lead reveal" style="--rd:120ms">{p('hero.lead')}</p>
+      <p class="small muted projects__note reveal" style="--rd:180ms">{p('hero.note')}</p>
+
+      <div class="pfilter reveal" role="group" aria-label={t(lang, 'projects.overlay.sector')} data-filter>
+        <button type="button" class="chip is-on" aria-pressed="true" data-sector="all">
+          <span>{p('filterAll')}</span><span class="chip__count num">{String(projects.length).padStart(2, '0')}</span>
+        </button>
+        {sectors.map((s) => (
+          <button type="button" class="chip" aria-pressed="false" data-sector={s.id}>
+            <span>{pick(lang, s.title)}</span><span class="chip__count num">{String(projectsBySector(s.id).length).padStart(2, '0')}</span>
+          </button>
+        ))}
+      </div>
+
+      <ul class="pgrid list-reset" id="projects-grid" aria-live="polite">
+        {projects.map((pr, i) => <ProjectCard project={pr} lang={lang} index={i} />)}
+      </ul>
+    </div>
+  </Block>
+
+  <!-- Project windows. Without JS they open via :target; with JS they are shown in a <dialog>. -->
+  <div class="pd-store">
+    {projects.map((pr) => (
+      <div class="pd" id={`p-${pr.id}`} data-pd={pr.id}>
+        <a class="pd__backdrop" href="#projects-grid" tabindex="-1" aria-hidden="true"></a>
+        <article class="win pd__win" data-theme="dark" aria-labelledby={`pd-title-${pr.id}`}>
+          <div class="win__bar">
+            <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="win__path label">{path} / {pr.id}</span>
+            <a class="win__close" href="#projects-grid" data-close aria-label={t(lang, 'common.close')}><Icon name="close" size={12} /></a>
+          </div>
+          <div class="pd__body">
+            <div class="pd__cover"><ProjectPhoto project={pr} sizes="(min-width: 768px) 720px, 100vw" /></div>
+            <div class="pd__content">
+              {(pr.type === 'experience' || pr.type === 'own') && <p class="pd__badge label">{p(`typeLabels.${pr.type}`)}</p>}
+              <h2 class="pd__title h2" id={`pd-title-${pr.id}`}>{pick(lang, pr.name)}</h2>
+              <dl class="pd__facts">
+                <div><dt class="label muted">{p('overlay.sector')}</dt><dd>{sectorTitle(pr.sector)}</dd></div>
+                {pr.geo && <div><dt class="label muted">{p('overlay.geo')}</dt><dd>{pick(lang, pr.geo)}</dd></div>}
+              </dl>
+              <p class="lead pd__details">{pick(lang, pr.details)}</p>
+              {pr.results && pr.results.length > 0 && (
+                <dl class="pd__results">
+                  {pr.results.map((r) => <div><dt class="pd__result-val num">{r.value}</dt><dd class="small muted">{pick(lang, r.label)}</dd></div>)}
+                </dl>
+              )}
+              <h3 class="label muted pd__sub">{p('overlay.tags')}</h3>
+              <div class="tags">{pick(lang, pr.tags).map((tg) => <span class="tag">{tg}</span>)}</div>
+              {pr.url && (
+                <a class="btn btn--secondary pd__visit" href={pr.url} target="_blank" rel="noopener">
+                  <span class="btn__in"><span class="btn__text">{p('overlay.visit')}</span><Icon name="arrow-ne" class="btn__arrow" /></span>
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      </div>
+    ))}
+  </div>
+  <dialog class="overlay" aria-modal="true" data-overlay></dialog>
+
+  <CtaBlock theme="light" label={t(lang, 'nav.contact')} title={p('cta.title')} lead={p('cta.lead')}
+    primary={{ href: url(lang, 'contact'), text: p('cta.primary') }} />
+</Base>
+
+<script>
+  import { flipSwap } from '../../scripts/core/flip';
+  import { reduced } from '../../scripts/core/motion';
+
+  /* ── Sector filter (interaction #3, FLIP) ── */
+  const filter = document.querySelector<HTMLElement>('[data-filter]');
+  const cards = [...document.querySelectorAll<HTMLElement>('.pcard')];
+  if (filter) {
+    const chips = [...filter.querySelectorAll<HTMLButtonElement>('.chip')];
+    const mark = (chip: HTMLButtonElement) =>
+      chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', String(on)); });
+    const match = (id: string) => (el: HTMLElement) => id === 'all' || el.dataset.sector === id;
+    filter.addEventListener('click', (e) => {
+      const chip = (e.target as Element).closest<HTMLButtonElement>('.chip');
+      if (!chip || chip.classList.contains('is-on')) return;
+      mark(chip);
+      const id = chip.dataset.sector!;
+      flipSwap(cards, match(id));
+      // keep the filter shareable: /projects/?sector=<id> (no param for "All")
+      const u = new URL(location.href);
+      if (id === 'all') u.searchParams.delete('sector'); else u.searchParams.set('sector', id);
+      history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+    });
+    // ?sector=<id> preselects a filter on load (instantly, no animation)
+    const initialSector = new URL(location.href).searchParams.get('sector');
+    const initialChip = chips.find((c) => c.dataset.sector === initialSector);
+    if (initialChip && initialSector !== 'all') {
+      mark(initialChip);
+      cards.forEach((el) => el.classList.toggle('is-off', !match(initialSector!)(el)));
+    }
+  }
+
+  /* ── Project window overlay ── */
+  const dialog = document.querySelector<HTMLDialogElement>('[data-overlay]')!;
+  let current: { id: string; win: HTMLElement; home: HTMLElement; card: HTMLElement | null } | null = null;
+
+  type VTDoc = Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
+  const vt = (cb: () => void) => {
+    const d = document as VTDoc;
+    if (!d.startViewTransition || reduced()) { cb(); return Promise.resolve(); }
+    return d.startViewTransition(cb).finished.catch(() => undefined);
+  };
+
+  function setUrl(id: string | null) {
+    const u = new URL(location.href); // keeps ?sector= when present
+    if (id) u.searchParams.set('p', id); else u.searchParams.delete('p');
+    u.hash = '';
+    history.replaceState(history.state, '', u.pathname + u.search);
+  }
+
+  async function open(id: string, animate = true) {
+    const pd = document.querySelector<HTMLElement>(`[data-pd="${CSS.escape(id)}"]`);
+    if (!pd || current) return;
+    const win = pd.querySelector<HTMLElement>('.pd__win')!;
+    const card = document.querySelector<HTMLElement>(`.pcard[data-id="${CSS.escape(id)}"] .pcard__link`);
+    const cover = card?.querySelector<HTMLElement>('.pcard__cover');
+    current = { id, win, home: pd, card };
+    dialog.setAttribute('aria-labelledby', `pd-title-${id}`);
+    const show = () => {
+      if (cover) cover.style.viewTransitionName = '';
+      win.style.viewTransitionName = 'project-win';
+      dialog.append(win);
+      dialog.showModal();
+      dialog.scrollTop = 0;
+    };
+    if (animate && cover) {
+      cover.style.viewTransitionName = 'project-win';
+      await vt(show);
+    } else show();
+    win.style.viewTransitionName = '';
+    setUrl(id);
+    win.querySelector<HTMLElement>('[data-close]')?.focus({ preventScroll: true });
+  }
+
+  async function close() {
+    if (!current) return;
+    const { win, home, card } = current;
+    const cover = card?.querySelector<HTMLElement>('.pcard__cover');
+    const hide = () => {
+      win.style.viewTransitionName = '';
+      dialog.close();
+      home.append(win);
+      if (cover) cover.style.viewTransitionName = 'project-win';
+    };
+    win.style.viewTransitionName = 'project-win';
+    await vt(hide);
+    if (cover) cover.style.viewTransitionName = '';
+    current = null;
+    setUrl(null);
+    card?.focus({ preventScroll: true });
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as Element;
+    const link = target.closest<HTMLAnchorElement>('[data-project]');
+    if (link) { e.preventDefault(); open(link.dataset.project!); return; }
+    if (current && target.closest('[data-close]')) { e.preventDefault(); close(); }
+  });
+  // backdrop click (the dialog element itself is the backdrop area)
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) close(); });
+  dialog.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+
+  const initial = new URL(location.href).searchParams.get('p') || (location.hash.startsWith('#p-') ? location.hash.slice(3) : null);
+  if (initial) open(initial, false);
+</script>

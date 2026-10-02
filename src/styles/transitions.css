@@ -1,0 +1,102 @@
+/* Interaction #1 — cross-document window transitions (native View Transitions API, no router). */
+@view-transition { navigation: auto; }
+
+@layer transitions {
+  .hdr { view-transition-name: header; }
+
+  /* The root snapshot is exactly what the user sees, so the old page scales back from its scrolled view. */
+  ::view-transition-group(root) { animation: none; }
+  ::view-transition-old(root) {
+    animation: vt-recede var(--dur-4) var(--ease-out) both;
+    transform-origin: 50% 40%;
+  }
+  ::view-transition-new(root) {
+    animation: vt-rise var(--dur-4) var(--ease-out) both;
+  }
+  ::view-transition-group(header) { animation-duration: var(--dur-2); }
+  ::view-transition-image-pair(root) { isolation: isolate; }
+
+  /* back: the new page comes from behind, the old one slides down */
+  html:active-view-transition-type(back)::view-transition-old(root) {
+    animation: vt-drop var(--dur-4) var(--ease-out) both;
+    z-index: 2;
+  }
+  html:active-view-transition-type(back)::view-transition-new(root) {
+    animation: vt-emerge var(--dur-4) var(--ease-out) both;
+    z-index: 1;
+  }
+
+  /* home window → page: the new page grows out of the window's rectangle, its title bar travels to the top */
+  html:active-view-transition-type(win)::view-transition-new(root) {
+    animation: vt-win-grow var(--dur-4) var(--ease-out) both;
+  }
+  ::view-transition-group(win-bar) {
+    animation-duration: var(--dur-4);
+    animation-timing-function: var(--ease-out);
+    z-index: 5;
+  }
+  html.vt-arrive:active-view-transition-type(win) .page-bar { view-transition-name: win-bar; }
+
+  @keyframes vt-recede {
+    to { transform: scale(0.94); filter: brightness(0.6); }
+  }
+  @keyframes vt-rise {
+    from { transform: translateY(12vh); clip-path: inset(0 0 0 0 round var(--radius-win) var(--radius-win) 0 0); }
+    to { transform: none; clip-path: inset(0 0 0 0 round 0); }
+  }
+  @keyframes vt-drop {
+    to { transform: translateY(100vh); clip-path: inset(0 0 0 0 round var(--radius-win) var(--radius-win) 0 0); }
+  }
+  @keyframes vt-emerge {
+    from { transform: scale(0.94); filter: brightness(0.6); }
+  }
+  @keyframes vt-win-grow {
+    from { clip-path: inset(var(--wt, 20%) var(--wr, 20%) var(--wb, 20%) var(--wl, 20%) round var(--radius-win)); }
+    to { clip-path: inset(0 0 0 0 round 0); }
+  }
+
+  /* Mobile: cheaper — slide-up only, no scale-back of the old page */
+  @media (max-width: 767px) {
+    ::view-transition-old(root) { animation: vt-dim var(--dur-3) var(--ease-out) both; }
+    ::view-transition-new(root) { animation-duration: var(--dur-3); }
+    html:active-view-transition-type(back)::view-transition-old(root) { animation-duration: var(--dur-3); }
+    html:active-view-transition-type(back)::view-transition-new(root) { animation: vt-dim var(--dur-3) var(--ease-out) reverse both; }
+    html:active-view-transition-type(win)::view-transition-new(root) { animation-duration: var(--dur-3); }
+    @keyframes vt-dim { to { opacity: 0.5; } }
+  }
+
+  /* Window bar of the arriving page: shown during arrival, then fades (≈800 ms after reveal) */
+  .page-bar {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    height: 36px;
+    display: flex; align-items: center; justify-content: center; gap: var(--s-3);
+    background: var(--bg-raised);
+    border-bottom: var(--hairline) solid var(--line);
+    color: var(--fg-muted);
+    opacity: 0; visibility: hidden;
+    transition: opacity var(--dur-2) var(--ease-out), visibility 0s linear var(--dur-2);
+    pointer-events: none;
+  }
+  .page-bar .win__dots { position: absolute; left: var(--s-4); }
+  html.vt-arrive .page-bar { opacity: 1; visibility: visible; transition: none; }
+  html.vt-arrive .hdr { opacity: 0; }
+
+  /* Fallback: no cross-document transitions → a short fade-in of main on load */
+  html.no-vt main { animation: vt-fade 240ms ease-out both; }
+  @keyframes vt-fade { from { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    html:active-view-transition-type(back)::view-transition-old(root) {
+      animation: vt-fade-out 150ms linear both;
+    }
+    ::view-transition-new(root),
+    html:active-view-transition-type(back)::view-transition-new(root),
+    html:active-view-transition-type(win)::view-transition-new(root) {
+      animation: vt-fade 150ms linear both;
+    }
+    @keyframes vt-fade-out { to { opacity: 0; } }
+    ::view-transition-group(win-bar) { animation: none; }
+    html.no-vt main { animation-duration: 150ms; }
+  }
+}

@@ -1,0 +1,9 @@
+---
+interface Props { label: string; link?: { href: string; text: string } }
+const { label, link } = Astro.props;
+import Icon from './Icon.astro';
+---
+<div class="block-head label reveal-fade">
+  <span class="block-head__label">{label}</span>
+  {link && <a class="link link--arrow" href={link.href}><span>{link.text}</span><Icon name="arrow" size={12} /></a>}
+</div>

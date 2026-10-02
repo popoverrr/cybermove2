@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  icon?: 'arrow' | 'whatsapp' | 'arrow-ne' | 'none';
+  external?: boolean;
+  size?: 'md' | 'sm';
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', icon = 'arrow', external = false, size = 'md', class: cls = '', ...rest } = Astro.props;
+const ext = external ? { target: '_blank', rel: 'noopener' } : {};
+---
+<a href={href} class:list={['btn', `btn--${variant}`, size === 'sm' && 'btn--sm', cls]} data-magnetic {...ext} {...rest}>
+  <span class="btn__in">
+    {icon === 'whatsapp' && <Icon name="whatsapp" size={18} class="btn__lead-icon" />}
+    <span class="btn__text"><slot /></span>
+    {(icon === 'arrow' || icon === 'arrow-ne') && <Icon name={icon} class="btn__arrow" />}
+  </span>
+</a>

@@ -1,0 +1,28 @@
+---
+// Minimal equirectangular map (no map library, no tiles): a faint dot grid, low-poly coastline hairlines
+// and the 13 cities — all projected with the same px()/py(), so dots and coasts cannot drift apart.
+import { cities } from '../lib/content';
+import { coastlines } from '../lib/coastlines';
+const LON0 = -12, LON1 = 148, LAT0 = -14, LAT1 = 62;
+const W = 800, H = Math.round((W * (LAT1 - LAT0)) / (LON1 - LON0));
+const px = (lon: number) => ((lon - LON0) / (LON1 - LON0)) * W;
+const py = (lat: number) => ((LAT1 - lat) / (LAT1 - LAT0)) * H;
+const coastD = coastlines
+  .map((line) => line.map(([lon, lat], i) => `${i ? 'L' : 'M'}${px(lon).toFixed(1)} ${py(lat).toFixed(1)}`).join(''))
+  .join('');
+---
+<svg class="geomap" viewBox={`0 0 ${W} ${H}`} role="img" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="geo-dots" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="0.9" class="geomap__grid-dot" />
+    </pattern>
+  </defs>
+  <rect width={W} height={H} fill="url(#geo-dots)" />
+  <path class="geomap__coast" d={coastD} />
+  {cities.map((c) => (
+    <g class="geomap__city" data-dot={c.id} transform={`translate(${px(c.lon).toFixed(1)} ${py(c.lat).toFixed(1)})`}>
+      <circle r="14" class="geomap__halo" />
+      <circle r="4" class="geomap__dot" />
+    </g>
+  ))}
+</svg>

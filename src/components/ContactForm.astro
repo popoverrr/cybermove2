@@ -1,0 +1,179 @@
+---
+import { t, ta, url, asset, type Lang } from '../lib/i18n';
+import { contacts } from '../lib/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const f = (k: string) => t(lang, `contact.form.${k}`);
+const needs = ta<{ id: string; label: string }[]>(lang, 'contact.form.needs');
+const emailMode = !!contacts.formEmail;
+---
+<form class="cform" action={contacts.whatsapp.url} method="get" target="_blank" novalidate data-contact-form
+  data-wa={contacts.whatsapp.url} data-endpoint={asset('api/send.php')} data-email={emailMode ? '1' : undefined}
+  data-template={f('waTemplate')} data-prefill={f('estimatePrefill')}
+  data-msg-required={f('required')} data-msg-contact={f('invalidContact')}
+  data-msg-success={emailMode ? f('successEmail') : f('success')} data-msg-error={f('error')}>
+  <h2 class="cform__title h3">{f('title')}</h2>
+
+  <div class="field">
+    <input class="field__input" id="cf-name" name="name" type="text" autocomplete="name" placeholder=" " required maxlength="120" aria-describedby="cf-name-err" />
+    <label class="field__label" for="cf-name">{f('name')}</label>
+    <p class="field__err small" id="cf-name-err" aria-live="polite"></p>
+  </div>
+  <div class="field">
+    <input class="field__input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="160" />
+    <label class="field__label" for="cf-company">{f('company')}</label>
+  </div>
+  <div class="field">
+    <input class="field__input" id="cf-contact" name="contact" type="text" autocomplete="email" inputmode="email" placeholder=" " required maxlength="160" aria-describedby="cf-contact-err" />
+    <label class="field__label" for="cf-contact">{f('contact')}</label>
+    <p class="field__err small" id="cf-contact-err" aria-live="polite"></p>
+  </div>
+
+  <fieldset class="chips">
+    <legend class="label muted">{f('needsTitle')}</legend>
+    <div class="chips__list">
+      {needs.map((n) => (
+        <label class="chip chip--check">
+          <input type="checkbox" name="needs" value={n.id} data-label={n.label} />
+          <span>{n.label}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <div class="field field--area">
+    <textarea class="field__input" id="cf-message" name="message" rows="4" placeholder=" " maxlength="2000"></textarea>
+    <label class="field__label" for="cf-message">{f('message')}</label>
+  </div>
+
+  <div class="cform__hp" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="cform__foot">
+    <button class="btn btn--primary cform__submit" type="submit" data-magnetic>
+      <span class="btn__in">
+        {!emailMode && <Icon name="whatsapp" size={18} />}
+        <span class="btn__text">{emailMode ? f('submitEmail') : f('submit')}</span>
+        <Icon name="arrow" class="btn__arrow" />
+      </span>
+      <span class="cform__spinner" aria-hidden="true"></span>
+    </button>
+    {!emailMode && <p class="small muted cform__note">{f('note')}</p>}
+    <p class="small muted cform__consent">{f('consent')} <a class="link" href={url(lang, 'privacy')}>{f('consentLink')}</a>.</p>
+    <p class="cform__status" role="status" aria-live="polite" hidden></p>
+  </div>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const d = form.dataset;
+    const loaded = Date.now();
+    const $ = <T extends Element>(s: string) => form.querySelector<T>(s)!;
+    const status = $<HTMLElement>('.cform__status');
+    const submit = $<HTMLButtonElement>('.cform__submit');
+
+    // Prefill from the query: ?need=<id> selects a chip, ?est=<hours>h prefills the message.
+    const qs = new URLSearchParams(location.search);
+    const need = qs.get('need');
+    if (need) {
+      const box = form.querySelector<HTMLInputElement>(`input[name="needs"][value="${CSS.escape(need)}"]`);
+      if (box) box.checked = true;
+    }
+    const est = qs.get('est');
+    const hours = est && /^\d{1,6}h?$/.test(est) ? parseInt(est, 10) : 0;
+    if (hours > 0) {
+      const msg = $<HTMLTextAreaElement>('textarea[name="message"]');
+      if (!msg.value) msg.value = (d.prefill || '').replace('{hours}', new Intl.NumberFormat(document.documentElement.lang).format(hours));
+    }
+
+    // chip press micro-interaction
+    form.querySelectorAll<HTMLElement>('.chip--check').forEach((c) => {
+      c.addEventListener('pointerdown', () => c.classList.add('is-press'));
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => c.addEventListener(ev, () => c.classList.remove('is-press')));
+    });
+
+    const val = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value.trim() ?? '';
+    const setErr = (n: string, msg: string) => {
+      const input = form.elements.namedItem(n) as HTMLInputElement;
+      const err = form.querySelector<HTMLElement>(`#cf-${n}-err`);
+      input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      input.closest('.field')?.classList.toggle('is-invalid', !!msg);
+      if (err) err.textContent = msg;
+    };
+    const contactOk = (v: string) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) || // email
+      /^@?[a-zA-Z0-9_]{4,32}$/.test(v) || // telegram handle
+      /^\+?[\d\s()-]{7,20}$/.test(v); // phone / WhatsApp
+
+    function validate() {
+      let ok = true;
+      const name = val('name'), contact = val('contact');
+      setErr('name', name ? '' : d.msgRequired!);
+      if (!name) ok = false;
+      if (!contact) { setErr('contact', d.msgRequired!); ok = false; }
+      else if (!contactOk(contact)) { setErr('contact', d.msgContact!); ok = false; }
+      else setErr('contact', '');
+      return ok;
+    }
+    ['name', 'contact'].forEach((n) => form.elements.namedItem(n)?.addEventListener('blur', () => {
+      if (form.classList.contains('was-validated')) validate();
+    }));
+
+    function message() {
+      const needs = [...form.querySelectorAll<HTMLInputElement>('input[name="needs"]:checked')].map((b) => b.dataset.label).join(', ');
+      const values: Record<string, string> = { name: val('name'), company: val('company'), contact: val('contact'), needs, message: val('message') };
+      // Lines whose value is empty are dropped, so the message stays clean.
+      return (d.template || '')
+        .split('\n')
+        .filter((line) => { const m = line.match(/\{(\w+)\}/); return !m || values[m[1]]; })
+        .map((line) => line.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? ''))
+        .join('\n');
+    }
+
+    function done(text: string, ok = true) {
+      status.hidden = false;
+      status.textContent = text;
+      status.classList.toggle('is-error', !ok);
+      submit.classList.remove('is-busy');
+      submit.disabled = false;
+    }
+    const openWhatsApp = (text: string) => {
+      const u = `${d.wa}?text=${encodeURIComponent(text)}`;
+      window.open(u, '_blank', 'noopener');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      form.classList.add('was-validated');
+      if (!validate()) {
+        form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+      if (val('website')) return; // honeypot
+      const text = message();
+      submit.classList.add('is-busy');
+      submit.disabled = true;
+      if (d.email) {
+        try {
+          const res = await fetch(d.endpoint!, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: val('name'), company: val('company'), contact: val('contact'), needs: [...form.querySelectorAll<HTMLInputElement>('input[name="needs"]:checked')].map((b) => b.value), message: val('message'), website: val('website'), ts: loaded, lang: document.documentElement.lang }),
+          });
+          const json = await res.json().catch(() => ({ ok: false }));
+          if (res.ok && json.ok) { done(d.msgSuccess!); form.reset(); return; }
+          throw new Error('send failed');
+        } catch {
+          // Never lose a lead: fall back to WhatsApp.
+          openWhatsApp(text);
+          done(d.msgError!, false);
+          return;
+        }
+      }
+      openWhatsApp(text);
+      setTimeout(() => done(d.msgSuccess!), 500);
+    });
+  });
+</script>

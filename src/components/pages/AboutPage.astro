@@ -1,0 +1,176 @@
+---
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import CtaBlock from '../CtaBlock.astro';
+import GeoMap from '../GeoMap.astro';
+import { t, ta, url, pick, type Lang } from '../../lib/i18n';
+import { regions, cities } from '../../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const a = (k: string) => t(lang, `about.${k}`);
+const paragraphs = ta<string[]>(lang, 'about.hero.paragraphs');
+const principles = ta<{ title: string; text: string }[]>(lang, 'about.principles.items');
+const core = ta<{ title: string; text: string }[]>(lang, 'about.core.items');
+const chain = ta<string[]>(lang, 'about.ai.chain');
+const metrics = ta<string[]>(lang, 'about.metrics.items');
+---
+<Base lang={lang} page="about" path={t(lang, 'home.windows.about.path')}>
+  <Block theme="dark" label={a('hero.label')} first hero class="page-hero about-hero">
+    <div class="container">
+      <p class="label hero__label reveal">{a('hero.label')}</p>
+      <h1 class="hero__title reveal" data-split>{a('hero.title')}</h1>
+      <div class="about-hero__cols">
+        {paragraphs.map((p, i) => <p class:list={['lead reveal', i > 0 && 'muted']} style={`--rd:${120 + i * 80}ms`}>{p}</p>)}
+      </div>
+    </div>
+  </Block>
+
+  <Block theme="light" label={a('principles.label')} class="about-principles">
+    <div class="container">
+      <BlockHead label={a('principles.label')} />
+      <h2 class="section-title reveal" data-split>{a('principles.title')}</h2>
+      <ol class="cols3 list-reset">
+        {principles.map((p, i) => (
+          <li class="cols3__item reveal" style={`--rd:${i * 80}ms`}>
+            <span class="label muted num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.title}</h3>
+            <p class="muted">{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={a('core.label')} class="about-core">
+    <div class="container">
+      <BlockHead label={a('core.label')} />
+      <h2 class="reveal" data-split>{a('core.title')}</h2>
+      <p class="lead muted section-lead-after reveal">{a('core.lead')}</p>
+      <div class="core reveal" data-core>
+        <svg class="core__lines" aria-hidden="true"><line class="core__line" x1="0" y1="0" x2="0" y2="0" /></svg>
+        <ol class="core__grid list-reset">
+          {core.map((c, i) => (
+            <li class="core__cell" tabindex="0" style={`--i:${i}`}>
+              <span class="label muted num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="core__title">{c.title}</h3>
+              <p class="small muted">{c.text}</p>
+            </li>
+          ))}
+        </ol>
+        <span class="core__center label" aria-hidden="true">{a('core.center')}</span>
+      </div>
+    </div>
+  </Block>
+
+  <Block theme="light" label={a('ai.label')} class="about-ai">
+    <div class="container">
+      <BlockHead label={a('ai.label')} />
+      <h2 class="reveal" data-split>{a('ai.title')}</h2>
+      <p class="lead muted section-lead-after reveal">{a('ai.lead')}</p>
+      <ol class="chain list-reset reveal" aria-label={chain.join(' → ')}>
+        {chain.map((c, i) => (
+          <li class="chain__item" style={`--i:${i}`}>
+            <span class="chain__word">{c}</span>
+            {i < chain.length - 1 && <span class="chain__arrow" aria-hidden="true"><i></i></span>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Block>
+
+  <Block theme="dark" label={a('metrics.label')} class="about-metrics">
+    <div class="container">
+      <BlockHead label={a('metrics.label')} />
+      <h2 class="section-title reveal" data-split>{a('metrics.title')}</h2>
+      <ul class="metrics list-reset" role="list">
+        {metrics.map((m, i) => <li class="tag tag--lg reveal" style={`--rd:${i * 40}ms`}>{m}</li>)}
+      </ul>
+      <p class="muted metrics__note reveal">{a('metrics.note')}</p>
+    </div>
+  </Block>
+
+  <Block theme="light" label={a('geo.label')} class="about-geo">
+    <div class="container">
+      <BlockHead label={a('geo.label')} />
+      <h2 class="reveal" data-split>{a('geo.title')}</h2>
+      <p class="lead muted section-lead-after reveal">{a('geo.lead')}</p>
+      <div class="geo">
+        <div class="geo__map reveal"><GeoMap /></div>
+        <div class="geo__lists">
+          {regions.map((r) => (
+            <div class="geo__region reveal">
+              <h3 class="label muted geo__region-title">{pick(lang, r.label)}</h3>
+              <ul class="list-reset">
+                {cities.filter((c) => c.region === r.id).map((c) => (
+                  <li class="geo__city" data-city={c.id} tabindex="0">
+                    <span class="geo__city-name">{pick(lang, c.city)}</span>
+                    <span class="small muted">{pick(lang, c.country)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Block>
+
+  <CtaBlock theme="dark" label={t(lang, 'nav.contact')} title={a('cta.title')}
+    primary={{ href: url(lang, 'contact'), text: a('cta.primary') }} />
+</Base>
+
+<script>
+  import { debounce } from '../../scripts/core/observe';
+  import { finePointer } from '../../scripts/core/motion';
+
+  // Core: accent line from the hovered cell to the central CORE label (geometry computed once per resize).
+  document.querySelectorAll<HTMLElement>('[data-core]').forEach((root) => {
+    if (!finePointer()) return;
+    const svg = root.querySelector<SVGSVGElement>('.core__lines')!;
+    const line = root.querySelector<SVGLineElement>('.core__line')!;
+    const center = root.querySelector<HTMLElement>('.core__center')!;
+    const cells = [...root.querySelectorAll<HTMLElement>('.core__cell')];
+    let pts: { x: number; y: number }[] = [];
+    let c = { x: 0, y: 0 };
+    const measure = () => {
+      const r = root.getBoundingClientRect();
+      const cr = center.getBoundingClientRect();
+      c = { x: cr.left - r.left + cr.width / 2, y: cr.top - r.top + cr.height / 2 };
+      pts = cells.map((el) => {
+        const b = el.getBoundingClientRect();
+        return { x: b.left - r.left + b.width / 2, y: b.top - r.top + b.height / 2 };
+      });
+      svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
+    };
+    const show = (i: number) => {
+      if (!pts.length) measure();
+      const p = pts[i];
+      line.setAttribute('x1', String(c.x)); line.setAttribute('y1', String(c.y));
+      line.setAttribute('x2', String(p.x)); line.setAttribute('y2', String(p.y));
+      const len = Math.hypot(p.x - c.x, p.y - c.y);
+      line.style.strokeDasharray = `${len}`;
+      line.style.strokeDashoffset = `${len}`;
+      root.classList.add('is-lit');
+      requestAnimationFrame(() => (line.style.strokeDashoffset = '0'));
+    };
+    cells.forEach((el, i) => {
+      el.addEventListener('pointerenter', () => show(i));
+      el.addEventListener('focus', () => show(i));
+      el.addEventListener('pointerleave', () => root.classList.remove('is-lit'));
+      el.addEventListener('blur', () => root.classList.remove('is-lit'));
+    });
+    window.addEventListener('resize', debounce(() => { pts = []; }, 150));
+  });
+
+  // Geography: hovering / focusing a city highlights its dot.
+  document.querySelectorAll<HTMLElement>('.geo__city').forEach((el) => {
+    const dot = document.querySelector(`.geomap [data-dot="${el.dataset.city}"]`);
+    const on = () => dot?.classList.add('is-on');
+    const off = () => dot?.classList.remove('is-on');
+    el.addEventListener('pointerenter', on); el.addEventListener('pointerleave', off);
+    el.addEventListener('focus', on); el.addEventListener('blur', off);
+    el.addEventListener('click', () => { document.querySelectorAll('.geomap .is-on').forEach((d) => d.classList.remove('is-on')); on(); });
+  });
+</script>

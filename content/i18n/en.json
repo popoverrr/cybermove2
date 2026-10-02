@@ -1,0 +1,347 @@
+{
+  "meta": {
+    "siteName": "CYBERMOVE",
+    "home": { "title": "CYBERMOVE — Marketing, AI & Business Growth", "description": "Marketing, brand, AI automation, business development, tenders and legal support — one team, one growth system." },
+    "services": { "title": "Services — CYBERMOVE", "description": "Business & marketing audit, marketing and growth, brand development, AI and automation, business development, tender and legal support." },
+    "projects": { "title": "Projects — CYBERMOVE", "description": "Brands and projects the CYBERMOVE team has worked on: personal brands, retail, hospitality, B2B and industry, media and technology." },
+    "team": { "title": "Team — CYBERMOVE", "description": "The people behind CYBERMOVE projects: strategy, operations, AI, digital, tenders and legal." },
+    "about": { "title": "About — CYBERMOVE", "description": "How CYBERMOVE works: core first, then the system, then growth. Principles, our view on AI and where we work." },
+    "contact": { "title": "Contact — CYBERMOVE", "description": "Tell us where your business is now — we'll suggest where to move next. Message us on WhatsApp or leave a request." },
+    "privacy": { "title": "Privacy Policy — CYBERMOVE", "description": "How CYBERMOVE handles the data you share on this website." },
+    "notFound": { "title": "Page not found — CYBERMOVE", "description": "This page doesn't exist." }
+  },
+  "nav": {
+    "services": "Services",
+    "projects": "Projects",
+    "team": "Team",
+    "about": "About",
+    "contact": "Contact",
+    "cta": "Start with an audit",
+    "menu": "Menu",
+    "close": "Close",
+    "lang": "RU",
+    "langLabel": "Русская версия",
+    "skip": "Skip to content",
+    "tabsLabel": "Recently opened pages"
+  },
+  "common": {
+    "open": "Open",
+    "discuss": "Discuss",
+    "all": "All",
+    "whatsapp": "Message on WhatsApp",
+    "backToTop": "Back to top",
+    "close": "Close"
+  },
+  "footer": {
+    "tagline": "Marketing, brand, AI and business development — one growth system.",
+    "bend": "We move business forward →",
+    "servicesTitle": "Services",
+    "companyTitle": "Company",
+    "contactTitle": "Get in touch",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "label": "Marketing · AI · Business growth",
+      "title": "We move business forward.",
+      "lead": "Marketing, brand, AI automation, business development, tenders and legal — one team, one growth system. We start with a diagnosis and see it through to results.",
+      "ctaPrimary": "Start with an audit",
+      "ctaSecondary": "See our projects"
+    },
+    "windows": {
+      "services": { "title": "Services", "path": "cybermove / services", "caption": "An audit and six practices" },
+      "projects": { "title": "Projects", "path": "cybermove / projects", "caption": "30+ brands and projects" },
+      "team": { "title": "Team", "path": "cybermove / team", "caption": "Six experts" },
+      "about": { "title": "About", "path": "cybermove / about", "caption": "Core → System → Growth" },
+      "contact": { "title": "Contact", "path": "cybermove / contact", "caption": "WhatsApp, Telegram, email" }
+    },
+    "clients": {
+      "label": "01 / Trusted by",
+      "link": "All projects"
+    },
+    "pains": {
+      "label": "02 / Why clients come",
+      "title": "Clients usually come to us when something doesn't add up.",
+      "items": [
+        { "quote": "“We do marketing, but there's no system.”", "answer": "Channels run on their own and aren't tied to a business goal. We start with an audit and connect them into one system.", "service": "audit" },
+        { "quote": "“We spend on ads but don't understand the economics.”", "answer": "We calculate the cost of a lead and a customer for every channel and move budget to where it pays back.", "service": "marketing" },
+        { "quote": "“Strong product, weak positioning.”", "answer": "We define how you are different and why customers should choose you — and carry it into the brand and communications.", "service": "brand" },
+        { "quote": "“Leads come in and get lost in sales.”", "answer": "We build the path from lead to deal: CRM, scripts, automatic qualification and response-time control.", "service": "ai" },
+        { "quote": "“The business has outgrown its processes.”", "answer": "We map processes, introduce metrics and assign ownership, so growth no longer depends on the founder alone.", "service": "bizdev" },
+        { "quote": "“We want to enter a new market or win tenders.”", "answer": "We assess the opportunities, prepare the documents and manage participation — legal side included.", "service": "tender" }
+      ]
+    },
+    "services": {
+      "label": "03 / Services",
+      "title": "One partner. Every competence you need.",
+      "link": "More about services"
+    },
+    "method": {
+      "label": "04 / Method",
+      "title": "Core first. Then the system. Then growth.",
+      "steps": [
+        { "title": "Diagnose", "text": "We examine the business, market, product, data and processes, and find what really holds growth back." },
+        { "title": "Core", "text": "We define the product, audience, positioning, value, offer and key message." },
+        { "title": "System", "text": "We design and launch marketing, sales, CRM and analytics — and automate what already works." },
+        { "title": "Growth", "text": "We measure results in leads and revenue and scale what has proven to work." }
+      ]
+    },
+    "sectors": {
+      "label": "05 / Industries",
+      "title": "Experience across industries.",
+      "lead": "Pick an industry to see the projects.",
+      "allLink": "All projects in this industry →"
+    },
+    "team": {
+      "label": "06 / Team",
+      "title": "Real people behind every project.",
+      "lead": "For each task we assemble the right mix: strategy, operations, AI, digital, tenders and legal.",
+      "link": "Meet the team"
+    },
+    "cta": {
+      "label": "07 / Start",
+      "title": "Start with an audit.",
+      "lead": "Tell us where your business is today. We'll show you what's holding it back and where to begin.",
+      "primary": "Send a request",
+      "secondary": "Message on WhatsApp"
+    }
+  },
+  "services": {
+    "hero": {
+      "label": "Services",
+      "title": "One partner. Every competence you need.",
+      "lead": "We don't sell standalone tools. We understand the task, assemble the right team for it and build a system that delivers results."
+    },
+    "audit": {
+      "label": "00 / Where to start",
+      "title": "Business & marketing audit.",
+      "lead": "The simplest way to start. We understand the problem first and propose a solution second.",
+      "includesTitle": "What we look at",
+      "deliverablesTitle": "What you get",
+      "deliverables": ["A structured diagnosis", "A map of problems and opportunities", "Priorities for change", "A roadmap of next steps"],
+      "cta": "Order an audit"
+    },
+    "directions": {
+      "label": "01 / Practices",
+      "title": "Six practices — one system.",
+      "includesTitle": "What's included",
+      "outcomeTitle": "What you get",
+      "discuss": "Discuss your task"
+    },
+    "aiFlow": {
+      "title": "What automation looks like in practice",
+      "steps": [
+        { "title": "Lead", "text": "From ads, the website, a messenger or a call." },
+        { "title": "AI qualification", "text": "AI identifies the request type, priority and next step." },
+        { "title": "CRM", "text": "A deal is created automatically, with full context." },
+        { "title": "Sales team", "text": "The manager gets a ready task, not a raw chat log." },
+        { "title": "AI analytics", "text": "AI reviews calls and chats and scores handling quality." },
+        { "title": "Report", "text": "Management sees the numbers and bottlenecks without manual summaries." }
+      ]
+    },
+    "estimator": {
+      "label": "02 / Estimate",
+      "title": "How much time automation can free up.",
+      "lead": "A rough estimate from three inputs. The precise calculation comes with the audit.",
+      "people": "Employees doing routine work",
+      "hours": "Routine hours per person per week",
+      "rate": "Loaded hourly cost",
+      "currency": "Currency",
+      "resultHours": "hours per month",
+      "resultMoney": "saved per month",
+      "resultFte": "full-time equivalents",
+      "formula": "Formula: employees × hours per week × 4.33 × 25% (from our practice) × hourly cost",
+      "disclaimer": "This is a guide, not a promise. The real effect depends on your processes and data — we calculate it during the audit.",
+      "cta": "Discuss automation"
+    },
+    "formats": {
+      "label": "03 / Formats",
+      "title": "Ways to work with us.",
+      "items": [
+        { "title": "Audit & roadmap", "text": "A diagnosis and a plan for change." },
+        { "title": "Launch", "text": "Launching a brand, a product or a new business line." },
+        { "title": "Growth partner", "text": "Long-term development of marketing and the business as a whole." },
+        { "title": "AI & automation", "text": "Designing and implementing automations." },
+        { "title": "Tenders & legal", "text": "Tender and legal support for a specific task." }
+      ]
+    },
+    "faq": {
+      "label": "04 / Questions",
+      "title": "Frequently asked questions.",
+      "items": [
+        { "q": "How does the work begin?", "a": "With a diagnosis of the business, market, product, processes and data. Then we define the core, design the system, implement it, measure results and scale." },
+        { "q": "What is the business core?", "a": "Product, audience, positioning, value, differentiation, offer, key message and brand DNA. Until these decisions are made, ads, the website, content and CRM pull in different directions." },
+        { "q": "How is integrated marketing different from a set of services?", "a": "Brand, content, digital, advertising, sales, CRM, AI and analytics are designed as one system around one business goal — not bought separately from different vendors." },
+        { "q": "Where does AI fit in?", "a": "Wherever it strengthens a process that is already in place: lead handling, qualification, follow-ups, reporting and integrations. Process and data first, automation second." },
+        { "q": "Can we start with just one service?", "a": "Yes. You can start with an audit, a tender or automating a single process. Other practices join when they make sense." }
+      ]
+    },
+    "cta": {
+      "title": "Let's discuss your task.",
+      "lead": "Describe your situation briefly — we'll suggest where to start.",
+      "primary": "Send a request"
+    }
+  },
+  "projects": {
+    "hero": {
+      "label": "Projects",
+      "title": "Brands and projects we've worked on.",
+      "lead": "Personal brands, retail, hospitality, industry, media and technology — across Europe, Ukraine and Kazakhstan.",
+      "note": "The list includes our clients, projects team members delivered while working at agencies, and CYBERMOVE's own ventures. They are marked accordingly."
+    },
+    "filterAll": "All",
+    "typeLabels": {
+      "client": "Client",
+      "experience": "Team experience",
+      "own": "Own venture",
+      "group": "Group of projects"
+    },
+    "overlay": {
+      "sector": "Industry",
+      "geo": "Location",
+      "tags": "What we did",
+      "visit": "Visit website"
+    },
+    "cta": {
+      "title": "Your project could be next.",
+      "lead": "Tell us about the task — we'll assemble a team for it.",
+      "primary": "Start a project"
+    }
+  },
+  "team": {
+    "hero": {
+      "label": "Team",
+      "title": "Our team.",
+      "lead": "Behind every CYBERMOVE project are people with real operating experience — from strategy and brand launches to AI automation, tenders and legal support."
+    },
+    "cta": {
+      "label": "Work with the team",
+      "title": "Discuss your project directly.",
+      "lead": "Tell us about the task — we'll put the right team on it.",
+      "whatsapp": "Message on WhatsApp",
+      "form": "Send a request"
+    }
+  },
+  "about": {
+    "hero": {
+      "label": "About",
+      "title": "We align the processes. We accelerate the business.",
+      "paragraphs": [
+        "A modern business rarely needs one more vendor. It needs a team that sees how brand, marketing, sales, technology and operations connect.",
+        "That is why CYBERMOVE exists. We combine strategy and execution, human expertise and AI, creativity and business logic — so the business moves faster and stays in control."
+      ]
+    },
+    "principles": {
+      "label": "01 / Principles",
+      "title": "Three principles.",
+      "items": [
+        { "title": "Business first", "text": "Every decision is judged by the business goal and the result, not by how good the report looks." },
+        { "title": "We implement", "text": "We don't stop at strategy — we put the system in place together with your team." },
+        { "title": "A team for the task", "text": "We bring in the right mix of marketing, business, AI, tender and legal expertise." }
+      ]
+    },
+    "core": {
+      "label": "02 / Core",
+      "title": "What makes a brand move.",
+      "lead": "Eight decisions to make before spending money on advertising.",
+      "center": "CORE",
+      "items": [
+        { "title": "Product", "text": "The value the customer actually receives." },
+        { "title": "Audience", "text": "Who the product is for and what problem it solves." },
+        { "title": "Positioning", "text": "Where the brand stands among competitors." },
+        { "title": "Value", "text": "Why customers choose you." },
+        { "title": "Differentiation", "text": "What competitors find hard to copy." },
+        { "title": "Offer", "text": "How the product is packaged and presented." },
+        { "title": "Message", "text": "What the brand says and what customers remember." },
+        { "title": "Brand DNA", "text": "Character, visual language and tone of voice." }
+      ]
+    },
+    "ai": {
+      "label": "03 / AI",
+      "title": "AI should work, not impress.",
+      "lead": "Automate the right process — not the wrong process faster.",
+      "chain": ["Core", "Process", "Data", "Automation", "AI"]
+    },
+    "metrics": {
+      "label": "04 / Metrics",
+      "title": "Activity is not a result.",
+      "items": ["Qualified leads", "Conversion rate", "CAC", "CPL", "Sales conversion", "Revenue contribution", "Retention", "Response time", "Pipeline", "Marketing efficiency"],
+      "note": "Which metrics matter for you is defined by your business data."
+    },
+    "geo": {
+      "label": "05 / Geography",
+      "title": "Where we work.",
+      "lead": "Projects and business ties across Europe, Ukraine, Central Asia and Asia-Pacific."
+    },
+    "cta": {
+      "title": "Your business should move.",
+      "primary": "Start a project"
+    }
+  },
+  "contact": {
+    "hero": {
+      "label": "Contact",
+      "title": "Let's start a project.",
+      "lead": "Tell us where your business is now — we'll suggest where to move next."
+    },
+    "channels": {
+      "title": "Fastest on WhatsApp",
+      "whatsappNote": "The quickest way to reach the team.",
+      "email": "Email",
+      "telegram": "Telegram",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "address": "Address"
+    },
+    "form": {
+      "title": "Or send a request",
+      "name": "Name",
+      "company": "Company",
+      "contact": "Email, Telegram or WhatsApp",
+      "needsTitle": "What do you need?",
+      "needs": [
+        { "id": "audit", "label": "Audit" },
+        { "id": "marketing", "label": "Marketing" },
+        { "id": "brand", "label": "Brand" },
+        { "id": "ai", "label": "AI & automation" },
+        { "id": "bizdev", "label": "Business development" },
+        { "id": "tender", "label": "Tenders" },
+        { "id": "legal", "label": "Legal support" },
+        { "id": "other", "label": "Other" }
+      ],
+      "message": "Your task in a few words",
+      "submit": "Send via WhatsApp",
+      "submitEmail": "Send request",
+      "consent": "By sending this request you agree to the",
+      "consentLink": "privacy policy",
+      "note": "WhatsApp will open with a ready message — check it and tap Send.",
+      "success": "Done. If WhatsApp didn't open, message us directly.",
+      "successEmail": "Thank you! Your request has been sent — we'll be in touch.",
+      "error": "Something went wrong. Message us on WhatsApp — it's faster.",
+      "required": "Please fill in this field",
+      "invalidContact": "Enter an email, Telegram handle or phone number",
+      "estimatePrefill": "The website estimate says automation could free about {hours} hours a month. I'd like to discuss it.",
+      "waTemplate": "Hello! A request from the CYBERMOVE website.\nName: {name}\nCompany: {company}\nContact: {contact}\nInterested in: {needs}\nTask: {message}"
+    },
+    "geo": { "label": "Where we work" }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Version of {date}",
+    "sections": [
+      { "h": "Who processes the data", "p": "The data controller is CYBER MOVE CONSULTING (\"we\"). For any questions about your data, message us on WhatsApp at the number shown on this website." },
+      { "h": "What data we receive", "p": "Only what you provide in the request form or in your message: name, company name, contact details and a description of your task." },
+      { "h": "Why", "p": "To reply to your request, discuss your task and prepare a proposal. We don't use your data for mailings without your consent and never sell it to third parties." },
+      { "h": "How data is transferred", "p": "When you send the form via WhatsApp, the message is delivered by WhatsApp under its own terms. If the form is sent by email, the data travels over a secure connection and is stored in our work mailbox." },
+      { "h": "How long we keep it", "p": "As long as needed to work on your request, or until you ask us to delete it." },
+      { "h": "Your rights", "p": "You can ask what data we hold about you, and have it corrected or deleted. Message us and we'll respond within a reasonable time." },
+      { "h": "Cookies and analytics", "p": "This website does not use advertising cookies or third-party analytics." }
+    ]
+  },
+  "notFound": {
+    "title": "This page doesn't exist.",
+    "lead": "It may have moved when the website was updated.",
+    "home": "Back to home"
+  }
+}
