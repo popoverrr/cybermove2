@@ -5,7 +5,8 @@ import BlockHead from '../BlockHead.astro';
 import Icon from '../Icon.astro';
 import DirHero from '../DirHero.astro';
 import CaseRow from '../CaseRow.astro';
-import ArticleRows from '../ArticleRows.astro';
+import ArticleCards from '../ArticleCards.astro';
+import { articlesFor } from '../../lib/articles';
 import SiteCta from '../SiteCta.astro';
 import { t, href, pick, localHref, type Lang } from '../../lib/i18n';
 import { directions, servicesOf, caseById, insightById, type Direction } from '../../lib/content';
@@ -21,6 +22,7 @@ const [intro, ...notes] = pick(lang, d.intro);
 const site = Astro.site!.origin;
 const others = directions.filter((x) => x.id !== d.id);
 const label = `${d.index} · ${d.stage}`;
+const topical = await articlesFor(lang, { direction: d.id, limit: 6 });
 ---
 <Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${d.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, d.nameFull), description: seo.description, serviceType: pick(lang, d.kicker),
@@ -70,12 +72,12 @@ const label = `${d.index} · ${d.stage}`;
     </div>
   </Block>
 
-  {d.insights.length > 0 && (
+  {topical.length > 0 && (
     <Block theme="dark" label={L('insights')} class="dir-insights">
       <div class="container">
         <BlockHead label={`${d.index} · ${t(lang, 'nav.insights')}`} link={{ href: href(lang, `insights/${d.id}/`), text: t(lang, 'insights.allInsights') }} />
         <h2 class="section-title reveal" data-split>{L('insights')}</h2>
-        <ArticleRows lang={lang} items={d.insights.map(insightById)} />
+        <ArticleCards lang={lang} items={topical} compact />
       </div>
     </Block>
   )}

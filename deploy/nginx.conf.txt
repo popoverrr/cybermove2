@@ -3,6 +3,8 @@
 
 error_page 404 /404.html;
 
+if ($host ~* ^www.(.+)$) { return 301 https://$1$request_uri; }
+
 location ~* ^/(approach)/?$ { return 301 /about/; }
 location ~* ^/(partners)/?$ { return 301 /cases/; }
 location ~* ^/(marketing|brand-development)/?$ { return 301 /services/; }

@@ -1,42 +1,62 @@
 ---
-// /insights/ and /insights/<rubric>/: hero, rubric chips (real links), article rows.
+// /insights/ and /insights/<rubric>/ (docs/16-seo.md §A.8, §E): hero, rubric chips (links), cards with 4:3 covers,
+// newest first. A rubric hub opens with a 120–200-word introduction (content/seo/hubs.json) that links to the
+// service direction, and lists every article of the rubric on one page.
 import Base from '../../layouts/Base.astro';
 import Block from '../Block.astro';
 import Crumbs from '../Crumbs.astro';
-import ArticleRows from '../ArticleRows.astro';
+import ArticleCards from '../ArticleCards.astro';
 import SiteCta from '../SiteCta.astro';
-import { t, href, pick, type Lang } from '../../lib/i18n';
-import { insights, rubrics, directions, type Rubric } from '../../lib/content';
+import { t, href, pick, localHref, type Lang } from '../../lib/i18n';
+import { rubrics, directions, directionById, type Rubric } from '../../lib/content';
+import { articles } from '../../lib/articles';
+import hubs from '../../../content/seo/hubs.json';
 
 interface Props { lang: Lang; rubric?: Rubric }
 const { lang, rubric } = Astro.props;
 const route = rubric ? `insights/${rubric.id}/` : 'insights/';
 const crumbs = [{ name: t(lang, 'nav.insights'), route: 'insights/' }, ...(rubric ? [{ name: pick(lang, directions.find((d) => d.id === rubric.id)!.name), route }] : [])];
-const items = rubric ? insights.filter((a) => a.direction === rubric.id) : insights;
+const all = await articles(lang);
+const items = rubric ? all.filter((a) => a.direction === rubric.id) : all;
 const seo = rubric ? pick(lang, rubric.seo) : null;
 const site = Astro.site!.origin;
+const hub = rubric ? (hubs as Record<string, Record<string, string[]>>)[rubric.id]?.[lang] : null;
+// hub text: paragraphs; [текст](/services/…/) links become anchors
+const md = (p: string) => p.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, (_, txt, u) => `<a class="link" href="${localHref(u)}">${txt}</a>`);
+const d = rubric ? directionById(rubric.id) : null;
 ---
 <Base lang={lang} page="insights" route={route} path={`${t(lang, 'home.windows.insights.path')}${rubric ? ` / ${rubric.id}` : ''}`}
-  title={seo?.title} description={seo?.description} crumbs={crumbs}
+  title={seo?.title} description={seo?.description} crumbs={crumbs} rss={lang === 'ru'}
+  lastmod={items.map((a) => a.updated.toISOString().slice(0, 10)).sort().at(-1)}
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: rubric ? pick(lang, rubric.h1) : t(lang, 'insights.hero.title'), inLanguage: lang,
-    hasPart: items.map((a) => ({ '@type': 'BlogPosting', headline: pick(lang, a.title), url: site + href(lang, `insights/${a.direction}/${a.id}/`) })) }]}>
+    url: site + href(lang, route),
+    mainEntity: { '@type': 'ItemList', numberOfItems: items.length, itemListElement: items.map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: site + href(lang, a.route), name: a.title })) } }]}>
   <Block theme="dark" label={t(lang, 'nav.insights')} first hero class="page-hero insights-hero">
     <div class="container">
       <Crumbs lang={lang} items={crumbs} />
-      <h1 class="hero__title reveal" data-split>{rubric ? pick(lang, rubric.h1) : t(lang, 'insights.hero.title')}</h1>
-      <p class="lead hero__lead reveal" style="--rd:120ms">{rubric ? pick(lang, rubric.lead) : t(lang, 'insights.hero.lead')}</p>
-      <nav class="pfilter pfilter--links reveal" aria-label={t(lang, 'nav.insights')}>
-        <a class:list={['chip', !rubric && 'is-on']} href={href(lang, 'insights/')} aria-current={!rubric ? 'page' : undefined}>
-          <span>{t(lang, 'insights.all')}</span><span class="chip__count num">{String(insights.length).padStart(2, '0')}</span>
+      <h1 class="hero__title reveal">{rubric ? pick(lang, rubric.h1) : t(lang, 'insights.hero.title')}</h1>
+      {hub ? (
+        <div class="hub-intro reveal" style="--rd:120ms">{hub.map((p) => <p set:html={md(p)} />)}</div>
+      ) : (
+        <p class="lead hero__lead reveal" style="--rd:120ms">{rubric ? pick(lang, rubric.lead) : t(lang, 'insights.hero.lead')}</p>
+      )}
+      {d && <p class="hub-link reveal"><a class="link link--arrow" href={href(lang, `services/${d.id}/`)}><span>{lang === 'ru' ? 'Услуги направления' : 'Services'}: {pick(lang, d.nameFull)}</span></a></p>}
+      <nav class="gchips gchips--static reveal" aria-label={t(lang, 'nav.insights')}>
+        <a class:list={['gchip', !rubric && 'is-on']} href={href(lang, 'insights/')} aria-current={!rubric ? 'page' : undefined}>
+          <span>{t(lang, 'insights.all')} <span class="num muted">{all.length}</span></span>
         </a>
-        {rubrics.map((r) => { const n = insights.filter((a) => a.direction === r.id).length; return (
-          <a class:list={['chip', rubric?.id === r.id && 'is-on']} href={href(lang, `insights/${r.id}/`)} aria-current={rubric?.id === r.id ? 'page' : undefined}>
-            <span>{pick(lang, directions.find((d) => d.id === r.id)!.name)}</span><span class="chip__count num">{String(n).padStart(2, '0')}</span>
+        {rubrics.map((r) => { const n = all.filter((a) => a.direction === r.id).length; return n > 0 && (
+          <a class:list={['gchip', rubric?.id === r.id && 'is-on']} href={href(lang, `insights/${r.id}/`)} aria-current={rubric?.id === r.id ? 'page' : undefined}>
+            <span>{pick(lang, directions.find((x) => x.id === r.id)!.name)} <span class="num muted">{n}</span></span>
           </a>
         ); })}
       </nav>
-      <ArticleRows lang={lang} items={items} headingLevel="h2" />
     </div>
   </Block>
-  <SiteCta lang={lang} theme="light" />
+  <Block theme="light" label={rubric ? pick(lang, rubric.h1) : t(lang, 'nav.insights')} class="insights-list">
+    <div class="container">
+      <ArticleCards lang={lang} items={items} headingLevel="h2" />
+    </div>
+  </Block>
+  <SiteCta lang={lang} />
 </Base>

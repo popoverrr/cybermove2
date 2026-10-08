@@ -1,0 +1,8 @@
+{
+  "_comment": "Коды подтверждения поисковых систем. Владелец вставляет значения и пересобирает сайт. Пустое значение = тег не выводится.",
+  "googleSiteVerification": "",
+  "googleHtmlFile": { "name": "", "content": "" },
+  "yandexVerification": "",
+  "bingVerification": "",
+  "indexNowKey": ""
+}

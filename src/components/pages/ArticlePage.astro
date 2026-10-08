@@ -1,55 +1,138 @@
 ---
-// /insights/<rubric>/<slug>/: crumbs, meta line, H1, excerpt, table of contents, the article verbatim
-// in the privacy-page typography, then «what Cyber Move Consulting does», related cases, FAQ, more on the topic, CTA.
-import type { CollectionEntry } from 'astro:content';
+// /insights/<rubric>/<slug>/ (docs/16-seo.md): crumbs, rubric, H1, author · dates · reading time, cover, «Коротко»,
+// table of contents, the article (figures drawn from ```figure blocks), sources, disclaimer for legal topics,
+// about the author/company, then «what Cyber Move Consulting does», related cases, FAQ, «Читайте также», CTA.
+import { existsSync } from 'node:fs';
 import Base from '../../layouts/Base.astro';
 import Block from '../Block.astro';
 import BlockHead from '../BlockHead.astro';
 import Button from '../Button.astro';
-import Icon from '../Icon.astro';
 import Crumbs from '../Crumbs.astro';
 import CaseRow from '../CaseRow.astro';
-import ArticleRows from '../ArticleRows.astro';
+import ArticleCards from '../ArticleCards.astro';
 import FaqList from '../FaqList.astro';
 import SiteCta from '../SiteCta.astro';
-import { t, href, url, pick, localHref, type Lang } from '../../lib/i18n';
-import { insightById, directionById, serviceById, caseById } from '../../lib/content';
+import CoverPicture from '../CoverPicture.astro';
+import { t, href, url, pick, asset, localHref, type Lang } from '../../lib/i18n';
+import { directionById, serviceById, servicesOf, caseById } from '../../lib/content';
+import { articles, relatedTo, allSlugs, fmtDate, isoDate, readLabel, authors, type Article } from '../../lib/articles';
+import { figure } from '../../../scripts/lib/figures.mjs';
 
-interface Props { lang: Lang; entry: CollectionEntry<'insights'> }
-const { lang, entry } = Astro.props;
-const slug = entry.id.split('/').pop()!;
-const meta = insightById(slug);
-const d = directionById(meta.direction);
-const seo = pick(lang, meta.seo);
-const route = `insights/${d.id}/${slug}/`;
-const crumbs = [{ name: t(lang, 'nav.insights'), route: 'insights/' }, { name: pick(lang, d.name), route: `insights/${d.id}/` }, { name: pick(lang, meta.title), route }];
-const headings = (entry.rendered?.metadata?.headings ?? []).filter((h) => h.depth === 2);
-// site-absolute links of the source ("/cases/x/", "/en/…") → current base path
-const html = (entry.rendered?.html ?? '').replace(/href="(\/[^"]*)"/g, (_, p) => `href="${localHref(p)}"`);
-const svcs = entry.data.services.map(serviceById);
-const more = meta.more.map(insightById);
+interface Props { lang: Lang; article: Article }
+const { lang, article: a } = Astro.props;
+const e = a.entry;
+const d = directionById(a.direction);
+const route = a.route;
+const crumbs = [{ name: t(lang, 'nav.insights'), route: 'insights/' }, { name: pick(lang, d.name), route: `insights/${d.id}/` }, { name: a.title, route }];
 const site = Astro.site!.origin;
 const L = (k: string) => t(lang, `insights.${k}`);
+const ru = lang === 'ru';
+
+/* body: figures from ```figure blocks (JSON in the source), links to unpublished articles unwrapped, local base */
+const figs = [...(e.body ?? '').matchAll(/```figure\r?\n([\s\S]*?)```/g)].map((m, i) => { try { return JSON.parse(m[1]); } catch { throw new Error(`[${a.id}] bad figure #${i + 1}`); } });
+let fi = 0;
+const published = new Set((await articles(lang)).map((x) => x.id));
+const known = await allSlugs();
+let html = (e.rendered?.html ?? '')
+  .replace(/<pre[^>]*>([\s\S]*?)<\/pre>/g, (m, inner) => { if (!/motif/.test(inner)) return m; const f = figs[fi++]; return f ? figure({ ...f, seed: fi * 97 + a.id.length }) : ''; }) // ```figure blocks (shiki marks the unknown language as plaintext)
+  .replace(/<a href="(\/(?:en\/)?insights\/[\w-]+\/([\w-]+)\/)"[^>]*>([\s\S]*?)<\/a>/g, (m, _p, slug, text) => (known.has(slug) && !published.has(slug) ? text : m))
+  .replace(/href="(\/[^"]*)"/g, (_, p) => `href="${localHref(p)}"`)
+  .replace(/<a href="(https?:[^"]+)"/g, '<a href="$1" rel="noopener" target="_blank"')
+  .replace(/<table>/g, '<div class="table-wrap" tabindex="0"><table>').replace(/<\/table>/g, '</table></div>');
+const headings = (e.rendered?.metadata?.headings ?? []).filter((h) => h.depth === 2);
+const words = (e.body ?? '').replace(/```[\s\S]*?```/g, '').split(/\s+/).filter(Boolean).length;
+
+/* the service this article leads to */
+const m = (a.serviceLink ?? '').match(/^\/services\/([\w-]+)\/(?:([\w-]+)\/)?/);
+const q = (a.serviceLink ?? '').match(/[?&]service=([\w-]+)/)?.[1];
+const svc = m?.[2] ? serviceById(m[2]) : null;
+const svcs = svc ? [svc, ...servicesOf(d).filter((s) => s.id !== svc.id).slice(0, 3)] : servicesOf(m?.[1] ? directionById(m[1]) : d).slice(0, 4);
+const ctaService = svc?.id ?? q ?? svcs[0].id;
+const svcLink = a.serviceLink ?? `/services/${d.id}/`;
+
+const related = await relatedTo(a, 3);
+const caseIds: string[] = e.data.cases ?? [];
+const faq = e.data.faq;
+const sources = e.data.sources;
+const legal = a.direction === 'tenders-legal';
+
+/* author: the editorial team (Organization) unless frontmatter names a real author from src/content/authors */
+const person = authors.find((x) => x.id === a.author);
+const orgId = site + href('ru') + '#organization';
+const authorLd = person
+  ? { '@type': 'Person', name: person.name, jobTitle: person.role, url: site + href(lang, `insights/authors/${person.id}/`), ...(person.sameAs.length ? { sameAs: person.sameAs } : {}) }
+  : { '@type': 'Organization', '@id': orgId, name: 'Cyber Move Consulting' };
+const authorName = person ? person.name : ru ? 'Редакция Cyber Move Consulting' : 'Cyber Move Consulting editorial team';
+const authorHref = person ? href(lang, `insights/authors/${person.id}/`) : url(lang, 'about');
+
+/* cover files (scripts/article-covers.mjs) */
+const hasCover = existsSync(`public/covers/${a.id}/og.jpg`);
+const ogImage = hasCover ? asset(`covers/${a.id}/${lang === 'en' && existsSync(`public/covers/${a.id}/og-en.jpg`) ? 'og-en' : 'og'}.jpg`) : undefined;
+const img = (f: string) => site + asset(`covers/${a.id}/${f}`);
+const pub = isoDate(a.published), mod = isoDate(a.updated);
 ---
-<Base lang={lang} page="insights" route={route} path={`${t(lang, 'home.windows.insights.path')} / ${slug}`} title={seo.title} description={seo.description} crumbs={crumbs}
+<Base lang={lang} page="insights" route={route} path={`${t(lang, 'home.windows.insights.path')} / ${a.id}`} title={a.seoTitle} description={a.description} crumbs={crumbs}
+  ogImage={ogImage} langsAvailable={a.hasEn ? ['ru', 'en'] : ['ru']} lastmod={mod} rss={ru}
+  article={{ published: pub, modified: mod, section: pick(lang, d.name), tags: a.keywords.slice(0, 6) }}
   jsonLd={[
-    { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: pick(lang, meta.title), description: seo.description, inLanguage: lang,
-      datePublished: entry.data.date.toISOString().slice(0, 10), url: site + href(lang, route), mainEntityOfPage: site + href(lang, route),
-      author: { '@id': site + href('ru') + '#organization' }, publisher: { '@id': site + href('ru') + '#organization' }, image: site + href('ru') + 'og.png' },
-    ...(entry.data.faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: entry.data.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+    { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': site + href(lang, route) + '#article',
+      headline: a.title, description: a.description, inLanguage: lang,
+      ...(hasCover ? { image: [img('16x9.webp'), img('4x3.webp'), img('1x1.webp')] } : { image: site + asset('og.png') }),
+      datePublished: pub, dateModified: mod, author: authorLd, publisher: { '@id': orgId },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': site + href(lang, route) }, url: site + href(lang, route),
+      articleSection: pick(lang, d.name), ...(a.keywords.length ? { keywords: a.keywords.join(', ') } : {}), wordCount: words,
+      about: { '@type': 'Service', name: svc ? pick(lang, svc.name) : pick(lang, d.nameFull), url: site + localHref(svcLink.split('?')[0]), provider: { '@id': orgId } },
+      ...(sources.length ? { citation: sources.map((s) => s.url) } : {}) },
+    ...(faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
   ]}>
+  {hasCover && <meta slot="head" name="cm:cover" content={img('16x9.webp')} />}
   <Block theme="light" label={pick(lang, d.nameFull)} first hero class="article">
     <div class="container">
       <Crumbs lang={lang} items={crumbs} />
-      <p class="label muted article__meta reveal">{d.index} · {pick(lang, d.nameFull)} · {pick(lang, meta.date)} · {pick(lang, meta.read)}</p>
-      <h1 class="h2 article__title reveal" data-split>{pick(lang, meta.title)}</h1>
-      <p class="lead muted article__lead reveal" style="--rd:120ms">{pick(lang, meta.excerpt)}</p>
+      <p class="label muted article__meta reveal"><a class="link" href={href(lang, `insights/${d.id}/`)}>{d.index} · {pick(lang, d.nameFull)}</a></p>
+      <h1 class="h2 article__title reveal">{a.title}</h1>
+      <p class="article__byline label muted reveal">
+        <a class="link" href={authorHref} rel="author">{authorName}</a>
+        <span aria-hidden="true"> · </span><span>{ru ? 'Опубликовано' : 'Published'} <time datetime={pub}>{fmtDate(lang, a.published)}</time></span>
+        {mod !== pub && <><span aria-hidden="true"> · </span><span>{ru ? 'Обновлено' : 'Updated'} <time datetime={mod}>{fmtDate(lang, a.updated)}</time></span></>}
+        <span aria-hidden="true"> · </span><span>{readLabel(lang, a.minutes)}</span>
+      </p>
+      {!a.isNew && <p class="lead muted article__lead reveal" style="--rd:120ms">{a.excerpt}</p>}
+      {hasCover && <CoverPicture slug={a.id} format="16x9" alt={a.coverAlt} eager class="article__cover" sizes="(min-width: 1280px) 1200px, 100vw" />}
       <div class="article__grid">
-        <nav class="toc reveal" aria-labelledby="toc-title">
-          <p class="label muted" id="toc-title">{L('toc')}</p>
-          <ol class="list-reset">{headings.map((h, i) => <li><a class="link" href={`#${h.slug}`}><span class="label muted num">{String(i + 1).padStart(2, '0')}</span><span>{h.text}</span></a></li>)}</ol>
-        </nav>
-        <div class="prose article__body" set:html={html} />
+        <aside class="article__side">
+          {e.data.summary.length > 0 && (
+            <div class="asum">
+              <p class="label asum__title">{ru ? 'Коротко' : 'Key takeaways'}</p>
+              <ul class="list-reset asum__list">{e.data.summary.map((s) => <li>{s}</li>)}</ul>
+            </div>
+          )}
+          {headings.length > 2 && (
+            <nav class="toc" aria-labelledby="toc-title">
+              <p class="label muted" id="toc-title">{L('toc')}</p>
+              <ol class="list-reset">{headings.map((h, i) => <li><a class="link" href={`#${h.slug}`}><span class="label muted num">{String(i + 1).padStart(2, '0')}</span><span>{h.text}</span></a></li>)}</ol>
+            </nav>
+          )}
+        </aside>
+        <div class="article__main">
+          <div class="prose article__body" set:html={html} />
+          {sources.length > 0 && (
+            <section class="asrc" aria-labelledby="src-title">
+              <h2 class="label muted" id="src-title">{ru ? 'Источники' : 'Sources'}</h2>
+              <ol class="asrc__list">{sources.map((s) => <li><a class="link" href={s.url} rel="noopener" target="_blank">{s.title}</a> <span class="muted asrc__host">{new URL(s.url).hostname.replace(/^www\./, '')}</span></li>)}</ol>
+            </section>
+          )}
+          {legal && (
+            <p class="adisc small muted">{ru ? `Материал носит информационный характер и не заменяет консультацию юриста; актуально на ${fmtDate(lang, a.updated)}.` : `This material is for information only and is not legal advice; current as of ${fmtDate(lang, a.updated)}.`}</p>
+          )}
+          <div class="aabout">
+            <p class="label muted">{ru ? 'Об авторе' : 'About the author'}</p>
+            <p><a class="link" href={authorHref}>{authorName}</a>{ru
+              ? ' — команда консультантов по аудиту, маркетингу, CRM и AI, тендерам и праву. Пишем о том, что делаем в проектах клиентов в Казахстане и за его пределами.'
+              : ' — consultants in audit, marketing, CRM and AI, tenders and law. We write about what we do in client projects.'}</p>
+            <p class="aabout__links small"><a class="link" href={url(lang, 'about')}>{ru ? 'О компании' : 'About us'}</a> · <a class="link" href={localHref(svcLink.split('?')[0].startsWith('/services') ? svcLink : `/services/${d.id}/`)}>{svc ? pick(lang, svc.name) : pick(lang, d.nameFull)}</a> · <a class="link" href={url(lang, 'cases')}>{ru ? 'Кейсы' : 'Cases'}</a></p>
+          </div>
+        </div>
       </div>
     </div>
   </Block>
@@ -59,8 +142,8 @@ const L = (k: string) => t(lang, `insights.${k}`);
       <BlockHead label={`${d.index} · ${pick(lang, d.nameFull)}`} />
       <div class="split">
         <div class="split__a">
-          <h2 class="reveal" data-split>{L('what')}</h2>
-          <p class="lead muted split__lead reveal">{pick(lang, svcs[0].lead)}</p>
+          <h2 class="reveal">{L('what')}</h2>
+          <p class="lead muted split__lead reveal">{pick(lang, (svc ?? svcs[0]).lead)}</p>
         </div>
         <div class="split__b">
           <ol class="numrows list-reset">
@@ -71,43 +154,43 @@ const L = (k: string) => t(lang, `insights.${k}`);
               </li>
             ))}
           </ol>
-          <div class="reveal split__cta"><Button href={url(lang, 'contact', `?service=${svcs[0].id}`)}>{t(lang, 'service.discuss')}</Button></div>
+          <div class="reveal split__cta"><Button href={url(lang, 'contact', `?service=${ctaService}`)} data-service={ctaService}>{t(lang, 'service.discuss')}</Button></div>
         </div>
       </div>
     </div>
   </Block>
 
-  {entry.data.cases.length > 0 && (
+  {caseIds.length > 0 && (
     <Block theme="light" label={L('relatedCases')} class="article-cases">
       <div class="container">
         <BlockHead label={L('relatedCases')} />
-        <h2 class="section-title reveal" data-split>{L('relatedCases')}</h2>
-        <CaseRow lang={lang} items={entry.data.cases.map(caseById)} />
+        <h2 class="section-title reveal">{L('relatedCases')}</h2>
+        <CaseRow lang={lang} items={caseIds.map(caseById)} />
       </div>
     </Block>
   )}
 
-  {entry.data.faq.length > 0 && (
+  {faq.length > 0 && (
     <Block theme="dark" label={L('faq')} class="svc-faq">
       <div class="container">
         <BlockHead label="FAQ" />
         <div class="faq-layout">
-          <h2 class="reveal" data-split>{L('faq')}</h2>
-          <FaqList items={entry.data.faq} />
+          <h2 class="reveal">{L('faq')}</h2>
+          <FaqList items={faq} />
         </div>
       </div>
     </Block>
   )}
 
-  {more.length > 0 && (
-    <Block theme="light" label={L('moreTopic')} class="article-more">
+  {related.length > 0 && (
+    <Block theme="light" label={ru ? 'Читайте также' : L('moreTopic')} class="article-more">
       <div class="container">
-        <BlockHead label={L('moreTopic')} link={{ href: href(lang, 'insights/'), text: L('allInsights') }} />
-        <h2 class="section-title reveal" data-split>{L('moreTopic')}</h2>
-        <ArticleRows lang={lang} items={more} />
+        <BlockHead label={ru ? 'Читайте также' : L('moreTopic')} link={{ href: href(lang, 'insights/'), text: L('allInsights') }} />
+        <h2 class="section-title reveal">{ru ? 'Читайте также' : L('moreTopic')}</h2>
+        <ArticleCards lang={lang} items={related} />
       </div>
     </Block>
   )}
 
-  <SiteCta lang={lang} query={`?service=${svcs[0].id}`} />
+  <SiteCta lang={lang} query={`?service=${ctaService}`} />
 </Base>

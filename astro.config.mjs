@@ -1,9 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
 import { readFileSync } from 'node:fs';
 import { loadEnv } from 'vite';
 import { hostingFiles } from './scripts/astro-hosting.mjs';
+import { execSync } from 'node:child_process';
+
+// date of the last content change (git), not of the build — for <lastmod> of non-article pages
+let CONTENT_DATE = new Date().toISOString().slice(0, 10);
+try { CONTENT_DATE = execSync('git log -1 --format=%cs -- content src/components src/content', { encoding: 'utf8' }).trim() || CONTENT_DATE; } catch { /* no git */ }
 
 const company = JSON.parse(readFileSync(new URL('./content/data/company.json', import.meta.url), 'utf8'));
 
@@ -30,13 +34,10 @@ export default defineConfig({
   devToolbar: { enabled: false },
   prefetch: false,
   integrations: [
-    sitemap({
-      i18n: { defaultLocale: 'ru', locales: { ru: 'ru-RU', en: 'en-GB' } },
-      filter: (page) => !page.includes('/404'),
-    }),
     hostingFiles(),
   ],
   vite: {
+    define: { 'import.meta.env.CONTENT_DATE': JSON.stringify(CONTENT_DATE) },
     build: { assetsInlineLimit: 0 },
   },
 });

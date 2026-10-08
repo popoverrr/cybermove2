@@ -1,0 +1,89 @@
+n	wave	rubric	slug	title	primary_keyword	secondary_keywords	intent	service_link	cover_motif	publish_date
+1	1	audit	audit-checklist-small-business	Чек-лист аудита малого бизнеса: 40 вопросов, которые стоит задать себе	аудит малого бизнеса	чек-лист аудита бизнеса; самодиагностика бизнеса	info	/services/audit/business-audit/	checklist	2026-10-08
+2	1	systems	crm-implementation-steps	Внедрение CRM: 9 шагов, чтобы менеджеры действительно ей пользовались	внедрение CRM	внедрение CRM Казахстан; настройка CRM	commercial	/services/systems/crm/	flow	2026-10-08
+3	1	brand-content	brand-platform	Платформа бренда: из чего состоит и как её собрать	платформа бренда	стратегия бренда	info	/services/brand-content/brand-core/	matrix	2026-10-08
+4	1	traffic	targeting-instagram-kazakhstan	Таргетированная реклама в Instagram в Казахстане: настройка и бюджеты	таргетированная реклама Казахстан	таргет Instagram Алматы	commercial	/services/traffic/targeting/	chart	2026-10-08
+5	1	tenders-legal	goszakup-registration	Регистрация на портале госзакупок: пошагово для поставщика	регистрация на портале госзакупок	goszakup.gov.kz регистрация	info	/services/tenders-legal/tender-monitoring/	flow	2026-10-08
+6	1	audit	marketing-audit-how-to	Маркетинговый аудит компании: как проводится и что вы получите на выходе	маркетинговый аудит	аудит маркетинга компании; аудит маркетинга Казахстан	commercial	/services/audit/business-audit/	funnel	2026-10-08
+7	1	systems	amocrm-vs-bitrix24	amoCRM или Битрикс24: что выбрать для отдела продаж	amoCRM или Битрикс24	сравнение CRM-систем	commercial	/services/systems/crm/	matrix	2026-10-08
+8	1	brand-content	brand-core-session	Ядро бренда за одну стратегическую сессию: как это проходит	ядро бренда	стратегическая сессия бренда	commercial	/services/brand-content/brand-core/	flow	2026-10-08
+9	1	traffic	meta-lead-forms	Лид-формы Meta: как получать заявки без сайта и не терять качество	лид-формы Facebook	лид-формы Instagram	info	/services/traffic/targeting/	funnel	2026-10-08
+10	1	tenders-legal	tender-search-kazakhstan	Как искать тендеры в Казахстане: порталы, фильтры, подписки	поиск тендеров Казахстан	тендеры Казахстан	info	/services/tenders-legal/tender-monitoring/	grid	2026-10-08
+11	1	audit	sales-department-audit	Аудит отдела продаж: как найти, где теряются сделки	аудит отдела продаж	прослушка звонков; конверсия отдела продаж	commercial	/services/audit/business-audit/	funnel	2026-10-08
+12	1	systems	whatsapp-crm-integration	WhatsApp и CRM: как не терять заявки из мессенджеров	интеграция WhatsApp с CRM	WhatsApp Business API Казахстан	info	/services/systems/crm/	network	2026-10-08
+13	1	brand-content	rebranding-when	Ребрендинг: когда он нужен, а когда достаточно обновить упаковку	ребрендинг	обновление бренда	info	/services/brand-content/brand-core/	matrix	2026-10-08
+14	1	traffic	creative-testing	Тестирование рекламных креативов: метод без слива бюджета	тестирование креативов	A/B-тест рекламы	info	/services/traffic/targeting/	matrix	2026-10-08
+15	1	tenders-legal	tender-chances	Как оценить шансы в тендере до подачи заявки	участие в тендере	анализ тендера	info	/services/tenders-legal/tender-monitoring/	matrix	2026-10-08
+16	1	audit	management-pnl	Управленческий P&L для собственника: как собрать его за неделю	управленческий отчёт о прибылях и убытках	P&L малого бизнеса; управленческий учёт	info	/services/audit/financial-audit/	chart	2026-10-08
+17	1	systems	kaspi-payments-crm	Оплаты Kaspi и CRM: как связать продажи и деньги	Kaspi интеграция с CRM	Kaspi Pay для бизнеса	info	/services/systems/automation/	flow	2026-10-08
+18	1	brand-content	naming	Нейминг: как придумать название компании и проверить его	нейминг	название компании; проверка названия	info	/services/brand-content/brand-core/	document	2026-10-08
+19	1	traffic	google-ads-search-setup	Поисковая реклама Google Ads: настройка кампании шаг за шагом	настройка Google Ads	контекстная реклама Google	info	/services/traffic/google-ads/	flow	2026-10-08
+20	1	tenders-legal	tender-documents	Документы для участия в госзакупках: список и типичные ошибки	документы для тендера	заявка на госзакупки	info	/services/tenders-legal/tender-application/	checklist	2026-10-08
+21	1	audit	cash-flow-gap	Кассовый разрыв: почему выручка растёт, а денег нет	кассовый разрыв	движение денежных средств; cash flow малого бизнеса	info	/services/audit/financial-audit/	chart	2026-10-08
+22	1	systems	sales-funnel-crm	Воронка продаж в CRM: этапы, которые отражают реальность	воронка продаж в CRM	этапы сделки; настройка воронки	info	/services/systems/crm/	funnel	2026-10-08
+23	2	brand-content	tone-of-voice	Tone of voice: как компании разговаривать с клиентами	tone of voice	голос бренда	info	/services/brand-content/brand-core/	document	2026-10-20
+24	2	traffic	performance-max	Performance Max: когда работает, а когда сливает бюджет	Performance Max	кампании PMax	info	/services/traffic/google-ads/	chart	2026-10-20
+25	2	tenders-legal	bid-security	Обеспечение заявки и исполнения договора в госзакупках	обеспечение заявки на тендер	банковская гарантия госзакупки	info	/services/tenders-legal/tender-application/	document	2026-10-20
+26	2	audit	margin-by-product	Маржинальность по продуктам: что продавать больше, а что убрать	маржинальность продукта	расчёт маржи; ABC-анализ ассортимента	info	/services/audit/financial-audit/	matrix	2026-10-20
+27	2	systems	ip-telephony-business	IP-телефония для бизнеса: как выбрать и подключить	IP-телефония для бизнеса	виртуальная АТС Казахстан	commercial	/services/systems/telephony/	network	2026-10-20
+28	2	brand-content	brand-book	Брендбук и гайдлайн: что должно быть в документе	брендбук	гайдлайн бренда	info	/services/brand-content/brand-core/	document	2026-10-20
+29	2	traffic	google-ads-cost-kazakhstan	Сколько стоит реклама в Google в Казахстане	стоимость рекламы в Google Казахстан	цена клика Google Ads	commercial	/services/traffic/google-ads/	chart	2026-10-20
+30	2	tenders-legal	tender-complaint	Обжалование итогов тендера: когда и как подавать жалобу	обжалование итогов госзакупок	жалоба на тендер	info	/services/tenders-legal/tender-application/	flow	2026-10-20
+31	2	audit	unit-economics-retail	Юнит-экономика розничного магазина: расчёт на примере	юнит-экономика магазина	рентабельность розницы; средний чек	info	/services/audit/financial-audit/	chart	2026-10-20
+32	2	systems	call-tracking	Коллтрекинг: как понять, какая реклама приносит звонки	коллтрекинг	отслеживание звонков	info	/services/systems/telephony/	chart	2026-10-20
+33	2	brand-content	content-plan-instagram	Контент-план для Instagram на месяц: логика и шаблон	контент-план	контент-план для Instagram	info	/services/brand-content/smm/	timeline	2026-10-20
+34	2	traffic	youtube-ads	Реклама на YouTube для бизнеса: форматы и цели	реклама на YouTube	видеореклама YouTube	info	/services/traffic/google-ads/	grid	2026-10-20
+35	2	tenders-legal	samruk-procurement	Закупки Самрук-Казына: чем отличаются от госзакупок	закупки Самрук-Казына	закупки квазигоссектора	info	/services/tenders-legal/tender-monitoring/	matrix	2026-10-20
+36	2	audit	marketing-budget-calc	Как рассчитать маркетинговый бюджет от цели по выручке	маркетинговый бюджет	бюджет на рекламу; расчёт бюджета маркетинга	info	/services/audit/investment/	chart	2026-10-20
+37	2	systems	speech-analytics-ai	Речевая аналитика: как AI разбирает звонки менеджеров	речевая аналитика	анализ звонков с помощью AI	info	/services/systems/ai/	chart	2026-10-20
+38	2	brand-content	smm-cost-kazakhstan	Сколько стоит SMM в Казахстане и что входит в ведение	стоимость SMM	SMM Алматы; ведение Instagram цена	commercial	/services/brand-content/smm/	chart	2026-10-20
+39	2	traffic	remarketing	Ремаркетинг: как возвращать посетителей и не раздражать их	ремаркетинг	ретаргетинг	info	/services/traffic/google-ads/	flow	2026-10-20
+40	2	tenders-legal	unreliable-suppliers-register	Реестр недобросовестных поставщиков: как в него не попасть	реестр недобросовестных поставщиков	недобросовестный поставщик госзакупки	info	/services/tenders-legal/tender-application/	document	2026-10-20
+41	2	audit	cut-costs-keep-growth	Как сократить расходы и не остановить рост	сокращение расходов бизнеса	оптимизация затрат компании	info	/services/audit/investment/	matrix	2026-10-20
+42	2	systems	ai-chatbot-business	Чат-бот с AI для бизнеса: когда окупается, а когда нет	чат-бот для бизнеса	AI-бот в WhatsApp; чат-бот Казахстан	commercial	/services/systems/ai/	network	2026-10-20
+43	2	brand-content	reels-for-business	Reels и короткие видео для бизнеса: форматы, которые продают	reels для бизнеса	короткие видео для бизнеса	info	/services/brand-content/production/	grid	2026-10-20
+44	2	traffic	tiktok-spark-ads	Spark Ads в TikTok: как продвигать публикации авторов	Spark Ads	реклама у блогеров TikTok	info	/services/traffic/tiktok-ads/	grid	2026-10-20
+45	3	tenders-legal	contract-review-checklist	Проверка договора перед подписанием: 20 пунктов	проверка договора	юридическая проверка договора	info	/services/tenders-legal/contracts/	checklist	2026-11-02
+46	3	audit	business-strategy-12-months	Стратегия развития бизнеса на 12 месяцев: структура и пример	стратегия развития бизнеса	план развития компании	info	/services/audit/strategy/	timeline	2026-11-02
+47	3	systems	ai-for-small-business	AI для малого бизнеса: 15 задач, которые можно отдать уже сейчас	AI для бизнеса	нейросети для бизнеса	info	/services/systems/ai/	matrix	2026-11-02
+48	3	brand-content	production-planning	Продакшн для бизнеса: как спланировать съёмку и не переплатить	продакшн для бизнеса	съёмка рекламного ролика	info	/services/brand-content/production/	timeline	2026-11-02
+49	3	traffic	tiktok-lead-generation	Лидогенерация в TikTok: формы, мессенджеры, боты	лидогенерация в TikTok	заявки из TikTok	info	/services/traffic/tiktok-ads/	funnel	2026-11-02
+50	3	tenders-legal	service-agreement	Договор оказания услуг: условия, которые нельзя пропустить	договор оказания услуг	договор возмездного оказания услуг Казахстан	info	/services/tenders-legal/contracts/	document	2026-11-02
+51	3	audit	kpi-for-owner	KPI для собственника: 10 показателей, которые стоит видеть каждую неделю	KPI для бизнеса	дашборд собственника; показатели эффективности бизнеса	info	/services/audit/strategy/	dashboard	2026-11-02
+52	3	systems	business-process-automation	Автоматизация бизнес-процессов: с чего начать	автоматизация бизнес-процессов	автоматизация процессов компании	commercial	/services/systems/automation/	flow	2026-11-02
+53	3	brand-content	ugc-creatives	UGC-креативы: что это и как их заказывать	UGC-контент	UGC-креативы для рекламы	info	/services/brand-content/production/	grid	2026-11-02
+54	3	traffic	seo-audit-checklist	SEO-аудит сайта: чек-лист из 30 пунктов	SEO-аудит сайта	технический аудит сайта	info	/services/traffic/seo/	checklist	2026-11-02
+55	3	tenders-legal	nda-agreement	NDA: когда соглашение о конфиденциальности действительно нужно	соглашение о конфиденциальности	NDA договор	info	/services/tenders-legal/contracts/	document	2026-11-02
+56	3	audit	quarterly-roadmap	Roadmap компании по кварталам: как выбрать, что делать первым	roadmap бизнеса	приоритизация задач; ICE-оценка	info	/services/audit/strategy/	timeline	2026-11-02
+57	3	systems	make-vs-n8n	Make, n8n или код: чем автоматизировать процессы компании	n8n или Make	сервисы автоматизации; интеграции без кода	info	/services/systems/automation/	matrix	2026-11-02
+58	3	brand-content	pr-for-business	PR для бизнеса: как попасть в СМИ без рекламного бюджета	PR для бизнеса	публикации в СМИ Казахстан	info	/services/brand-content/pr/	network	2026-11-02
+59	3	traffic	local-seo-kazakhstan	Локальное SEO: Google Бизнес-профиль, 2GIS и карты	локальное SEO	Google Бизнес-профиль Казахстан	info	/services/traffic/seo/	map	2026-11-02
+60	3	tenders-legal	personal-data-law	Персональные данные клиентов: что требует закон Казахстана	закон о персональных данных Казахстан	согласие на обработку персональных данных	info	/services/tenders-legal/contracts/	document	2026-11-02
+61	3	audit	competitor-analysis	Анализ конкурентов: пошаговый метод для малого и среднего бизнеса	анализ конкурентов	конкурентный анализ; анализ конкурентов Казахстан	info	/services/audit/business-audit/	matrix	2026-11-02
+62	3	systems	end-to-end-analytics	Сквозная аналитика: как связать рекламу, CRM и деньги	сквозная аналитика	сквозная аналитика Казахстан	commercial	/services/systems/automation/	flow	2026-11-02
+63	3	brand-content	reputation-management	Управление репутацией: отзывы, 2GIS и Google Карты	управление репутацией	отзывы в 2GIS; отзывы в Google	info	/services/brand-content/pr/	map	2026-11-02
+64	3	traffic	seo-cost-kazakhstan	Сколько стоит SEO-продвижение в Казахстане и когда ждать результат	стоимость SEO Казахстан	SEO Алматы	commercial	/services/traffic/seo/	chart	2026-11-02
+65	3	tenders-legal	llp-registration	Регистрация ТОО в Казахстане: шаги, сроки, документы	регистрация ТОО	открыть ТОО в Казахстане	info	/services/tenders-legal/corporate/	flow	2026-11-02
+66	3	audit	customer-journey-map	Карта пути клиента (CJM): как построить и что с ней делать дальше	карта пути клиента	customer journey map; CJM	info	/services/audit/business-audit/	flow	2026-11-02
+67	4	systems	website-cost-kazakhstan	Сколько стоит сайт в Казахстане и из чего складывается цена	стоимость сайта Казахстан	разработка сайта Алматы цена	commercial	/services/systems/websites/	chart	2026-11-14
+68	4	brand-content	online-course-launch	Запуск онлайн-курса эксперта: продукт, воронка, команда	запуск онлайн-курса	запуск курса эксперта	commercial	/services/brand-content/personal-brand/	timeline	2026-11-14
+69	4	traffic	semantic-core	Семантическое ядро для сайта услуг: как собрать и разметить	семантическое ядро	сбор ключевых слов	info	/services/traffic/seo/	matrix	2026-11-14
+70	4	tenders-legal	ie-or-llp	ИП или ТОО: что выбрать для бизнеса в Казахстане	ИП или ТОО	форма бизнеса Казахстан	info	/services/tenders-legal/corporate/	matrix	2026-11-14
+71	4	audit	why-sales-dropped	Почему упали продажи: 12 причин и как проверить каждую	упали продажи	снижение продаж причины	info	/services/audit/business-audit/	checklist	2026-11-14
+72	4	systems	website-brief	Техническое задание на сайт: бриф для собственника	техническое задание на сайт	бриф на разработку сайта	info	/services/systems/websites/	document	2026-11-14
+73	4	brand-content	personal-brand-ceo	Личный бренд руководителя: зачем он компании и как его строить	личный бренд руководителя	личный бренд CEO	info	/services/brand-content/personal-brand/	network	2026-11-14
+74	4	traffic	yandex-direct-kazakhstan	Яндекс Директ в Казахстане: когда его стоит запускать	Яндекс Директ Казахстан	контекстная реклама Яндекс	info	/services/traffic/	chart	2026-11-14
+75	4	tenders-legal	trademark-registration	Регистрация товарного знака в Казахстане	регистрация товарного знака	защита бренда Казахстан	info	/services/tenders-legal/corporate/	document	2026-11-14
+76	4	audit	consultant-vs-agency	Бизнес-консультант или агентство: кого нанимать и когда	бизнес-консультант	бизнес-консультант Алматы; консалтинг или агентство	commercial	/services/	matrix	2026-11-14
+77	4	brand-content	business-events	Деловое мероприятие под ключ: от концепции до отчёта	организация деловых мероприятий	конференция Алматы; корпоративное мероприятие	commercial	/contact/?service=events	timeline	2026-11-14
+78	4	traffic	ads-report-for-owner	Отчёт по рекламе для собственника: какие цифры требовать от подрядчика	отчёт по рекламе	отчётность таргетолога	info	/services/traffic/	dashboard	2026-11-14
+79	4	tenders-legal	corporate-documents	Корпоративные документы ТОО: устав, решения, протоколы	корпоративные документы ТОО	устав ТОО	info	/services/tenders-legal/corporate/	document	2026-11-14
+80	4	audit	business-consulting-kazakhstan	Бизнес-консалтинг в Казахстане: какие задачи решает и как выбрать подрядчика	бизнес-консалтинг Казахстан	консалтинговая компания Алматы; консалтинг Астана	commercial	/services/audit/	map	2026-11-14
+81	4	systems	online-store-launch	Запуск интернет-магазина: от каталога до первых заказов	создание интернет-магазина	интернет-магазин Казахстан	commercial	/services/systems/websites/	timeline	2026-11-14
+82	4	traffic	b2b-lead-generation	Лидогенерация в B2B: каналы, которые работают в Казахстане	лидогенерация B2B	привлечение клиентов B2B	commercial	/services/traffic/	funnel	2026-11-14
+83	4	audit	hr-consulting-growing-team	HR-консалтинг: подбор и развитие команды в растущей компании	HR-консалтинг	подбор персонала Алматы; адаптация сотрудников	commercial	/contact/?service=hr	flow	2026-11-14
+84	4	systems	website-speed	Скорость сайта: почему медленный сайт теряет заявки	скорость загрузки сайта	Core Web Vitals	info	/services/systems/websites/	chart	2026-11-14
+85	4	traffic	b2c-complex-promotion	Комплексное продвижение B2C: как собрать каналы в одну систему	комплексное продвижение	интернет-маркетинг под ключ	commercial	/services/traffic/	network	2026-11-14
+86	4	systems	sales-department-from-scratch	Отдел продаж с нуля: структура, скрипты, CRM и KPI	отдел продаж с нуля	построение отдела продаж	commercial	/contact/?service=sales-department	flow	2026-11-14
+87	4	traffic	offline-advertising	Офлайн-реклама: наружка, радио, ивенты — как измерять результат	офлайн-реклама	наружная реклама Алматы	info	/services/traffic/	map	2026-11-14
+88	4	systems	sales-scripts	Скрипты продаж: как написать и внедрить, чтобы ими пользовались	скрипты продаж	скрипт звонка; работа с возражениями	info	/services/systems/crm/	document	2026-11-14

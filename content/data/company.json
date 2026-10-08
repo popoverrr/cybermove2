@@ -6,5 +6,8 @@
     "ru": "Убираем хаос. Структурируем. Развиваем бизнес.",
     "en": "We clear the chaos. Bring structure. Grow the business."
   },
-  "foundedYear": null
+  "foundedYear": null,
+  "sameAs": [],
+  "address": null,
+  "_comment": "sameAs — только реальные профили компании (Instagram, LinkedIn…); address — только реальный адрес {streetAddress, addressLocality, postalCode, addressCountry}. Пусто — в разметку не выводится."
 }

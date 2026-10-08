@@ -62,7 +62,8 @@ for (const p of PAGES) {
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no horizontal scroll').toBe(true);
         await expect(page.locator('h1')).toHaveCount(1);
         expect(await page.getAttribute('html', 'lang')).toBe(lang);
-        await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(3);
+        // 404 is noindex and has no language alternates (docs/16-seo.md §A.13)
+        await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(p.key === '404' ? 0 : 3);
         await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
 
         await scrollThrough(page);

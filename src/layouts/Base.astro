@@ -10,7 +10,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import { t, href, asset, langs, defaultLang, ogLocale, otherLang, pageSlugs, type Lang, type PageKey } from '../lib/i18n';
-import { company, contacts, cities } from '../lib/content';
+import { company, contacts, directions } from '../lib/content';
+import seoCodes from '../../content/data/seo.json';
+import { pick } from '../lib/i18n';
+const contentDate: string = import.meta.env.CONTENT_DATE ?? new Date().toISOString().slice(0, 10);
 import fontCyr from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-cyrillic-wght-normal.woff2?url';
 import fontLat from '../../node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
 import textCyr from '../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
@@ -32,22 +35,35 @@ interface Props {
   crumbs?: Crumb[];
   jsonLd?: Record<string, unknown>[];
   noindex?: boolean;
+  /** absolute or root-relative OG image (1200×630); default /og.png */
+  ogImage?: string;
+  /** article pages: og:type=article + article:* meta */
+  article?: { published: string; modified: string; section: string; tags: string[] };
+  /** languages this page exists in (default: all) — hreflang only for these */
+  langsAvailable?: Lang[];
+  /** content date for the sitemap (YYYY-MM-DD) */
+  lastmod?: string;
+  /** extra <head> links (RSS) */
+  rss?: boolean;
 }
-const { lang, page, path, jsonLd = [], noindex = false, crumbs } = Astro.props;
+const { lang, page, path, jsonLd = [], noindex = false, crumbs, article, rss = false } = Astro.props;
+const langsAvail = Astro.props.langsAvailable ?? langs;
 // Origin only: page URLs from href()/asset() already carry the base path.
 const site = Astro.site!.origin;
 const isNotFound = page === 'notFound';
 const route = Astro.props.route ?? (isNotFound ? '' : pageSlugs[page as PageKey]);
 const hrefFor = (l: Lang) => href(l, route);
 const canonical = site + (isNotFound ? asset('404.html') : hrefFor(lang));
-const altHref = hrefFor(otherLang(lang));
+// a page without a version in the other language switches to that language's section index
+const altHref = langsAvail.includes(otherLang(lang)) ? hrefFor(otherLang(lang)) : href(otherLang(lang), route.split('/')[0] ? route.split('/')[0] + '/' : '');
 const title = Astro.props.title ?? t(lang, `meta.${page}.title`);
 const description = Astro.props.description ?? t(lang, `meta.${page}.description`);
-const ogImage = site + asset('og.png');
+const ogImage = Astro.props.ogImage ? (Astro.props.ogImage.startsWith('http') ? Astro.props.ogImage : site + Astro.props.ogImage) : site + asset('og.png');
+const lastmod = Astro.props.lastmod ?? contentDate;
 
-const sameAs = [contacts.instagram, contacts.telegram, contacts.linkedin]
-  .map((v) => (typeof v === 'string' ? v : v && typeof v === 'object' && 'url' in v ? v.url : null))
-  .filter((v): v is string => !!v && /^https?:/.test(v));
+// only real profiles: company.json → sameAs (empty until the owner gives them)
+const sameAs = ((company as unknown as { sameAs?: string[] }).sameAs ?? []).filter((v) => /^https?:/.test(v));
+const address = (company as unknown as { address?: Record<string, string> | null }).address;
 const orgId = site + href(defaultLang) + '#organization';
 const org = {
   '@context': 'https://schema.org',
@@ -64,11 +80,16 @@ const org = {
     '@type': 'ContactPoint',
     telephone: contacts.phone?.number ?? `+${contacts.whatsapp.number}`,
     contactType: 'sales',
-    availableLanguage: ['Russian', 'English'],
+    availableLanguage: ['ru', 'en'],
     url: contacts.whatsapp.url,
   }],
-  areaServed: cities.map((c) => ({ '@type': 'City', name: c.name })),
+  areaServed: [
+    { '@type': 'Country', name: lang === 'ru' ? 'Казахстан' : 'Kazakhstan' },
+    ...(lang === 'ru' ? ['Алматы', 'Астана', 'Шымкент'] : ['Almaty', 'Astana', 'Shymkent']).map((name) => ({ '@type': 'City', name })),
+  ],
+  knowsAbout: directions.map((d) => pick(lang, d.nameFull)),
   ...(sameAs.length ? { sameAs } : {}),
+  ...(address ? { address: { '@type': 'PostalAddress', ...address } } : {}),
   ...(contacts.email ? { email: contacts.email } : {}),
 };
 const website = {
@@ -92,8 +113,13 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
   <meta name="description" content={description} />
   {(noindex || import.meta.env.PUBLIC_PREVIEW) && <meta name="robots" content="noindex" />}
   <link rel="canonical" href={canonical} />
-  {langs.map((l) => <link rel="alternate" hreflang={l} href={site + hrefFor(l)} />)}
-  <link rel="alternate" hreflang="x-default" href={site + hrefFor(defaultLang)} />
+  {!isNotFound && langsAvail.map((l) => <link rel="alternate" hreflang={l} href={site + hrefFor(l)} />)}
+  {!isNotFound && <link rel="alternate" hreflang="x-default" href={site + hrefFor(langsAvail.includes(defaultLang) ? defaultLang : langsAvail[0])} />}
+  {!isNotFound && <meta name="cm:lastmod" content={lastmod} />}
+  {seoCodes.googleSiteVerification && <meta name="google-site-verification" content={seoCodes.googleSiteVerification} />}
+  {seoCodes.yandexVerification && <meta name="yandex-verification" content={seoCodes.yandexVerification} />}
+  {seoCodes.bingVerification && <meta name="msvalidate.01" content={seoCodes.bingVerification} />}
+  {rss && <link rel="alternate" type="application/rss+xml" title="Cyber Move Consulting — Разборы" href={site + asset('insights/rss.xml')} />}
   <meta name="theme-color" content="#08090B" />
   <meta name="color-scheme" content="dark light" />
   <meta name="view-transition" content="same-origin" />
@@ -108,7 +134,11 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
   <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
   <link rel="manifest" href={asset('site.webmanifest')} />
 
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={article ? 'article' : 'website'} />
+  {article && <meta property="article:published_time" content={article.published} />}
+  {article && <meta property="article:modified_time" content={article.modified} />}
+  {article && <meta property="article:section" content={article.section} />}
+  {article?.tags.map((tg) => <meta property="article:tag" content={tg} />)}
   <meta property="og:site_name" content={company.brand} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
@@ -117,7 +147,7 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content={ogLocale[lang]} />
-  {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
+  {langsAvail.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
@@ -152,6 +182,7 @@ const ld = [org, website, ...(breadcrumbs ? [breadcrumbs] : []), ...jsonLd];
     })(document, window);
   </script>
   {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  <slot name="head" />
 
   <!--
     Analytics slot (none by default). If Yandex Metrica / Google Analytics is added here,

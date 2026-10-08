@@ -12,7 +12,10 @@ import CaseFilter from '../CaseFilter.astro';
 import CaseRow from '../CaseRow.astro';
 import ServicesList from '../ServicesList.astro';
 import { t, ta, url, href, pick, type Lang } from '../../lib/i18n';
-import { casesRanked, sites, insights, directionById, sectors, casesBySector, byRank } from '../../lib/content';
+import { casesRanked, sites, directionById, sectors, casesBySector, byRank } from '../../lib/content';
+import { articles, readLabel } from '../../lib/articles';
+import CoverPicture from '../CoverPicture.astro';
+import { existsSync } from 'node:fs';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -23,7 +26,8 @@ const names = ta<string[]>(lang, 'home.clients.names');
 const half = Math.ceil(names.length / 2);
 const steps = ta<{ stage: string; title: string; text: string }[]>(lang, 'method.steps');
 const svc = ta<{ label: string; to: string }[]>(lang, 'homeServices.items');
-const latest = insights.slice(0, 4);
+// newest 4 (legacy + published SEO articles), small 1:1 covers (docs/16-seo.md §E)
+const latest = (await articles(lang)).slice(0, 4);
 const casesTitle = dots(t(lang, 'casesBlock.title'));
 // stabilize §4: only the top 14 cases are in the DOM; categories (≤ 10 each) wait in <template>s
 const topCases = casesRanked().slice(0, 14);
@@ -99,9 +103,10 @@ const pools = Object.fromEntries(sectors.map((s) => [s.id, byRank(casesBySector(
       <ol class="rins__list list-reset">
         {latest.map((a) => (
           <li class="rins__row reveal">
-            <a class="rins__link" href={href(lang, `insights/${a.direction}/${a.id}/`)}>
-              <span class="label muted">{pick(lang, directionById(a.direction).name)} · {pick(lang, a.read)}</span>
-              <span class="rins__title">{pick(lang, a.title)}</span>
+            <a class="rins__link" href={href(lang, a.route)}>
+              {existsSync(`public/covers/${a.id}/1x1-400.webp`) && <CoverPicture slug={a.id} format="1x1" alt="" sizes="72px" class="rins__cover" />}
+              <span class="label muted">{pick(lang, directionById(a.direction).name)} · {readLabel(lang, a.minutes)}</span>
+              <span class="rins__title">{a.title}</span>
             </a>
           </li>
         ))}

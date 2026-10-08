@@ -9,18 +9,14 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # ── Single host without www (docs/16-seo.md §B.2): http(s)://www.… → https://<host>/… in one hop ──
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
   # ── Force HTTPS (works behind Plesk's nginx proxy too) ──
   RewriteCond %{HTTPS} off
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-  # ── Single host. Default: keep whatever host is used (no www rule).
-  # To force non-www, uncomment:
-  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
-  # To force www instead, uncomment:
-  # RewriteCond %{HTTP_HOST} !^www\. [NC]
-  # RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # ── Old-site URLs → new pages (301) ──
   RewriteRule ^approach/?$ /about/ [L,R=301,NC]

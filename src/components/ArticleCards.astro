@@ -1,0 +1,24 @@
+---
+// Article cards (docs/16-seo.md §E): 4:3 cover, rubric · reading time, title, date. Used on /insights/, hubs,
+// «Читайте также» and «Разборы по теме». Without a cover file the card is text-only.
+import { existsSync } from 'node:fs';
+import CoverPicture from './CoverPicture.astro';
+import { href, pick, type Lang } from '../lib/i18n';
+import { directionById } from '../lib/content';
+import { fmtDate, isoDate, readLabel, type Article } from '../lib/articles';
+interface Props { lang: Lang; items: Article[]; headingLevel?: 'h2' | 'h3'; compact?: boolean }
+const { lang, items, headingLevel: H = 'h3', compact = false } = Astro.props;
+---
+<ol class:list={['acards list-reset', compact && 'acards--compact']}>
+  {items.map((a) => (
+    <li class="acard" data-rubric={a.direction}>
+      <a class="acard__link" href={href(lang, a.route)}>
+        {existsSync(`public/covers/${a.id}/4x3.webp`) && <CoverPicture slug={a.id} format="4x3" alt="" sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw" class="acard__cover" />}
+        <span class="acard__meta label muted">{pick(lang, directionById(a.direction).name)} · {readLabel(lang, a.minutes)}</span>
+        <H class="acard__title">{a.title}</H>
+        {!compact && <span class="acard__excerpt muted">{a.excerpt}</span>}
+        <time class="acard__date label muted" datetime={isoDate(a.published)}>{fmtDate(lang, a.published)}</time>
+      </a>
+    </li>
+  ))}
+</ol>

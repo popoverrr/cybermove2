@@ -71,6 +71,8 @@ export function hostingFiles() {
 
 error_page 404 /404.html;
 
+if ($host ~* ^www\.(.+)$) { return 301 https://$1$request_uri; }
+
 location ~* ^/(approach)/?$ { return 301 /about/; }
 location ~* ^/(partners)/?$ { return 301 /cases/; }
 location ~* ^/(marketing|brand-development)/?$ { return 301 /services/; }
@@ -101,7 +103,65 @@ gzip_types text/css application/javascript text/javascript application/json imag
         await mkdir(deployDir, { recursive: true });
         await writeFile(join(deployDir, 'nginx.conf.txt'), nginx);
         logger.info(`CSP hashes: ${csp || '(none)'}; robots.txt and deploy/nginx.conf.txt written`);
+        await writeSitemaps(dist, site, logger);
+        await writeVerificationFiles(dist, logger);
       },
     },
   };
+}
+
+/* ── Sitemaps (docs/16-seo.md §A.6): built from the pages themselves — only indexable pages whose canonical is
+   their own address; <lastmod> = content date (article:modified_time or cm:lastmod), hreflang alternates from <head>,
+   articles in a separate sitemap-insights.xml with their cover (image:image). ── */
+const xmlEsc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+async function writeSitemaps(dist, site, logger) {
+  const pages = [];
+  for (const f of await htmlFiles(dist)) {
+    const html = await readFile(f, 'utf8');
+    if (/<meta name="robots" content="[^"]*noindex/.test(html)) continue;
+    const canonical = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
+    if (!canonical || canonical.endsWith('.html')) continue;
+    const rel = f.slice(dist.length).replace(/\\/g, '/').replace(/^\/?/, '/').replace(/index\.html$/, '');
+    if (new URL(canonical).pathname !== rel) continue; // a redirect stub or a page canonicalised elsewhere
+    const lastmod = ((html.match(/<meta property="article:modified_time" content="([^"]+)"/) || html.match(/<meta name="cm:lastmod" content="([^"]+)"/)) || [])[1];
+    const alts = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]]);
+    const isArticle = /<meta property="og:type" content="article"/.test(html);
+    const image = isArticle ? (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1] : null;
+    const cover = isArticle ? (html.match(/<meta name="cm:cover" content="([^"]+)"/) || [])[1] : null;
+    const title = isArticle ? (html.match(/<meta property="og:title" content="([^"]+)"/) || [])[1] : null;
+    pages.push({ loc: canonical, lastmod, alts, isArticle, images: [cover, image].filter(Boolean), title, insights: /\/insights\//.test(rel) });
+  }
+  pages.sort((a, b) => a.loc.localeCompare(b.loc));
+  const urlXml = (p) => `  <url>
+    <loc>${xmlEsc(p.loc)}</loc>${p.lastmod ? `
+    <lastmod>${p.lastmod.slice(0, 10)}</lastmod>` : ''}${p.alts.map(([l, h]) => `
+    <xhtml:link rel="alternate" hreflang="${l}" href="${xmlEsc(h)}"/>`).join('')}${p.images.map((i) => `
+    <image:image><image:loc>${xmlEsc(i)}</image:loc></image:image>`).join('')}
+  </url>`;
+  const set = (list) => `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${list.map(urlXml).join('\n')}
+</urlset>
+`;
+  const ins = pages.filter((p) => p.insights), rest = pages.filter((p) => !p.insights);
+  const newest = (list) => list.map((p) => p.lastmod || '').sort().at(-1)?.slice(0, 10);
+  await writeFile(join(dist, 'sitemap-pages.xml'), set(rest));
+  await writeFile(join(dist, 'sitemap-insights.xml'), set(ins));
+  const index = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${[['sitemap-pages.xml', newest(rest)], ['sitemap-insights.xml', newest(ins)]].map(([n, d]) => `  <sitemap><loc>${site}/${n}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</sitemap>`).join('\n')}
+</sitemapindex>
+`;
+  await writeFile(join(dist, 'sitemap-index.xml'), index);
+  for (const old of ['sitemap-0.xml']) await unlink(join(dist, old)).catch(() => {});
+  logger.info(`sitemaps: ${rest.length} pages + ${ins.length} insights pages`);
+}
+
+/* ── Search engine verification (docs/16-seo.md §B): content/data/seo.json; empty values → nothing written ── */
+async function writeVerificationFiles(dist, logger) {
+  const seo = JSON.parse(await readFile(new URL('../content/data/seo.json', import.meta.url), 'utf8'));
+  const g = seo.googleHtmlFile || {};
+  if (g.name && /^google[\w-]+\.html$/.test(g.name)) await writeFile(join(dist, g.name), g.content || `google-site-verification: ${g.name}`);
+  if (seo.indexNowKey && /^[a-zA-Z0-9-]{8,128}$/.test(seo.indexNowKey)) await writeFile(join(dist, `${seo.indexNowKey}.txt`), seo.indexNowKey);
+  logger.info(`verification: google meta ${seo.googleSiteVerification ? 'on' : 'off'}, google file ${g.name ? 'on' : 'off'}, yandex ${seo.yandexVerification ? 'on' : 'off'}, bing ${seo.bingVerification ? 'on' : 'off'}, IndexNow ${seo.indexNowKey ? 'on' : 'off'}`);
 }

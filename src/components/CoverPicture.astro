@@ -1,0 +1,14 @@
+---
+// Article cover from public/covers/<slug>/ (scripts/article-covers.mjs): AVIF + WebP, explicit size, lazy unless eager.
+import { asset } from '../lib/i18n';
+interface Props { slug: string; format: '16x9' | '4x3' | '1x1'; alt: string; eager?: boolean; sizes?: string; class?: string }
+const { slug, format, alt, eager = false, sizes = '100vw', class: cls } = Astro.props;
+const dims = { '16x9': [1600, 900, 800], '4x3': [1200, 900, 600], '1x1': [800, 800, 400] }[format];
+const small = { '16x9': '16x9-800', '4x3': '4x3-600', '1x1': '1x1-400' }[format];
+const u = (f: string) => asset(`covers/${slug}/${f}`);
+---
+<picture class:list={['cover', cls]}>
+  <source type="image/avif" srcset={`${u(small + '.avif')} ${dims[2]}w, ${u(format + '.avif')} ${dims[0]}w`} sizes={sizes} />
+  <source type="image/webp" srcset={`${u(small + '.webp')} ${dims[2]}w, ${u(format + '.webp')} ${dims[0]}w`} sizes={sizes} />
+  <img src={u(format + '.webp')} alt={alt} width={dims[0]} height={dims[1]} loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'auto' : 'async'} fetchpriority={eager ? 'high' : undefined} />
+</picture>

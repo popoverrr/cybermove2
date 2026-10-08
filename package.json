@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/article-covers.mjs && astro build",
     "preview": "astro preview --port 4321",
     "assets": "node scripts/fetch-assets.mjs",
     "photos": "node scripts/fetch-project-photos.mjs",
@@ -17,7 +17,11 @@
     "clean": "node scripts/clean.mjs",
     "deploy": "npm run build && node scripts/deploy-ftp.mjs",
     "deploy:dry": "node scripts/deploy-ftp.mjs --dry-run",
-    "sites": "node scripts/capture-sites.mjs"
+    "sites": "node scripts/capture-sites.mjs",
+    "covers": "node scripts/article-covers.mjs",
+    "covers:sheet": "node scripts/article-covers.mjs --sheet",
+    "seo:check": "node scripts/seo-check.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "engines": {
     "node": ">=20"

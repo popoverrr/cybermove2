@@ -5,7 +5,8 @@ import BlockHead from '../BlockHead.astro';
 import Button from '../Button.astro';
 import DirHero from '../DirHero.astro';
 import CaseRow from '../CaseRow.astro';
-import ArticleRows from '../ArticleRows.astro';
+import ArticleCards from '../ArticleCards.astro';
+import { articles, articlesFor } from '../../lib/articles';
 import FaqList from '../FaqList.astro';
 import SiteCta from '../SiteCta.astro';
 import { t, href, url, pick, type Lang } from '../../lib/i18n';
@@ -24,7 +25,10 @@ const others = servicesOf(d).filter((x) => x.id !== s.id);
 const site = Astro.site!.origin;
 const contactQ = `?service=${s.id}`;
 const codes = t(lang, 'common.codes').replace(/ · /g, ' → ');
-const hasInsights = s.insights.length > 0;
+// «Разборы по теме»: articles leading to this service first, then the rubric (docs/16-seo.md §A.9)
+const linked = (await articles(lang)).filter((x) => s.insights.includes(x.id)); // the articles the source links to this service
+const topical = [...linked, ...(await articlesFor(lang, { service: s.id, direction: d.id, limit: 6 })).filter((x) => !linked.includes(x))].slice(0, 6);
+const hasInsights = topical.length > 0;
 ---
 <Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${d.id} / ${s.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
   jsonLd={[
@@ -132,7 +136,7 @@ const hasInsights = s.insights.length > 0;
       <div class="container">
         <BlockHead label="07" link={{ href: href(lang, `insights/${d.id}/`), text: t(lang, 'insights.allInsights') }} />
         <h2 class="section-title reveal" data-split>{L('insights')}</h2>
-        <ArticleRows lang={lang} items={s.insights.map(insightById)} />
+        <ArticleCards lang={lang} items={topical.length > 3 && topical.length < 6 ? topical.slice(0, 3) : topical} />
       </div>
     </Block>
   )}

@@ -1,10 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Page from '../../../../components/pages/ArticlePage.astro';
+import { articles } from '../../../../lib/articles';
 export async function getStaticPaths() {
-  const all = await getCollection('insights', (e) => e.id.startsWith('en/'));
-  return all.map((entry) => ({ params: { direction: entry.data.direction, slug: entry.id.split('/').pop() }, props: { entry } }));
+  return (await articles('en')).map((a) => ({ params: { direction: a.direction, slug: a.id }, props: { article: a } }));
 }
-const { entry } = Astro.props;
+const { article } = Astro.props;
 ---
-<Page lang="en" entry={entry} />
+<Page lang="en" article={article} />

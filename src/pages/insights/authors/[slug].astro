@@ -1,0 +1,28 @@
+---
+// Author pages appear only when the owner adds real authors in src/content/authors/<slug>.md
+// (name, role, photo, sameAs) and sets `author: <slug>` in articles. No names are invented.
+import Base from '../../../layouts/Base.astro';
+import Block from '../../../components/Block.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import ArticleCards from '../../../components/ArticleCards.astro';
+import { articles, authors } from '../../../lib/articles';
+export async function getStaticPaths() {
+  return authors.map((a) => ({ params: { slug: a.id }, props: { author: a } }));
+}
+const { author } = Astro.props;
+const list = (await articles('ru')).filter((a) => a.author === author.id);
+const route = `insights/authors/${author.id}/`;
+const site = Astro.site!.origin;
+---
+<Base lang="ru" page="insights" route={route} path={`разборы / ${author.id}`} title={`${author.name} — Cyber Move Consulting`} description={`${author.name}, ${author.role}. Разборы автора.`}
+  langsAvailable={['ru']} crumbs={[{ name: 'Разборы', route: 'insights/' }, { name: author.name, route }]}
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'ProfilePage', mainEntity: { '@type': 'Person', name: author.name, jobTitle: author.role, url: site + '/' + route, ...(author.sameAs.length ? { sameAs: author.sameAs } : {}), worksFor: { '@id': site + '/#organization' } } }]}>
+  <Block theme="dark" label="Автор" first hero class="page-hero">
+    <div class="container">
+      <Crumbs lang="ru" items={[{ name: 'Разборы', route: 'insights/' }, { name: author.name, route }]} />
+      <h1 class="hero__title">{author.name}</h1>
+      <p class="lead hero__lead">{author.role}</p>
+    </div>
+  </Block>
+  <Block theme="light" label="Разборы" class="insights-list"><div class="container"><ArticleCards lang="ru" items={list} /></div></Block>
+</Base>
