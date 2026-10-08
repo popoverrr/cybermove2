@@ -15,13 +15,17 @@
     "linkcheck": "node scripts/linkcheck.mjs",
     "sizes": "node scripts/sizes.mjs",
     "clean": "node scripts/clean.mjs",
-    "deploy": "npm run build && node scripts/deploy-ftp.mjs",
+    "deploy": "npm run build && npm run editor:build && node scripts/deploy-ftp.mjs",
     "deploy:dry": "node scripts/deploy-ftp.mjs --dry-run",
     "sites": "node scripts/capture-sites.mjs",
     "covers": "node scripts/article-covers.mjs",
     "covers:sheet": "node scripts/article-covers.mjs --sheet",
     "seo:check": "node scripts/seo-check.mjs",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "editor:build": "node tools/case-editor/build.mjs",
+    "editor:snapshot": "node tools/case-editor/snapshot.mjs",
+    "editor:password": "node tools/case-editor/password.mjs",
+    "cases:import": "node tools/case-editor/import.mjs"
   },
   "engines": {
     "node": ">=20"
@@ -37,6 +41,7 @@
     "@playwright/test": "^1.63.0",
     "adm-zip": "^0.6.1",
     "basic-ftp": "^6.2.1",
+    "fflate": "^0.8.3",
     "sharp": "^0.35.4",
     "typescript": "^7.0.2"
   },

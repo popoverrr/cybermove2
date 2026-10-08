@@ -70,14 +70,17 @@ export interface Site {
   id: string; name: string; domain: string; url: string;
   type: Localized; summary: Localized; description: Localized; languages: string[]; tags: Localized<string[]>; direction: string;
 }
-export const sites = sitesJson.items as unknown as Site[];
+// `hidden: true` (set by the case editor import, docs/17-cases-editor.md §7) removes an item from the site
+export const sites = (sitesJson.items as unknown as (Site & { hidden?: boolean })[]).filter((s) => !s.hidden);
 export const company = companyJson as Company;
 export const contacts = contactsJson as unknown as Contacts;
 export const regions = geographyJson.regions as Region[];
 export const cities = geographyJson.cities as City[];
 export const directions = directionsJson as Direction[];
 export const services = servicesJson as Service[];
-export const cases = casesJson as Case[];
+const hiddenCases = new Set((casesJson as { id: string; hidden?: boolean }[]).filter((c) => c.hidden).map((c) => c.id));
+const visible = (ids: string[]) => ids.filter((id) => !hiddenCases.has(id));
+export const cases = (casesJson as (Case & { hidden?: boolean })[]).filter((c) => !c.hidden).map((c) => (hiddenCases.size ? { ...c, similar: visible(c.similar) } : c));
 export const sectors = sectorsJson as Sector[];
 export const insights = insightsJson.items as InsightMeta[];
 export const rubrics = insightsJson.rubrics as Rubric[];
@@ -100,6 +103,7 @@ export const byRank = <T extends { rank: number }>(list: T[]) => [...list].sort(
 export const casesRanked = () => byRank(cases);
 export const servicesOf = (d: Direction) => d.services.map(serviceById);
 
+if (hiddenCases.size) { for (const d of directions) d.cases = visible(d.cases); for (const sv of services) sv.cases = visible(sv.cases); }
 /** Data integrity: every reference must resolve (fails the build otherwise). */
 for (const d of directions) { d.services.forEach(serviceById); d.cases.forEach(caseById); d.insights.forEach(insightById); }
 for (const s of services) { directionById(s.direction); s.cases.forEach(caseById); s.insights.forEach(insightById); }

@@ -23,3 +23,7 @@ qa/
 deploy/*
 !deploy/ftp.env.example
 !deploy/nginx.conf.txt
+
+# case editor: password hash and local data
+tools/case-editor/config.php
+tools/case-editor/dev-data/
