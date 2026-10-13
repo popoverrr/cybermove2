@@ -1,0 +1,69 @@
+---
+// Services 08–10 of the ribbon (sales department, HR consulting, events) — pages added with the service motion
+// loops. They have no service text in content/source; the RU page takes its text verbatim from the matching
+// article (description, «Коротко» points, FAQ). EN has no source text: title, motion and the contact button only.
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Block from '../Block.astro';
+import BlockHead from '../BlockHead.astro';
+import Button from '../Button.astro';
+import DirHero from '../DirHero.astro';
+import FaqList from '../FaqList.astro';
+import SiteCta from '../SiteCta.astro';
+import Icon from '../Icon.astro';
+import { articles } from '../../lib/articles';
+import { t, href, url, type Lang } from '../../lib/i18n';
+import { EXTRA, motionServices, type ExtraId } from '../../lib/motion';
+
+interface Props { lang: Lang; id: ExtraId }
+const { lang, id } = Astro.props;
+const m = motionServices(lang).find((x) => x.id === id)!;
+const route = m.route;
+const crumbs = [{ name: t(lang, 'nav.services'), route: 'services/' }, { name: m.label, route }];
+const ru = lang === 'ru';
+const entry = ru ? (await getCollection('insights')).find((e) => e.id.endsWith(`/${EXTRA[id].article}`) && e.id.startsWith('ru/')) : undefined;
+const d = entry?.data;
+const published = ru ? (await articles('ru')).find((a) => a.id === EXTRA[id].article) : undefined;
+const faq = (d?.faq ?? []) as { q: string; a: string }[];
+const site = Astro.site!.origin;
+const form = m.form ?? id; // contact-form value from the source («#events» → events)
+const contact = url(lang, 'contact', `?service=${form}`);
+---
+<Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${id}`} title={`${m.label} — Cyber Move Consulting`} description={d?.description ?? m.label} crumbs={crumbs}
+  jsonLd={[
+    { '@context': 'https://schema.org', '@type': 'Service', name: m.label, description: d?.description ?? m.label, url: site + href(lang, route), provider: { '@id': site + href('ru') + '#organization' } },
+    ...(faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+  ]}>
+  <DirHero lang={lang} label={`${m.index} · ${t(lang, 'nav.services')}`} crumbs={crumbs} title={m.label} lead={d?.description ?? ''} index={m.index} motion={m.id}>
+    <div class="reveal xsvc__cta" style="--rd:200ms"><Button href={contact} data-service={form}>{t(lang, 'service.discuss')}</Button></div>
+  </DirHero>
+
+  {d && d.summary.length > 0 && (
+    <Block theme="light" label={ru ? 'Коротко' : 'Key takeaways'} class="xsvc">
+      <div class="container">
+        <BlockHead label={`${m.index} · 01`} />
+        <h2 class="section-title reveal" data-split>{ru ? 'Коротко' : 'Key takeaways'}</h2>
+        <ol class="xsvc__points list-reset">
+          {d.summary.map((s: string, i: number) => (
+            <li class="xsvc__point reveal" style={`--rd:${i * 50}ms`}><span class="label muted">{String(i + 1).padStart(2, '0')}</span><p>{s}</p></li>
+          ))}
+        </ol>
+        {published && (
+          <p class="xsvc__read reveal"><a class="link link--arrow" href={href('ru', published.route)}><span>{published.title}</span><Icon name="arrow" size={14} /></a></p>
+        )}
+      </div>
+    </Block>
+  )}
+
+  {faq.length > 0 && (
+    <Block theme="dark" label={t(lang, 'service.faq')} class="xsvc-faq">
+      <div class="container">
+        <BlockHead label={`${m.index} · 02`} />
+        <h2 class="section-title reveal" data-split>{t(lang, 'service.faq')}</h2>
+        <FaqList items={faq} />
+      </div>
+    </Block>
+  )}
+
+  <SiteCta lang={lang} theme={faq.length > 0 || !d ? 'light' : 'dark'} query={`?service=${form}`} />
+</Base>

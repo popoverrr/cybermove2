@@ -27,7 +27,8 @@ function track(page: Page) {
   const problems: string[] = [];
   page.on('console', (m) => { if (m.type() === 'error') problems.push(`console: ${m.text()}`); });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
-  page.on('requestfailed', (r) => problems.push(`failed: ${r.url()} ${r.failure()?.errorText}`));
+  // motion loops: the browser aborts a video download when the loop leaves the screen — expected
+  page.on('requestfailed', (r) => { if (/.mp4$/.test(r.url()) && r.failure()?.errorText === 'net::ERR_ABORTED') return; problems.push(`failed: ${r.url()} ${r.failure()?.errorText}`); });
   page.on('response', (r) => {
     if (r.status() >= 400 && !r.url().endsWith('/404.html')) problems.push(`http ${r.status()}: ${r.url()}`);
   });
@@ -220,8 +221,19 @@ test.describe('rework (docs/14-rework.md)', () => {
     const order = await page.evaluate(() => [...document.querySelectorAll('main > section')].map((s) => s.className.split(' ').find((c) => /^(rhero|rcases|rbrands|rsvc|rmethod|rins|cta)$/.test(c)) || s.className));
     expect(order).toEqual(['rhero', 'rcases', 'rbrands', 'rsvc', 'home-method', 'rins', 'cta'].map((x) => (x === 'home-method' ? 'rmethod' : x)));
     await expect(page.locator('.rhero .btn')).toHaveCount(1);
-    await expect(page.locator('.rsvc__row')).toHaveCount(10);
+    await expect(page.locator('.rsvc .mcard')).toHaveCount(10);
     await expect(page.locator('.cta a[href*="wa.me"]')).toHaveCount(0);
+  });
+  test('services ribbon: 10 motion cards → 10 pages, loops play on screen only', async ({ page }) => {
+    await page.goto('/');
+    const links = await page.locator('.rsvc .mcard__link').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    expect(links).toEqual(['/services/audit/', '/services/brand-content/brand-core/', '/services/brand-content/', '/services/systems/', '/services/brand-content/smm/', '/services/traffic/', '/services/tenders-legal/', '/services/sales-department/', '/services/hr-consulting/', '/services/business-events/']);
+    for (const l of links) expect((await page.request.get(l!)).status()).toBe(200);
+    await page.locator('.rsvc').scrollIntoViewIfNeeded();
+    await expect(page.locator('.rsvc .smotion').first()).toHaveClass(/is-playing/, { timeout: 8000 });
+    expect(await page.locator('.rsvc .mcard').last().locator('video').evaluate((v) => (v as HTMLVideoElement).src)).toBe('');
+    await page.goto('/services/systems/');
+    await expect(page.locator('.dir-hero__motion .smotion')).toHaveCount(1);
   });
   test('home cases: all chips visible, ranked ribbon, filter', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
@@ -251,12 +263,13 @@ test.describe('rework (docs/14-rework.md)', () => {
   test('contact panel: fab + every CTA, four ways to close', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
-    await page.goto('/');
-    await page.locator('.rsvc__link[data-service="hr-consulting"]').click();
+    await page.goto('/services/hr-consulting/');
+    await page.locator('.xsvc__cta .btn[data-service="hr-consulting"]').click();
     await expect(page.locator('#cpanel')).toBeVisible();
     await expect(page.locator('#cpanel select[name="service"]')).toHaveValue('hr-consulting');
     await page.keyboard.press('Escape');
     await expect(page.locator('#cpanel')).toBeHidden();
+    await page.goto('/');
     await page.locator('[data-panel-open]').click();
     await expect(page.locator('#cpanel')).toBeVisible();
     await page.locator('.cpanel__close').click();

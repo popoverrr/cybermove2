@@ -1,0 +1,37 @@
+---
+// «Услуги»: a horizontal ribbon of 10 service cards, each with its own looped motion (docs: REPORT.md § Услуги-
+// ролики). Native horizontal scroll with snap (+ arrows and mouse drag on desktop, scripts/case-row.ts manual mode).
+// Card → the service page (01–07 existing pages, 08–10 /services/<id>/).
+import Icon from './Icon.astro';
+import ServiceMotion from './ServiceMotion.astro';
+import { t, type Lang } from '../lib/i18n';
+import { motionServices } from '../lib/motion';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const list = motionServices(lang);
+---
+<div class="crow srib" data-crow="manual">
+  <div class="crow__viewport">
+    <ul class="crow__track list-reset" aria-label={t(lang, 'homeServices.title')}>
+      {list.map((m, i) => (
+        <li class="mcard reveal" style={`--rd:${Math.min(i, 4) * 60}ms`}>
+          <a class="mcard__link" href={m.link}>
+            <span class="mcard__media" data-theme="dark"><ServiceMotion id={m.id} variant="card" /></span>
+            <span class="mcard__meta">
+              <span class="mcard__idx label">{m.index}</span>
+              <span class="mcard__name">{m.label}</span>
+              <Icon name="arrow" size={18} class="mcard__arrow" />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="crow__nav" aria-hidden="true">
+    <button type="button" class="crow__btn" data-crow-prev tabindex="-1" aria-label={t(lang, 'casesBlock.prev')}><Icon name="arrow" size={16} class="crow__prev-icon" /></button>
+    <button type="button" class="crow__btn" data-crow-next tabindex="-1" aria-label={t(lang, 'casesBlock.next')}><Icon name="arrow" size={16} /></button>
+  </div>
+</div>
+<script>
+  import '../scripts/case-row';
+</script>

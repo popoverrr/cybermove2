@@ -1,0 +1,19 @@
+---
+// A service motion loop (tools/motion → public/motion/). Without JS, with reduced motion or Save-Data only the
+// poster shows; otherwise scripts/service-motion.ts loads and plays the video while it is on screen.
+// hero: 16:9 on wide screens; phones (< 600 px) always get the light 720×900 card cut.
+import { motionSrc, motionPhone, type MotionId } from '../lib/motion';
+interface Props { id: MotionId; variant: 'card' | 'hero'; eager?: boolean; class?: string }
+const { id, variant, eager = false, class: cls } = Astro.props;
+const main = motionSrc(id, variant);
+const tall = motionPhone(id); // phones: the light 4:5 cut, also for hero loops
+---
+<div class:list={['smotion', `smotion--${variant}`, cls]} data-smotion>
+  <img class="smotion__poster" src={main.poster} alt="" width={variant === 'hero' ? 1280 : 720} height={variant === 'hero' ? 720 : 900}
+    loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} data-tall={variant === 'hero' ? tall.poster : undefined} />
+  <video class="smotion__video" muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1"
+    data-src={main.mp4} data-src-tall={tall.mp4}></video>
+</div>
+<script>
+  import '../scripts/service-motion';
+</script>

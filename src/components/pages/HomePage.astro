@@ -10,7 +10,7 @@ import Marquee from '../Marquee.astro';
 import CoreScene from '../CoreScene.astro';
 import CaseFilter from '../CaseFilter.astro';
 import CaseRow from '../CaseRow.astro';
-import ServicesList from '../ServicesList.astro';
+import ServicesRibbon from '../ServicesRibbon.astro';
 import { t, ta, url, href, pick, type Lang } from '../../lib/i18n';
 import { casesRanked, sites, directionById, sectors, casesBySector, byRank } from '../../lib/content';
 import { articles, readLabel } from '../../lib/articles';
@@ -61,12 +61,12 @@ const pools = Object.fromEntries(sectors.map((s) => [s.id, byRank(casesBySector(
     <Marquee rows={[names.slice(0, half), names.slice(half)]} label={h('clients.label')} />
   </Block>
 
-  <!-- 4 · Services: 10 rows -->
+  <!-- 4 · Services: ribbon of 10 cards with motion loops -->
   <Block theme="light" label={t(lang, 'homeServices.title')} class="rsvc">
     <div class="container">
       <BlockHead label={`01–${String(svc.length).padStart(2, '0')}`} link={{ href: url(lang, 'services'), text: t(lang, 'nav.services') }} />
       <h2 class="block-title-sm reveal">{t(lang, 'homeServices.title')}</h2>
-      <ServicesList lang={lang} />
+      <ServicesRibbon lang={lang} />
     </div>
   </Block>
 

@@ -279,3 +279,46 @@
     .gbtn--sound { height: 40px; min-width: 40px; }
   }
 }
+
+/* ── services ribbon with motion loops + motion on service pages ── */
+@layer pages {
+  .smotion { position: relative; display: block; width: 100%; height: 100%; background: var(--c-space); overflow: hidden; }
+  .smotion__poster, .smotion__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .smotion__video { opacity: 0; transition: opacity var(--dur-3) var(--ease-out); }
+  .smotion.is-playing .smotion__video { opacity: 1; }
+
+  .srib { margin-top: var(--s-6); }
+  .crow__track > .mcard { flex: none; width: min(78vw, 360px); scroll-snap-align: start; }
+  @media (min-width: 1024px) { .crow__track > .mcard { width: 380px; } }
+  .mcard__link { display: flex; flex-direction: column; gap: 14px; color: inherit; height: 100%; }
+  .mcard__media {
+    display: block; aspect-ratio: 4 / 5; border-radius: var(--radius-win); overflow: hidden;
+    border: var(--hairline) solid var(--line); background: var(--c-space);
+    transition: transform var(--dur-3) var(--ease-out), box-shadow var(--dur-3) var(--ease-out);
+  }
+  .mcard__meta { display: grid; grid-template-columns: 2.6ch 1fr 20px; gap: 10px; align-items: start; padding-inline: 2px; }
+  .mcard__idx { color: var(--fg-muted); padding-top: 0.28em; }
+  .mcard__name { font-family: var(--font-display); font-weight: 520; font-size: clamp(1.02rem, 0.95rem + 0.4vw, 1.3rem); letter-spacing: -0.015em; line-height: 1.2; text-wrap: balance; }
+  .mcard__arrow { margin-top: 0.2em; transition: transform var(--dur-2) var(--ease-out); }
+  .mcard__link:focus-visible .mcard__media { transform: translateY(-4px); }
+  @media (hover: hover) and (pointer: fine) {
+    .mcard__link:hover .mcard__media { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(8, 9, 11, 0.55); }
+    .mcard__link:hover .mcard__name { text-decoration: underline; text-underline-offset: 0.14em; text-decoration-thickness: 1px; }
+    .mcard__link:hover .mcard__arrow { transform: translateX(4px); }
+  }
+
+  /* hero of a service page: the wide loop under the lead (phones: the 4:5 cut) */
+  .dir-hero__motion {
+    position: relative; margin-top: var(--s-7); aspect-ratio: 16 / 9; border-radius: var(--radius-win); overflow: hidden;
+    border: var(--hairline) solid var(--line); background: var(--c-space);
+  }
+  .dir-hero__motion:has(.is-tall) { aspect-ratio: 4 / 5; }
+  @media (max-width: 599px) { .dir-hero__motion { aspect-ratio: 4 / 5; } }
+
+  /* extra service pages (08–10) */
+  .xsvc__points { display: grid; gap: 0; margin-top: var(--s-6); border-bottom: var(--hairline) solid var(--line); }
+  .xsvc__point { display: grid; grid-template-columns: 2.6ch 1fr; gap: 12px; padding-block: 16px; border-top: var(--hairline) solid var(--line); }
+  .xsvc__point p { font-size: var(--fs-lead); line-height: 1.35; max-width: 40ch; }
+  .xsvc__read { margin-top: var(--s-6); }
+}
+@layer pages { .xsvc__cta { margin-top: var(--s-6); } }

@@ -25,7 +25,11 @@
     "editor:build": "node tools/case-editor/build.mjs",
     "editor:snapshot": "node tools/case-editor/snapshot.mjs",
     "editor:password": "node tools/case-editor/password.mjs",
-    "cases:import": "node tools/case-editor/import.mjs"
+    "cases:import": "node tools/case-editor/import.mjs",
+    "motion": "npm --prefix tools/motion run render",
+    "motion:posters": "npm --prefix tools/motion run render -- --posters",
+    "motion:studio": "npm --prefix tools/motion run dev",
+    "motion:mobile": "npm --prefix tools/motion run mobile"
   },
   "engines": {
     "node": ">=20"

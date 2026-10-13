@@ -10,6 +10,7 @@ import { articlesFor } from '../../lib/articles';
 import SiteCta from '../SiteCta.astro';
 import { t, href, pick, localHref, type Lang } from '../../lib/i18n';
 import { directions, servicesOf, caseById, insightById, type Direction } from '../../lib/content';
+import { motionFor } from '../../lib/motion';
 
 interface Props { lang: Lang; d: Direction }
 const { lang, d } = Astro.props;
@@ -23,12 +24,13 @@ const site = Astro.site!.origin;
 const others = directions.filter((x) => x.id !== d.id);
 const label = `${d.index} · ${d.stage}`;
 const topical = await articlesFor(lang, { direction: d.id, limit: 6 });
+const motion = motionFor(lang, route)?.id;
 ---
 <Base lang={lang} page="services" route={route} path={`${t(lang, 'home.windows.services.path')} / ${d.id}`} title={seo.title} description={seo.description} crumbs={crumbs}
   jsonLd={[{ '@context': 'https://schema.org', '@type': 'Service', name: pick(lang, d.nameFull), description: seo.description, serviceType: pick(lang, d.kicker),
     url: site + href(lang, route), provider: { '@id': site + href('ru') + '#organization' },
     hasOfferCatalog: { '@type': 'OfferCatalog', name: pick(lang, d.nameFull), itemListElement: svcs.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: pick(lang, s.name), url: site + href(lang, `${route}${s.id}/`) } })) } }]}>
-  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.name)} sub={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} index={d.index} />
+  <DirHero lang={lang} label={label} crumbs={crumbs} kicker={pick(lang, d.kicker)} title={pick(lang, d.name)} sub={pick(lang, d.thesis)} lead={pick(lang, d.lead)} metrics={d.metrics} index={d.index} motion={motion} />
 
   <Block theme="light" label={label} class="dir-intro">
     <div class="container">
