@@ -6,21 +6,23 @@ import Icon from './Icon.astro';
 import ServiceMotion from './ServiceMotion.astro';
 import { t, type Lang } from '../lib/i18n';
 import { motionServices } from '../lib/motion';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; heading?: 'h1' | 'h2' }
+const { lang, heading = 'h2' } = Astro.props;
+const H = heading;
 const list = motionServices(lang);
 ---
-<div class="crow srib" data-crow="manual">
+<H class="srib-title reveal">{t(lang, 'homeServices.title')}<span class="srib-title__px" aria-hidden="true"></span><span class="srib-title__n label" aria-hidden="true" data-n={String(list.length).padStart(2, '0')}></span></H>
+<div class="crow srib reveal" data-crow="manual" style="--rd:80ms">
   <div class="crow__viewport">
     <ul class="crow__track list-reset" aria-label={t(lang, 'homeServices.title')}>
-      {list.map((m, i) => (
-        <li class="mcard reveal" style={`--rd:${Math.min(i, 4) * 60}ms`}>
-          <a class="mcard__link" href={m.link}>
-            <span class="mcard__media" data-theme="dark"><ServiceMotion id={m.id} variant="card" /></span>
+      {list.map((m) => (
+        <li class="mcard">
+          <a class="mcard__link" href={m.link} data-theme="dark">
+            <span class="mcard__media"><ServiceMotion id={m.id} variant="card" /></span>
             <span class="mcard__meta">
-              <span class="mcard__idx label">{m.index}</span>
+              <span class="mcard__idx label">{m.index} / {String(list.length).padStart(2, '0')}</span>
               <span class="mcard__name">{m.label}</span>
-              <Icon name="arrow" size={18} class="mcard__arrow" />
+              <span class="mcard__go" aria-hidden="true"><Icon name="arrow" size={18} /></span>
             </span>
           </a>
         </li>

@@ -65,7 +65,6 @@ const pools = Object.fromEntries(sectors.map((s) => [s.id, byRank(casesBySector(
   <Block theme="light" label={t(lang, 'homeServices.title')} class="rsvc">
     <div class="container">
       <BlockHead label={`01–${String(svc.length).padStart(2, '0')}`} link={{ href: url(lang, 'services'), text: t(lang, 'nav.services') }} />
-      <h2 class="block-title-sm reveal">{t(lang, 'homeServices.title')}</h2>
       <ServicesRibbon lang={lang} />
     </div>
   </Block>

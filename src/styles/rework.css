@@ -287,24 +287,45 @@
   .smotion__video { opacity: 0; transition: opacity var(--dur-3) var(--ease-out); }
   .smotion.is-playing .smotion__video { opacity: 1; }
 
+  /* block title: large display word + volt pixel (fill, not text — light-theme rule) + mono count */
+  .srib-title {
+    position: relative; display: flex; align-items: flex-end; gap: 0.08em;
+    font-family: var(--font-display); font-weight: 600; font-size: clamp(3.5rem, 2rem + 7vw, 8.5rem); letter-spacing: -0.05em; line-height: 0.9;
+    margin: var(--s-2) 0 0; max-width: none;
+  }
+  .srib-title__px { width: 0.16em; height: 0.16em; background: var(--accent); margin-bottom: 0.1em; flex: none; }
+  .srib-title__n::after { content: attr(data-n); }
+  .srib-title__n { align-self: flex-start; margin-left: 0.2em; margin-top: 0.3em; font-size: clamp(0.75rem, 0.7rem + 0.3vw, 0.9375rem); letter-spacing: 0.06em; color: var(--fg-muted); }
+
   .srib { margin-top: var(--s-6); }
-  .crow__track > .mcard { flex: none; width: min(78vw, 360px); scroll-snap-align: start; }
-  @media (min-width: 1024px) { .crow__track > .mcard { width: 380px; } }
-  .mcard__link { display: flex; flex-direction: column; gap: 14px; color: inherit; height: 100%; }
-  .mcard__media {
-    display: block; aspect-ratio: 4 / 5; border-radius: var(--radius-win); overflow: hidden;
-    border: var(--hairline) solid var(--line); background: var(--c-space);
+  .srib .crow__track { align-items: stretch; }
+  .crow__track > .mcard { flex: none; width: min(66vw, 300px); scroll-snap-align: start; }
+  @media (min-width: 600px) { .crow__track > .mcard { width: 320px; } }
+  @media (min-width: 1024px) { .crow__track > .mcard { width: 360px; } }
+  .mcard__link {
+    display: flex; flex-direction: column; height: 100%; color: var(--fg); background: var(--c-graphite);
+    border-radius: var(--radius-win); overflow: clip; border: var(--hairline) solid rgba(242, 242, 239, 0.08);
     transition: transform var(--dur-3) var(--ease-out), box-shadow var(--dur-3) var(--ease-out);
   }
-  .mcard__meta { display: grid; grid-template-columns: 2.6ch 1fr 20px; gap: 10px; align-items: start; padding-inline: 2px; }
-  .mcard__idx { color: var(--fg-muted); padding-top: 0.28em; }
-  .mcard__name { font-family: var(--font-display); font-weight: 520; font-size: clamp(1.02rem, 0.95rem + 0.4vw, 1.3rem); letter-spacing: -0.015em; line-height: 1.2; text-wrap: balance; }
-  .mcard__arrow { margin-top: 0.2em; transition: transform var(--dur-2) var(--ease-out); }
-  .mcard__link:focus-visible .mcard__media { transform: translateY(-4px); }
+  .mcard__media { display: block; aspect-ratio: 4 / 5; background: var(--c-space); }
+  .mcard__meta {
+    flex: 1; display: grid; grid-template-columns: 1fr 44px; grid-template-rows: auto 1fr; column-gap: 12px; row-gap: 10px; align-content: start;
+    padding: 14px 16px 16px; border-top: var(--hairline) solid rgba(242, 242, 239, 0.1);
+  }
+  .mcard__idx { grid-column: 1 / -1; color: var(--accent); letter-spacing: 0.08em; }
+  .mcard__name {
+    font-family: var(--font-display); font-weight: 600; color: var(--c-chalk);
+    font-size: clamp(1.2rem, 1.08rem + 0.55vw, 1.55rem); letter-spacing: -0.025em; line-height: 1.1; text-wrap: balance; hyphens: auto;
+    align-self: start;
+  }
+  .mcard__go {
+    align-self: end; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); transition: transform var(--dur-2) var(--ease-out);
+  }
+  .mcard__link:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) {
-    .mcard__link:hover .mcard__media { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(8, 9, 11, 0.55); }
-    .mcard__link:hover .mcard__name { text-decoration: underline; text-underline-offset: 0.14em; text-decoration-thickness: 1px; }
-    .mcard__link:hover .mcard__arrow { transform: translateX(4px); }
+    .mcard__link:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -26px rgba(8, 9, 11, 0.6); }
+    .mcard__link:hover .mcard__go { transform: translateX(3px); }
   }
 
   /* hero of a service page: the wide loop under the lead (phones: the 4:5 cut) */
